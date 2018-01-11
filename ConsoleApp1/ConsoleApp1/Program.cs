@@ -5,7 +5,6 @@ using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 
@@ -16,58 +15,71 @@ namespace CourseChecker
     {
         static void Main(string[] args)
         {
-            //IDS ids = new IDS();
-            //List<Kurse> idsAll = ids.GetCourse;
-            //List<Kurse> idsIntegrata = ids.GetCourseIntegrata;
-            //List<Kurse> idsTechData = ids.GetCourseTechData;
-            //List<Kurse> integrata = (new Integrata()).GetCourse;
-            ////Techdata test = new Techdata();
+            List<String> listExcludeForTechData = new List<string> {
+                "OE98G",
+                "OL4AG",
+                "F258G",
+                "F211G",
+                "AS24G",
+                "AS27G"
+            };
 
-            //List<Kurse> loeschenIntegrata = new List<Kurse>();
-            //List<Kurse> loeschenIDSIntegrata = new List<Kurse>();
+            IDS ids = new IDS();
+            List<Kurse> idsAll = ids.GetCourse;
+            List<Kurse> idsIntegrata = ids.GetCourseIntegrata;
+            List<Kurse> idsTechData = ids.GetCourseTechData;
+            List<Kurse> integrata = (new Integrata()).GetCourse;
+            List<Kurse> techdata = (new Techdata(listExcludeForTechData)).GetCourse;
+            Console.Clear();
 
-            //foreach (Kurse kurs in integrata) {
-            //    foreach (Kurse kursIDS in idsIntegrata) {
-            //        if (kurs.Contains(kursIDS)) {
-            //            loeschenIntegrata.Add(kurs);
-            //            loeschenIDSIntegrata.Add(kursIDS);
-            //        }
-            //    }
-            //}
+            RemoveMatches(integrata, idsIntegrata);
+            RemoveMatches(techdata, idsTechData);
 
-            //foreach (Kurse m in loeschenIntegrata) {
-            //    integrata.Remove(m);
-            //}
-
-            //foreach (Kurse m in loeschenIDSIntegrata) {
-            //    idsIntegrata.Remove(m);
-            //}
-
-            //if (integrata.Count > 0) {
-            //    int i = 1;
-            //    Console.WriteLine("Folgende \"Integrata\" Kurse sind nicht in \"ids\" enthalten: \n");
-            //    foreach (Kurse kurs in integrata) {
-            //        Console.WriteLine("{6,-3} |{0,-7} | {1,-82} | {2,-20} | {3,-20} | {4,-10} | {5}", kurs.StrKursNr, kurs.StrKursTitel, kurs.DateBeginn, kurs.DateEnde, kurs.StrOrt, kurs.IPreis, i);
-            //        i++;
-            //    }
-            //} else {
-            //    Console.WriteLine("Folgende \"Integrata\" Kurse sind nicht in \"ids\" enthalten: \n Keine gefunden!\n");
-            //}
-
-            //if (idsIntegrata.Count > 0) {
-            //    int i = 1;
-            //    Console.WriteLine("Folgende \"ids\" Kurse sind nicht in \"Integrata\" enthalten: \n");
-            //    foreach (Kurse kurs in idsIntegrata) {
-            //        Console.WriteLine("{6,-3} |{0,-7} | {1,-82} | {2,-20} | {3,-20} | {4,-10} | {5}", kurs.StrKursNr, kurs.StrKursTitel, kurs.DateBeginn, kurs.DateEnde, kurs.StrOrt, kurs.IPreis, i);
-            //        i++;
-            //    }
-            //} else {
-            //    Console.WriteLine("Folgende \"ids\" Kurse sind nicht in \"Integrata\" enthalten: \n Keine gefunden!\n");
-            //}
-
-            Techdata techdata = new Techdata();
+            PrintResult(integrata, "Integrata", "IDS");
+            PrintResult(idsIntegrata, "IDS", "Integrata");
+            PrintResult(techdata, "TechData", "IDS");
+            PrintResult(idsTechData, "IDS", "TechData");
 
             Console.ReadKey();
+        }
+
+        private static void RemoveMatches(List<Kurse> course, List<Kurse> idsCourse)
+        {
+            List<Kurse> deleteCourse = new List<Kurse>();
+            List<Kurse> deleteIDSCourse = new List<Kurse>();
+
+            foreach (Kurse kurs in course) {
+                foreach (Kurse kursIDS in idsCourse) {
+                    if (kurs.Contains(kursIDS)) {
+                        deleteCourse.Add(kurs);
+                        deleteIDSCourse.Add(kursIDS);
+                    } else if (kurs.ContainsForIDS(kursIDS)) {
+                        deleteIDSCourse.Add(kursIDS);
+                    }
+                }
+            }
+
+            foreach (Kurse m in deleteCourse) {
+                course.Remove(m);
+            }
+
+            foreach (Kurse m in deleteIDSCourse) {
+                idsCourse.Remove(m);
+            }
+        }
+
+        private static void PrintResult(List<Kurse> course, String strCourseName, String strTowardsCourseName)
+        {
+            if (course.Count > 0) {
+                int i = 1;
+                Console.WriteLine("\nFolgende \"{0}\" Kurse sind nicht in \"{1}\" enthalten: \n", strCourseName, strTowardsCourseName);
+                foreach (Kurse kurs in course) {
+                    Console.WriteLine("{6,-3} |{0,-7} | {1,-82} | {2,-20} | {3,-20} | {4,-10} | {5}", kurs.StrKursNr, kurs.StrKursTitel, kurs.DateBeginn, kurs.DateEnde, kurs.StrOrt, kurs.IPreis, i);
+                    i++;
+                }
+            } else {
+                Console.WriteLine("\nFolgende \"{0}\" Kurse sind nicht in \"{1}\" enthalten: \n Keine gefunden!\n", strCourseName, strTowardsCourseName);
+            }
         }
     }
 
@@ -94,11 +106,12 @@ namespace CourseChecker
 
     class Techdata:KursAnbieter
     {
-        public Techdata()
+        public Techdata(List<String> listExclude)
         {
             GetCourse = new List<Kurse>();
             ReadWithSeleniumTechDataMainSite collectUrl = new ReadWithSeleniumTechDataMainSite("https://academy.techdata.com/de/search/index/#?country=DE&selectedVendor=5&searchTerm=db2&modality=classroom");
-            CollectCourseTechData collectCourseTechData = new CollectCourseTechData(collectUrl.ListUrl);
+            CollectCourseTechData collectCourseTechData = new CollectCourseTechData(collectUrl.ListUrl, listExclude);
+            GetCourse = collectCourseTechData.Kurse;
         }
     }
 
@@ -165,23 +178,13 @@ namespace CourseChecker
     {
         public List<Kurse> Kurse { get; set; }
 
-        public CollectCourseTechData(List<String> strSite)
+        public CollectCourseTechData(List<String> strSite, List<String> listExclude)
         {
             Kurse = new List<Kurse>();
-            foreach (String url in strSite)
-            {
-                Kurse.AddRange(getCourse(url));
-            }
+            ReadWithSeleniumTechDataSite getCours = new ReadWithSeleniumTechDataSite(strSite, listExclude);
+            Kurse.AddRange(getCours.ListKurse);
 
         }
-
-        private List<Kurse> getCourse(String url)
-        {
-            ReadWithSeleniumTechDataSite getCours = new ReadWithSeleniumTechDataSite(url);
-
-            return getCours.ListKurse;
-        }
-
     }
 
     class CollectCourseIntegrata
@@ -397,9 +400,42 @@ namespace CourseChecker
 
         public Boolean Contains(Kurse kursCheck)
         {
-            return (this.strKursNr.ToLowerInvariant().Equals(kursCheck.StrKursNr.ToLowerInvariant()) & this.dateBeginn.Equals(kursCheck.DateBeginn) & this.dateEnde.Equals(kursCheck.DateEnde)
-                & this.strOrt.ToLowerInvariant().Equals(kursCheck.StrOrt.ToLowerInvariant()) & this.iPreis.Equals(kursCheck.IPreis)
-                & this.strKursTitel.ToLowerInvariant().Replace("–", "-").Replace("/", "").Replace("ibm ", "").Equals(kursCheck.StrKursTitel.ToLowerInvariant().Replace("–", "-").Replace("/", "").Replace("ibm ", "")));
+            Boolean retEqual = false;
+            if (this.strKursNr.Length>0)
+                retEqual = this.strKursNr.ToLowerInvariant().Equals(kursCheck.StrKursNr.ToLowerInvariant())
+                        & this.dateBeginn.Equals(kursCheck.DateBeginn)
+                        & this.dateEnde.Equals(kursCheck.DateEnde)
+                        & this.strOrt.ToLowerInvariant().Equals(kursCheck.StrOrt.ToLowerInvariant())
+                        & this.iPreis.Equals(kursCheck.IPreis);
+            else 
+                retEqual = this.strKursNr.ToLowerInvariant().Equals(kursCheck.StrKursNr.ToLowerInvariant())
+                        & this.dateBeginn.Equals(kursCheck.DateBeginn)
+                        & this.dateEnde.Equals(kursCheck.DateEnde)
+                        & this.iPreis.Equals(kursCheck.IPreis)
+                        & this.strOrt.ToLowerInvariant().Equals(kursCheck.StrOrt.ToLowerInvariant())
+                        & this.strKursTitel.ToLowerInvariant().Replace("–", "-").Replace("/", "").Replace("ibm ", "").Replace(":", "").Trim().Equals(kursCheck.StrKursTitel.ToLowerInvariant().Replace("–", "-").Replace("/", "").Replace("ibm ", "").Replace(":", "").Trim());
+
+
+            return retEqual;
+        }
+
+        public Boolean ContainsForIDS(Kurse kursCheck)
+        {
+            Boolean retEqual = false;
+            if (this.strKursNr.Length > 0)
+                retEqual = this.strKursNr.ToLowerInvariant().Equals(kursCheck.StrKursNr.ToLowerInvariant())
+                        & this.dateBeginn.Equals(kursCheck.DateBeginn)
+                        & this.dateEnde.Equals(kursCheck.DateEnde)
+                        & this.strOrt.ToLowerInvariant().Equals(kursCheck.StrOrt.ToLowerInvariant());
+            else
+                retEqual = this.strKursNr.ToLowerInvariant().Equals(kursCheck.StrKursNr.ToLowerInvariant())
+                        & this.dateBeginn.Equals(kursCheck.DateBeginn)
+                        & this.dateEnde.Equals(kursCheck.DateEnde)
+                        & this.strOrt.ToLowerInvariant().Equals(kursCheck.StrOrt.ToLowerInvariant())
+                        & this.strKursTitel.ToLowerInvariant().Replace("–", "-").Replace("/", "").Replace("ibm ", "").Replace(":", "").Trim().Equals(kursCheck.StrKursTitel.ToLowerInvariant().Replace("–", "-").Replace("/", "").Replace("ibm ", "").Replace(":", "").Trim());
+
+
+            return retEqual;
         }
 
     }
@@ -411,26 +447,26 @@ namespace CourseChecker
             listUrl = new List<String>();
             using (IWebDriver driver = new ChromeDriver())
             {
+                Console.Clear();
                 driver.Url = url;
                 System.Threading.Thread.Sleep(2000);
-                addUrl(driver);
+                AddUrl(driver);
 
                 IWebElement getButtom = driver.FindElement(By.LinkText("»"));
                 getButtom.Click();
                 System.Threading.Thread.Sleep(5000);
-                addUrl(driver);
+                AddUrl(driver);
             }
 
         }
 
-        private void addUrl(IWebDriver driver){
+        private void AddUrl(IWebDriver driver){
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             wait.Until<IWebElement>(d => d.FindElement(By.CssSelector(".btn-sm")));
             IList<IWebElement> test = driver.FindElements(By.CssSelector(".btn-sm"));
             foreach(IWebElement b in test)
             {
                 this.listUrl.Add(b.GetAttribute("href"));
-                Console.WriteLine("URL: " + b.GetAttribute("href"));
             }
         }
 
@@ -441,31 +477,73 @@ namespace CourseChecker
     {
         private List<Kurse> listKurse;
 
-        public ReadWithSeleniumTechDataSite(String url)
+        public ReadWithSeleniumTechDataSite(List<String> ListUrl, List<String> listExclude)
         {
-            String pattern = ".*?(\\d+.\\d+),\\d+";
+            String pattern = ".*?(\\d+\\.?\\d+)";
             Regex r = new Regex(pattern, RegexOptions.IgnoreCase);
             listKurse = new List<Kurse>();
+            List<String>[] arrLocDate = null;
+            int iPrice = 0;
+            String[] kursNr_Title = null;
 
             using (IWebDriver driver = new ChromeDriver())
             {
-                driver.Url = url;
-                System.Threading.Thread.Sleep(1000);
-                IWebElement keywords = driver.FindElement(By.Name("keywords"));
-                IList<IWebElement> location = driver.FindElements(By.ClassName("location"));
-                IList<IWebElement> date = driver.FindElements(By.ClassName("date"));
-                IWebElement price = driver.FindElement(By.ClassName("price"));
+                Console.Clear();
+                foreach (String url in ListUrl) {
+                    driver.Url = url;
+                    IWebElement keywords = driver.FindElement(By.Name("keywords"));
+                    IList<IWebElement> location = driver.FindElements(By.ClassName("location"));
+                    arrLocDate = new List<String>[location.Count];
+                    for (int i = 1; i <= location.Count; i++) {
+                        arrLocDate[i - 1] = new List<String>();
+                        IList<IWebElement> list = driver.FindElements(By.XPath("/html/body/div[4]/div/div/div/div[3]/div[2]/div/div/div[2]/ul/li[" + i + "]"));
+                        String[] listSplit = list.ElementAt(0).Text.Split('\n');
+                        for (int j = 0; j < listSplit.Length; j++) {
+                            if (j == 0) {
+                                arrLocDate[i - 1].Add(listSplit.GetValue(j).ToString().Trim());
+                            } else if (j % 3 == 2) {
+                                arrLocDate[i - 1].Add(listSplit.GetValue(j).ToString().Trim());
+                            }
+                        }
+                    }
 
-                String[] kursNr_Title = keywords.GetAttribute("content").Split('-');
+                    kursNr_Title = keywords.GetAttribute("content").Split('-');
+                    if (kursNr_Title.Length > 2) {
+                        for (int i = 2; i < kursNr_Title.Length; i++)
+                            kursNr_Title[1] = kursNr_Title[1].Trim() + " - " + kursNr_Title[i].Trim();
+                    }
 
-                int strPrice;
-                Match m = r.Match(price.Text);
-                if (m.Success) 
-                   strPrice = Int32.Parse(m.Groups[1].ToString().Replace(".",""));
+                    try {
+                        if (listExclude.Contains(kursNr_Title[0].Trim()))
+                            throw new NoSuchElementException();
+                        
+                        IWebElement price = driver.FindElement(By.ClassName("price"));
+
+                        Match m = r.Match(price.Text);
+                        if (m.Success) {
+                            if (m.Groups[1].ToString().Contains('.')) {
+                                iPrice = Int32.Parse(m.Groups[1].ToString().Replace(".", ""));
+                            } else {
+                                iPrice = Int32.Parse(m.Groups[1].ToString());
+                            }
+                        }
+
+                        for (int i = 0; i < arrLocDate.Length; i++) {
+                            for (int j = 1; j < arrLocDate[i].Count; j++) {
+                                String[] splitDate = arrLocDate[i].ElementAt(j).Split('-');
+                                DateTime dateBegin = DateTime.Parse(splitDate[0].Trim());
+                                DateTime dateEnd = DateTime.Parse(splitDate[1].Trim());
+                                listKurse.Add(new Kurse(kursNr_Title[0].Trim(), kursNr_Title[1].Trim(), dateBegin, dateEnd, arrLocDate[i].ElementAt(0).ToString(), iPrice));
+                            }
+                        }
+                    } catch (NoSuchElementException) {
+                        Console.Out.WriteLine("Keine Termine für: {0}  {1}", kursNr_Title[0], kursNr_Title[1]);
+                    }
+                }
             }
         }
 
-        public List<Kurse> ListKurse {get;}
+        public List<Kurse> ListKurse => listKurse;
 
     } 
 }

@@ -30,3 +30,18 @@ C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\Seleni
 C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\ThoughtWorks.Selenium.Core.xml
 C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\WebDriver.xml
 C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\WebDriver.Support.xml
+C:\Users\chimp\Desktop\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\ConsoleApp1.exe.config
+C:\Users\chimp\Desktop\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\ConsoleApp1.exe
+C:\Users\chimp\Desktop\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\ConsoleApp1.pdb
+C:\Users\chimp\Desktop\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\Selenium.WebDriverBackedSelenium.dll
+C:\Users\chimp\Desktop\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\ThoughtWorks.Selenium.Core.dll
+C:\Users\chimp\Desktop\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\WebDriver.dll
+C:\Users\chimp\Desktop\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\WebDriver.Support.dll
+C:\Users\chimp\Desktop\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\Selenium.WebDriverBackedSelenium.xml
+C:\Users\chimp\Desktop\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\ThoughtWorks.Selenium.Core.xml
+C:\Users\chimp\Desktop\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\WebDriver.xml
+C:\Users\chimp\Desktop\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\WebDriver.Support.xml
+C:\Users\chimp\Desktop\CourseChecker_-master\ConsoleApp1\ConsoleApp1\obj\Debug\ConsoleApp1.csprojResolveAssemblyReference.cache
+C:\Users\chimp\Desktop\CourseChecker_-master\ConsoleApp1\ConsoleApp1\obj\Debug\ConsoleApp1.csproj.CoreCompileInputs.cache
+C:\Users\chimp\Desktop\CourseChecker_-master\ConsoleApp1\ConsoleApp1\obj\Debug\ConsoleApp1.exe
+C:\Users\chimp\Desktop\CourseChecker_-master\ConsoleApp1\ConsoleApp1\obj\Debug\ConsoleApp1.pdb
