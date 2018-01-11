@@ -1,0 +1,32 @@
+\\Datastore\Ordner-Umleitung\anwiids01\Downloads\CourseChecker_-master\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\ConsoleApp1.exe.config
+\\Datastore\Ordner-Umleitung\anwiids01\Downloads\CourseChecker_-master\CourseChecker_-master\ConsoleApp1\ConsoleApp1\obj\Debug\ConsoleApp1.csprojResolveAssemblyReference.cache
+\\Datastore\Ordner-Umleitung\anwiids01\Downloads\CourseChecker_-master\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\ConsoleApp1.exe
+\\Datastore\Ordner-Umleitung\anwiids01\Downloads\CourseChecker_-master\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\ConsoleApp1.pdb
+\\Datastore\Ordner-Umleitung\anwiids01\Downloads\CourseChecker_-master\CourseChecker_-master\ConsoleApp1\ConsoleApp1\obj\Debug\ConsoleApp1.exe
+\\Datastore\Ordner-Umleitung\anwiids01\Downloads\CourseChecker_-master\CourseChecker_-master\ConsoleApp1\ConsoleApp1\obj\Debug\ConsoleApp1.pdb
+\\Datastore\Ordner-Umleitung\anwiids01\Downloads\Course_master\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\ConsoleApp1.exe.config
+\\Datastore\Ordner-Umleitung\anwiids01\Downloads\Course_master\CourseChecker_-master\ConsoleApp1\ConsoleApp1\obj\Debug\ConsoleApp1.exe
+\\Datastore\Ordner-Umleitung\anwiids01\Downloads\Course_master\CourseChecker_-master\ConsoleApp1\ConsoleApp1\obj\Debug\ConsoleApp1.pdb
+\\Datastore\Ordner-Umleitung\anwiids01\Downloads\Course_master\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\ConsoleApp1.exe
+\\Datastore\Ordner-Umleitung\anwiids01\Downloads\Course_master\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\ConsoleApp1.pdb
+\\Datastore\Ordner-Umleitung\anwiids01\Downloads\Course_master\CourseChecker_-master\ConsoleApp1\ConsoleApp1\obj\Debug\ConsoleApp1.csprojResolveAssemblyReference.cache
+C:\Users\anwiids01\Desktop\Course_master\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\ConsoleApp1.exe.config
+C:\Users\anwiids01\Desktop\Course_master\CourseChecker_-master\ConsoleApp1\ConsoleApp1\obj\Debug\ConsoleApp1.exe
+C:\Users\anwiids01\Desktop\Course_master\CourseChecker_-master\ConsoleApp1\ConsoleApp1\obj\Debug\ConsoleApp1.pdb
+C:\Users\anwiids01\Desktop\Course_master\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\ConsoleApp1.exe
+C:\Users\anwiids01\Desktop\Course_master\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\ConsoleApp1.pdb
+C:\Users\anwiids01\Desktop\Course_master\CourseChecker_-master\ConsoleApp1\ConsoleApp1\obj\Debug\ConsoleApp1.csprojResolveAssemblyReference.cache
+C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\ConsoleApp1.exe.config
+C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\obj\Debug\ConsoleApp1.exe
+C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\obj\Debug\ConsoleApp1.pdb
+C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\ConsoleApp1.exe
+C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\ConsoleApp1.pdb
+C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\obj\Debug\ConsoleApp1.csprojResolveAssemblyReference.cache
+C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\Selenium.WebDriverBackedSelenium.dll
+C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\ThoughtWorks.Selenium.Core.dll
+C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\WebDriver.dll
+C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\WebDriver.Support.dll
+C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\Selenium.WebDriverBackedSelenium.xml
+C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\ThoughtWorks.Selenium.Core.xml
+C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\WebDriver.xml
+C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\WebDriver.Support.xml

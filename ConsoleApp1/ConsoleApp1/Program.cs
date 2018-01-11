@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-
+using OpenQA.Selenium;
+using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 
 namespace CourseChecker
 {
@@ -16,54 +16,56 @@ namespace CourseChecker
     {
         static void Main(string[] args)
         {
-            IDS ids = new IDS();
-            List<Kurse> idsAll = ids.GetCourse;
-            List<Kurse> idsIntegrata = ids.GetCourseIntegrata;
-            List<Kurse> idsTechData = ids.GetCourseTechData;
-            List<Kurse> integrata = (new Integrata()).GetCourse;
-            //Techdata test = new Techdata();
+            //IDS ids = new IDS();
+            //List<Kurse> idsAll = ids.GetCourse;
+            //List<Kurse> idsIntegrata = ids.GetCourseIntegrata;
+            //List<Kurse> idsTechData = ids.GetCourseTechData;
+            //List<Kurse> integrata = (new Integrata()).GetCourse;
+            ////Techdata test = new Techdata();
 
-            List<Kurse> loeschenIntegrata = new List<Kurse>();
-            List<Kurse> loeschenIDSIntegrata = new List<Kurse>();
+            //List<Kurse> loeschenIntegrata = new List<Kurse>();
+            //List<Kurse> loeschenIDSIntegrata = new List<Kurse>();
 
-            foreach (Kurse kurs in integrata) {
-                foreach (Kurse kursIDS in idsIntegrata) {
-                    if (kurs.Contains(kursIDS)) {
-                        loeschenIntegrata.Add(kurs);
-                        loeschenIDSIntegrata.Add(kursIDS);
-                    }
-                }
-            }
+            //foreach (Kurse kurs in integrata) {
+            //    foreach (Kurse kursIDS in idsIntegrata) {
+            //        if (kurs.Contains(kursIDS)) {
+            //            loeschenIntegrata.Add(kurs);
+            //            loeschenIDSIntegrata.Add(kursIDS);
+            //        }
+            //    }
+            //}
 
-            foreach (Kurse m in loeschenIntegrata) {
-                integrata.Remove(m);
-            }
+            //foreach (Kurse m in loeschenIntegrata) {
+            //    integrata.Remove(m);
+            //}
 
-            foreach (Kurse m in loeschenIDSIntegrata) {
-                idsIntegrata.Remove(m);
-            }
+            //foreach (Kurse m in loeschenIDSIntegrata) {
+            //    idsIntegrata.Remove(m);
+            //}
 
-            if (integrata.Count > 0) {
-                int i = 1;
-                Console.WriteLine("Folgende \"Integrata\" Kurse sind nicht in \"ids\" enthalten: \n");
-                foreach (Kurse kurs in integrata) {
-                    Console.WriteLine("{6,-3} |{0,-7} | {1,-82} | {2,-20} | {3,-20} | {4,-10} | {5}", kurs.StrKursNr, kurs.StrKursTitel, kurs.DateBeginn, kurs.DateEnde, kurs.StrOrt, kurs.IPreis, i);
-                    i++;
-                }
-            } else {
-                Console.WriteLine("Folgende \"Integrata\" Kurse sind nicht in \"ids\" enthalten: \n Keine gefunden!\n");
-            }
+            //if (integrata.Count > 0) {
+            //    int i = 1;
+            //    Console.WriteLine("Folgende \"Integrata\" Kurse sind nicht in \"ids\" enthalten: \n");
+            //    foreach (Kurse kurs in integrata) {
+            //        Console.WriteLine("{6,-3} |{0,-7} | {1,-82} | {2,-20} | {3,-20} | {4,-10} | {5}", kurs.StrKursNr, kurs.StrKursTitel, kurs.DateBeginn, kurs.DateEnde, kurs.StrOrt, kurs.IPreis, i);
+            //        i++;
+            //    }
+            //} else {
+            //    Console.WriteLine("Folgende \"Integrata\" Kurse sind nicht in \"ids\" enthalten: \n Keine gefunden!\n");
+            //}
 
-            if (idsIntegrata.Count > 0) {
-                int i = 1;
-                Console.WriteLine("Folgende \"ids\" Kurse sind nicht in \"Integrata\" enthalten: \n");
-                foreach (Kurse kurs in idsIntegrata) {
-                    Console.WriteLine("{6,-3} |{0,-7} | {1,-82} | {2,-20} | {3,-20} | {4,-10} | {5}", kurs.StrKursNr, kurs.StrKursTitel, kurs.DateBeginn, kurs.DateEnde, kurs.StrOrt, kurs.IPreis, i);
-                    i++;
-                }
-            } else {
-                Console.WriteLine("Folgende \"ids\" Kurse sind nicht in \"Integrata\" enthalten: \n Keine gefunden!\n");
-            }
+            //if (idsIntegrata.Count > 0) {
+            //    int i = 1;
+            //    Console.WriteLine("Folgende \"ids\" Kurse sind nicht in \"Integrata\" enthalten: \n");
+            //    foreach (Kurse kurs in idsIntegrata) {
+            //        Console.WriteLine("{6,-3} |{0,-7} | {1,-82} | {2,-20} | {3,-20} | {4,-10} | {5}", kurs.StrKursNr, kurs.StrKursTitel, kurs.DateBeginn, kurs.DateEnde, kurs.StrOrt, kurs.IPreis, i);
+            //        i++;
+            //    }
+            //} else {
+            //    Console.WriteLine("Folgende \"ids\" Kurse sind nicht in \"Integrata\" enthalten: \n Keine gefunden!\n");
+            //}
+
+            Techdata techdata = new Techdata();
 
             Console.ReadKey();
         }
@@ -95,7 +97,8 @@ namespace CourseChecker
         public Techdata()
         {
             GetCourse = new List<Kurse>();
-            ReadSite readSite = new ReadSite("https://academy.techdata.com/de/search/index/#?country=DE&selectedVendor=5&searchTerm=db2&modality=classroom");
+            ReadWithSeleniumTechDataMainSite collectUrl = new ReadWithSeleniumTechDataMainSite("https://academy.techdata.com/de/search/index/#?country=DE&selectedVendor=5&searchTerm=db2&modality=classroom");
+            CollectCourseTechData collectCourseTechData = new CollectCourseTechData(collectUrl.ListUrl);
         }
     }
 
@@ -110,9 +113,9 @@ namespace CourseChecker
             GetCourseIntegrata = new List<Kurse>();
             GetCourseTechData = new List<Kurse>();
 
-            ReadSite readSiteIDS_2 = new ReadSite("http://www.ids-system.de/schulungen/tutor/2");
+            ReadSite readSiteIDS_2 = new ReadSite("http://www.ids-system.de/leistung/schulungen/tutor/2");
             CollectCourseIDS collectIDS_2 = new CollectCourseIDS(readSiteIDS_2.GetSite());
-            ReadSite readSiteIDS_3 = new ReadSite("http://www.ids-system.de/schulungen/tutor/3");
+            ReadSite readSiteIDS_3 = new ReadSite("http://www.ids-system.de/leistung/schulungen/tutor/3");
             CollectCourseIDS collectIDS_3 = new CollectCourseIDS(readSiteIDS_3.GetSite());
             ReadSite readSiteIDS = new ReadSite("http://www.ids-system.de/component/seminarman/2-100-durchfuehrungsgarantie?Itemid=585");
             CollectCourseIDS collectIDS = new CollectCourseIDS(readSiteIDS.GetSite());
@@ -162,19 +165,23 @@ namespace CourseChecker
     {
         public List<Kurse> Kurse { get; set; }
 
-        public CollectCourseTechData(String strSite)
+        public CollectCourseTechData(List<String> strSite)
         {
             Kurse = new List<Kurse>();
-            List<String> listSection = ListSection(strSite);
+            foreach (String url in strSite)
+            {
+                Kurse.AddRange(getCourse(url));
+            }
 
         }
 
-        private List<String> ListSection(String strSite)
+        private List<Kurse> getCourse(String url)
         {
-            List<String> listSections = new List<String>();
+            ReadWithSeleniumTechDataSite getCours = new ReadWithSeleniumTechDataSite(url);
 
-            return listSections;
+            return getCours.ListKurse;
         }
+
     }
 
     class CollectCourseIntegrata
@@ -382,7 +389,7 @@ namespace CourseChecker
 
         public String StrOrt => strOrt;
         public int IPreis => iPreis;
-        public Boolean BoolGarantieTermin { get => boolGarantieTermin; set => boolGarantieTermin = value; }
+        public Boolean BoolGarantieTermin { get { return this.boolGarantieTermin; } set { this.boolGarantieTermin = value; } }
         public DateTime DateEnde => dateEnde;
         public DateTime DateBeginn => dateBeginn;
         public String StrKursTitel => strKursTitel;
@@ -390,12 +397,76 @@ namespace CourseChecker
 
         public Boolean Contains(Kurse kursCheck)
         {
-            if (this.strKursNr.ToLowerInvariant().Equals(kursCheck.StrKursNr.ToLowerInvariant()) & this.dateBeginn.Equals(kursCheck.DateBeginn) & this.dateEnde.Equals(kursCheck.DateEnde)
+            return (this.strKursNr.ToLowerInvariant().Equals(kursCheck.StrKursNr.ToLowerInvariant()) & this.dateBeginn.Equals(kursCheck.DateBeginn) & this.dateEnde.Equals(kursCheck.DateEnde)
                 & this.strOrt.ToLowerInvariant().Equals(kursCheck.StrOrt.ToLowerInvariant()) & this.iPreis.Equals(kursCheck.IPreis)
-                & this.strKursTitel.ToLowerInvariant().Replace("–", "-").Replace("/", "").Replace("ibm ", "").Equals(kursCheck.StrKursTitel.ToLowerInvariant().Replace("–", "-").Replace("/", "").Replace("ibm ", ""))) { return true; }
-            return false;
+                & this.strKursTitel.ToLowerInvariant().Replace("–", "-").Replace("/", "").Replace("ibm ", "").Equals(kursCheck.StrKursTitel.ToLowerInvariant().Replace("–", "-").Replace("/", "").Replace("ibm ", "")));
         }
 
     }
+
+    class ReadWithSeleniumTechDataMainSite{
+        List<String> listUrl;
+        public ReadWithSeleniumTechDataMainSite(String url)
+        {
+            listUrl = new List<String>();
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                driver.Url = url;
+                System.Threading.Thread.Sleep(2000);
+                addUrl(driver);
+
+                IWebElement getButtom = driver.FindElement(By.LinkText("»"));
+                getButtom.Click();
+                System.Threading.Thread.Sleep(5000);
+                addUrl(driver);
+            }
+
+        }
+
+        private void addUrl(IWebDriver driver){
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until<IWebElement>(d => d.FindElement(By.CssSelector(".btn-sm")));
+            IList<IWebElement> test = driver.FindElements(By.CssSelector(".btn-sm"));
+            foreach(IWebElement b in test)
+            {
+                this.listUrl.Add(b.GetAttribute("href"));
+                Console.WriteLine("URL: " + b.GetAttribute("href"));
+            }
+        }
+
+        public List<String> ListUrl => listUrl;
+    }
+
+    class ReadWithSeleniumTechDataSite
+    {
+        private List<Kurse> listKurse;
+
+        public ReadWithSeleniumTechDataSite(String url)
+        {
+            String pattern = ".*?(\\d+.\\d+),\\d+";
+            Regex r = new Regex(pattern, RegexOptions.IgnoreCase);
+            listKurse = new List<Kurse>();
+
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                driver.Url = url;
+                System.Threading.Thread.Sleep(1000);
+                IWebElement keywords = driver.FindElement(By.Name("keywords"));
+                IList<IWebElement> location = driver.FindElements(By.ClassName("location"));
+                IList<IWebElement> date = driver.FindElements(By.ClassName("date"));
+                IWebElement price = driver.FindElement(By.ClassName("price"));
+
+                String[] kursNr_Title = keywords.GetAttribute("content").Split('-');
+
+                int strPrice;
+                Match m = r.Match(price.Text);
+                if (m.Success) 
+                   strPrice = Int32.Parse(m.Groups[1].ToString().Replace(".",""));
+            }
+        }
+
+        public List<Kurse> ListKurse {get;}
+
+    } 
 }
 
