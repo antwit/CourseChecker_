@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2006
+VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{1C41EE7E-751D-45F5-9195-43E1FE3F60A7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseChecker", "ConsoleApp1\CourseChecker.csproj", "{1C41EE7E-751D-45F5-9195-43E1FE3F60A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

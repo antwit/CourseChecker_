@@ -130,3 +130,15 @@
 [0111/194933.942:ERROR:process_reader_win.cc(123)] NtOpenThread: {Zugriff verweigert} Ein Prozess hat einen Zugriff auf ein Objekt angefordert, aber ihm wurden nicht die Rechte für den Zugriff erteilt.  (0xc0000022)
 [0111/194933.942:ERROR:exception_snapshot_win.cc(87)] thread ID 8096 not found in process
 [0111/194933.943:WARNING:crash_report_exception_handler.cc(62)] ProcessSnapshotWin::Initialize failed
+[0118/184520.302:ERROR:process_reader_win.cc(123)] NtOpenThread: {Zugriff verweigert} Ein Prozess hat einen Zugriff auf ein Objekt angefordert, aber ihm wurden nicht die Rechte für den Zugriff erteilt.  (0xc0000022)
+[0118/184520.304:ERROR:exception_snapshot_win.cc(87)] thread ID 12980 not found in process
+[0118/184520.304:WARNING:crash_report_exception_handler.cc(62)] ProcessSnapshotWin::Initialize failed
+[0118/221453.156:ERROR:process_reader_win.cc(123)] NtOpenThread: {Zugriff verweigert} Ein Prozess hat einen Zugriff auf ein Objekt angefordert, aber ihm wurden nicht die Rechte für den Zugriff erteilt.  (0xc0000022)
+[0118/221453.157:ERROR:exception_snapshot_win.cc(87)] thread ID 12524 not found in process
+[0118/221453.157:WARNING:crash_report_exception_handler.cc(62)] ProcessSnapshotWin::Initialize failed
+[0118/221454.836:ERROR:process_reader_win.cc(123)] NtOpenThread: {Zugriff verweigert} Ein Prozess hat einen Zugriff auf ein Objekt angefordert, aber ihm wurden nicht die Rechte für den Zugriff erteilt.  (0xc0000022)
+[0118/221454.837:ERROR:exception_snapshot_win.cc(87)] thread ID 11788 not found in process
+[0118/221454.837:WARNING:crash_report_exception_handler.cc(62)] ProcessSnapshotWin::Initialize failed
+[0118/222719.331:ERROR:process_reader_win.cc(123)] NtOpenThread: {Zugriff verweigert} Ein Prozess hat einen Zugriff auf ein Objekt angefordert, aber ihm wurden nicht die Rechte für den Zugriff erteilt.  (0xc0000022)
+[0118/222719.332:ERROR:exception_snapshot_win.cc(87)] thread ID 6708 not found in process
+[0118/222719.332:WARNING:crash_report_exception_handler.cc(62)] ProcessSnapshotWin::Initialize failed
