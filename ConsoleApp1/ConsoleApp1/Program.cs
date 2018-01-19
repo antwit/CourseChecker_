@@ -49,9 +49,10 @@ namespace CourseChecker
                     if (kurs.Contains(kursIDS)) {
                         deleteCourse.Add(kurs);
                         deleteIDSCourse.Add(kursIDS);
-                    } else if (kurs.ContainsForIDS(kursIDS)) {
-                        deleteIDSCourse.Add(kursIDS);
                     }
+                    //else if (kurs.ContainsForIDS(kursIDS)) {
+                    //    deleteIDSCourse.Add(kursIDS);
+                    //}
                 }
             }
 

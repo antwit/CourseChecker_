@@ -1,0 +1,14 @@
+C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\CourseChecker.exe.config
+C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\CourseChecker.exe
+C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\CourseChecker.pdb
+C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\Selenium.WebDriverBackedSelenium.dll
+C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\ThoughtWorks.Selenium.Core.dll
+C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\WebDriver.dll
+C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\WebDriver.Support.dll
+C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\Selenium.WebDriverBackedSelenium.xml
+C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\ThoughtWorks.Selenium.Core.xml
+C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\WebDriver.xml
+C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\WebDriver.Support.xml
+C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker.csprojResolveAssemblyReference.cache
+C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker.exe
+C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker.pdb
