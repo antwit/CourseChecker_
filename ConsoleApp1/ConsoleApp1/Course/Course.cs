@@ -13,7 +13,13 @@ namespace CourseChecker.Course
         private int iPreis;
         private Boolean boolGarantieTermin;
         private String strReason;
-        private Dictionary<String, String> dictReason = new Dictionary<string, string>();
+        private static readonly Dictionary<String, String> dictReason = new Dictionary<string, string>() {
+            { "Preis", "Kurspreis wurde geändert;"},
+            { "Garantie", "Kurs ist Garantietermin;" },
+            { "!Garantie", "Kurs ist nicht mehr Garantietermin;" },
+            { "!Kurs", "Kurs entfernt;" },
+            { "Kurs", "Kurs hinzugefügt;" }
+        };
 
         
         public Kurse(String strKursNr, String strKursTitel, DateTime dateBeginn, DateTime dateEnde, String strOrt, int iPreis)
@@ -25,8 +31,7 @@ namespace CourseChecker.Course
             this.strOrt = strOrt;
             this.iPreis = iPreis;
             this.boolGarantieTermin = false;
-
-            AddDict();
+            this.strReason = "";
         }
 
         public Kurse(String strKursNr, String strKursTitel, DateTime dateBeginn, DateTime dateEnde, String strOrt, int iPreis, Boolean boolGarantieTermin)
@@ -38,8 +43,7 @@ namespace CourseChecker.Course
             this.strOrt = strOrt;
             this.iPreis = iPreis;
             this.boolGarantieTermin = boolGarantieTermin;
-
-            AddDict();
+            this.strReason = "";
         }
 
         public String StrOrt => strOrt;
@@ -50,15 +54,6 @@ namespace CourseChecker.Course
         public String StrKursTitel => strKursTitel;
         public String StrKursNr => strKursNr;
         public String StrReason => strReason;
-
-        private void AddDict()
-        {
-            this.dictReason.Add("Preis", "Kurspreis wurde geändert;");
-            this.dictReason.Add("Garantie", "Kurs ist Garantietermin;");
-            this.dictReason.Add("!Garantie", "Kurs ist nicht mehr Garantietermin;");
-            this.dictReason.Add("!Kurs", "Kurs entfernt;");
-            this.dictReason.Add("Kurs", "Kurs hinzugefügt;");
-        }
 
         public Boolean Contains(Kurse kursCheck)
         {
@@ -86,7 +81,7 @@ namespace CourseChecker.Course
                     this.strReason = dictReason["Garantie"];
                 if (!this.boolGarantieTermin.Equals(kursCheck.BoolGarantieTermin) && kursCheck.BoolGarantieTermin)
                     this.strReason = dictReason["!Garantie"];
-            }else if (!retEqual) {
+            }else if (!retEqual && !(this.strReason.Length > 1)) {
                 this.strReason = dictReason["Kurs"];
             }
 
