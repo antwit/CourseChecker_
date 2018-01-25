@@ -9,7 +9,7 @@ namespace CourseChecker.SiteReader
     class ReadWithSeleniumTechDataMainSite
     {
         List<String> listUrl;
-        public ReadWithSeleniumTechDataMainSite(String url)
+        internal ReadWithSeleniumTechDataMainSite(String url)
         {
             listUrl = new List<String>();
             using (IWebDriver driver = new ChromeDriver()) {
@@ -36,6 +36,6 @@ namespace CourseChecker.SiteReader
             }
         }
 
-        public List<String> ListUrl => listUrl;
+        internal List<String> ListUrl => listUrl;
     }
 }
