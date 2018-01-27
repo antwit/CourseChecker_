@@ -15,10 +15,6 @@ namespace CourseChecker.Course
         public Integrata()
         {
             GetCourse = new List<Kurse>();
-            Uri mainSiteToCollectUrls = new Uri("https://www.integrata.de/seminarangebot/ibm-operations/");
-
-            ReadSiteWithSeleniumIntegrata courseUrls = new ReadSiteWithSeleniumIntegrata(mainSiteToCollectUrls);
-            courseUrls.CollectUrls();
 
             ReadSite readSiteOperation = new ReadSite("https://www.integrata.de/seminarangebot/ibm-operations/");
             CollectCourseIntegrata collectIntegrataOperation = new CollectCourseIntegrata(readSiteOperation.GetSite());

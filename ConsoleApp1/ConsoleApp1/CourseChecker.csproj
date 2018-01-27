@@ -87,7 +87,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SiteReader\ReadSite.cs" />
-    <Compile Include="SiteReader\ReadSiteWithSeleniumIntegrata.cs" />
     <Compile Include="SiteReader\ReadWithSeleniumTechDataMainSite.cs" />
     <Compile Include="SiteReader\ReadWithSeleniumTechDataSite.cs" />
   </ItemGroup>
