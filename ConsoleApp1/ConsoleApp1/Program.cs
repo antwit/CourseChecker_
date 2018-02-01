@@ -20,21 +20,21 @@ namespace CourseChecker
                 "AS27G"
             };
 
-            IDS ids = new IDS();
-            List<Kurse> idsAll = ids.GetCourse;
-            List<Kurse> idsIntegrata = ids.GetCourseIntegrata;
-            List<Kurse> idsTechData = ids.GetCourseTechData;
+            //IDS ids = new IDS();
+            //List<Kurse> idsAll = ids.GetCourse;
+            //List<Kurse> idsIntegrata = ids.GetCourseIntegrata;
+            //List<Kurse> idsTechData = ids.GetCourseTechData;
             List<Kurse> integrata = (new Integrata()).GetCourse;
-            List<Kurse> techdata = (new Techdata(listExcludeForTechData)).GetCourse;
+            //List<Kurse> techdata = (new Techdata(listExcludeForTechData)).GetCourse;
             Console.Clear();
 
-            RemoveMatches(integrata, idsIntegrata);
-            RemoveMatches(techdata, idsTechData);
+            //RemoveMatches(integrata, idsIntegrata);
+            //RemoveMatches(techdata, idsTechData);
 
-            PrintResult(integrata, "Integrata", "IDS");
-            PrintResult(idsIntegrata, "IDS", "Integrata");
-            PrintResult(techdata, "TechData", "IDS");
-            PrintResult(idsTechData, "IDS", "TechData");
+            //PrintResult(integrata, "Integrata", "IDS");
+            //PrintResult(idsIntegrata, "IDS", "Integrata");
+            //PrintResult(techdata, "TechData", "IDS");
+            //PrintResult(idsTechData, "IDS", "TechData");
 
             Console.ReadKey();
         }
