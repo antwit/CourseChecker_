@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
 using CourseChecker.Course;
 
 namespace CourseChecker
@@ -9,6 +7,11 @@ namespace CourseChecker
 
     class Program
     {
+        private readonly static List<String> listManualCheck = new List<string> {
+                "TD-TS6S",
+                "KM423G"
+        };
+
         static void Main(string[] args)
         {
             List<String> listExcludeForTechData = new List<string> {
@@ -66,28 +69,39 @@ namespace CourseChecker
 
         private static void PrintResult(List<Kurse> course, String strCourseName, String strTowardsCourseName)
         {
+            List<Kurse> listBuffer = new List<Kurse>();
+
             if (course.Count > 0) {
                 int i = 1;
+                int jBuffer = 1;
                 Console.WriteLine("\nFolgende \"{0}\" Kurse sind nicht in \"{1}\" enthalten: \n", strCourseName, strTowardsCourseName);
+                Console.WriteLine("{6,-3} |{0,-9} | {1,-82} | {2,-10} | {3,-10} | {4,-15} | {5,-9} | {7,-8} | {8}", "Kurs-Nr.", "Kurs Titel", "Beginn", "Ende", "Ort", "Preis", "", "Garantie", "Grund");
+                Console.Write("-----------------------------------------------------------------------------------------------------------");
+                Console.WriteLine("------------------------------------------------------------------------------");
+
                 foreach (Kurse kurs in course) {
-                    Console.WriteLine("{6,-3} |{0,-7} | {1,-82} | {2,-20} | {3,-20} | {4,-15} | {5,-8} | {7}", kurs.StrKursNr, kurs.StrKursTitel, kurs.DateBeginn, kurs.DateEnde, kurs.StrOrt, kurs.IPreis, i, kurs.StrReason);
-                    i++;
+                    if (!listManualCheck.Contains(kurs.StrKursNr)) {
+                        Console.WriteLine("{6,-3} |{0,-9} | {1,-82} | {2,-10} | {3,-10} | {4,-15} | {5,5} EUR | {7,-8} | {8}", kurs.StrKursNr, kurs.StrKursTitel, kurs.DateBeginn.Date.ToString("d"), kurs.DateEnde.Date.ToString("d"), kurs.StrOrt, kurs.IPreis, i, kurs.BoolGarantieTermin, kurs.StrReason);
+                        i++;
+                    } else {
+                        listBuffer.Add(kurs);
+                    }
                 }
+
+                if (listBuffer.Count > 0) {
+                    Console.Write("\n------------------------------------------------------------------------------- manuell Überprüfen -------");
+                    Console.WriteLine("------------------------------------------------------------------------------");
+                    foreach (Kurse kurs in listBuffer) {
+                        Console.WriteLine("{6,-3} |{0,-9} | {1,-82} | {2,-10} | {3,-10} | {4,-15} | {5,5} EUR | {7,-8} | {8}", kurs.StrKursNr, kurs.StrKursTitel, kurs.DateBeginn.Date.ToString("d"), kurs.DateEnde.Date.ToString("d"), kurs.StrOrt, kurs.IPreis, jBuffer, kurs.BoolGarantieTermin, kurs.StrReason);
+                        jBuffer++;
+                    }
+                }
+
             } else {
                 Console.WriteLine("\nFolgende \"{0}\" Kurse sind nicht in \"{1}\" enthalten: \n Keine gefunden!\n", strCourseName, strTowardsCourseName);
             }
+            Console.WriteLine("\n\n");
         }
     }
-
-
-
-    
-    
-
-    
-
-    
-
-   
 }
 
