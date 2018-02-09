@@ -12,16 +12,18 @@ namespace CourseChecker
                 "KM423G"
         };
 
-        static void Main(string[] args)
-        {
-            List<String> listExcludeForTechData = new List<string> {
+        private readonly static List<String> listExcludeForTechData = new List<string> {
                 "OE98G",
                 "OL4AG",
                 "F258G",
                 "F211G",
                 "AS24G",
                 "AS27G"
-            };
+        };
+
+        static void Main(string[] args)
+        {
+            
 
             IDS ids = new IDS();
             List<Kurse> idsAll = ids.GetCourse;
