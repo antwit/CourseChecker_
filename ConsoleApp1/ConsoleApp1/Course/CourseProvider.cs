@@ -16,20 +16,21 @@ namespace CourseChecker.Course
         {
             GetCourse = new List<Kurse>();
             Queue<Uri> queueUrls = new Queue<Uri>();
+            List<String> listIDs = new List<string>() {
+                "db2-luw",
+                "db2-z-os",
+                "db2-z-os"
+            };
+            List<Uri> listURIs = new List<Uri>() {
+                new Uri("https://www.integrata.de/seminarangebot/ibm-operations/"),
+                new Uri("https://www.integrata.de/seminarangebot/ibm-operations/"),
+                new Uri("https://www.integrata.de/seminarangebot/ibm-development/#db2-zos")
+            };
 
-            Uri firstURL = new Uri("https://www.integrata.de/seminarangebot/ibm-operations/");
-            String firstID = "db2-luw";
-            String secondID = "db2-z-os";
-            Uri secondURL = new Uri("https://www.integrata.de/seminarangebot/ibm-development/#db2-zos");
-            String thirdID = secondID;
 
-            ReadWithSeliumIntegrataMainSite urlsPartOne = new ReadWithSeliumIntegrataMainSite(firstURL, firstID);
-            ReadWithSeliumIntegrataMainSite urlsPartTwo = new ReadWithSeliumIntegrataMainSite(firstURL, secondID);
-            ReadWithSeliumIntegrataMainSite urlsPartThree = new ReadWithSeliumIntegrataMainSite(secondURL, secondID);
+            ReadWithSeliumIntegrataMainSite urlsPartOne = new ReadWithSeliumIntegrataMainSite(listURIs, listIDs);
 
             AddRange(queueUrls, urlsPartOne.SetsOfUrls);
-            AddRange(queueUrls, urlsPartTwo.SetsOfUrls);
-            AddRange(queueUrls, urlsPartThree.SetsOfUrls);
 
             ReadWithSeleniumIntegrata getKurse = new ReadWithSeleniumIntegrata(queueUrls);
             GetCourse.AddRange(getKurse.GetListKurse());

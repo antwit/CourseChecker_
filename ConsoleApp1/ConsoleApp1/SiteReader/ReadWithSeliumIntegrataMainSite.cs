@@ -9,14 +9,14 @@ namespace CourseChecker.SiteReader
 
     class ReadWithSeliumIntegrataMainSite
     {
-        private Uri url;
-        private String strID;
+        private List<Uri> listURIs;
+        private List<String> listIDs;
         private Queue<Uri> setsOfUrls;
 
-        internal ReadWithSeliumIntegrataMainSite(Uri url, String strID)
+        internal ReadWithSeliumIntegrataMainSite(List<Uri> listURIs, List<String> listIDs)
         {
-            this.url = url;
-            this.strID = strID;
+            this.listURIs = listURIs;
+            this.listIDs = listIDs;
             this.setsOfUrls = new Queue<Uri>();
 
             CollectUrls();
@@ -25,14 +25,15 @@ namespace CourseChecker.SiteReader
         private void CollectUrls()
         {
             using (IWebDriver driver = new ChromeDriver()) {
-                Console.Clear();
-                driver.Url = this.url.AbsoluteUri;
-                GetSinglesURLs(driver);
-
+                for (int i = 0; i < listURIs.Count; i++) {
+                    Console.Clear();
+                    driver.Url = this.listURIs[i].AbsoluteUri;
+                    GetSinglesURLs(driver, this.listIDs[i]);
+                }
             }
         }
 
-        private void GetSinglesURLs(IWebDriver driver)
+        private void GetSinglesURLs(IWebDriver driver, string strID)
         {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             wait.Until<IWebElement>(d => d.FindElement(By.ClassName("column-group__sub-item-title")));
