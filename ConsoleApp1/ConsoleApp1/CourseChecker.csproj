@@ -80,12 +80,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CollectCourses\CollectCourseIDS.cs" />
-    <Compile Include="CollectCourses\CollectCourseIntegrata.cs" />
     <Compile Include="CollectCourses\CollectCourseTechData.cs" />
     <Compile Include="Course\Course.cs" />
     <Compile Include="Course\CourseProvider.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SiteReader\ReadWithSeleniumIntegrata.cs" />
+    <Compile Include="SiteReader\ReadWithSeliumIntegrataMainSite.cs" />
     <Compile Include="SiteReader\ReadSite.cs" />
     <Compile Include="SiteReader\ReadWithSeleniumTechDataMainSite.cs" />
     <Compile Include="SiteReader\ReadWithSeleniumTechDataSite.cs" />
