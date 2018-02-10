@@ -80,7 +80,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CollectCourses\CollectCourseIDS.cs" />
-    <Compile Include="CollectCourses\CollectCourseIntegrata.cs" />
     <Compile Include="CollectCourses\CollectCourseTechData.cs" />
     <Compile Include="Course\Course.cs" />
     <Compile Include="Course\CourseProvider.cs" />
