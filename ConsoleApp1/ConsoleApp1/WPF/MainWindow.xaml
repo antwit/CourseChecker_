@@ -1,27 +1,119 @@
-﻿<UserControl x:Class="CourseChecker.WPF.MainWindow"
+﻿<Window x:Class="CourseChecker.WPF.MainWindow"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CourseChecker.WPF"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="600">
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" MinHeight="100"/>
+            <RowDefinition Height="Auto" MinHeight="100"/>
+            <RowDefinition Height="Auto" MinHeight="100"/>
+            <RowDefinition Height="Auto" MinHeight="100"/>
+            <RowDefinition Height="200" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
-        <StackPanel>
-            <Label FontWeight="Bold">Test</Label>
-            <ListBox Name="listBoxIntegrata" SelectionMode="Multiple">
-            </ListBox>
-        </StackPanel>
+        <DockPanel>
+            <ToolBar DockPanel.Dock="Top" Name="mnuMenu">
+                <Button Name="btnStart" ButtonBase.Click="BtnStart">Suche starten ...</Button>
+                <Separator/>
+                <Button Name="btnPDF" ButtonBase.Click="BtnPDF">Erstelle PDF</Button>
+            </ToolBar>
+        </DockPanel>
+        <GroupBox Header="Integrat -> IDS" BorderThickness="2" BorderBrush="Black" Grid.Row="1">
+            <ListView Name="lstViewIntegrata" SelectionMode="Multiple">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:Name="FirstCell">
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox IsChecked="{Binding Path=IsSelected, 
+                                RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.View>
+                    <GridView>
+                        <GridView.Columns>
+                            <GridViewColumn CellTemplate="{x:Reference FirstCell}" Width="30"/>
+                            <GridViewColumn Header="Kurs-Nr." DisplayMemberBinding="{Binding StrKursNr}" />
+                            <GridViewColumn Header="Kursname" DisplayMemberBinding="{Binding StrKursTitel}"/>
+                            <GridViewColumn Header="Beginn" DisplayMemberBinding="{Binding DateBeginn}"/>
+                            <GridViewColumn Header="Ende" DisplayMemberBinding="{Binding DateEnde}"/>
+                            <GridViewColumn Header="Ort" DisplayMemberBinding="{Binding StrOrt}"/>
+                            <GridViewColumn Header="Preis" DisplayMemberBinding="{Binding IPreis}"/>
+                            <GridViewColumn Header="Garantie" DisplayMemberBinding="{Binding BoolGarantieTermin}"/>
+                        </GridView.Columns>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </GroupBox>
+        <GroupBox Header="IDS -> Integrat" BorderThickness="2" BorderBrush="Black" Grid.Row="2">
+            <ListView Name="lstViewIDSIntegrata" SelectionMode="Multiple">
+                <ListView.View>
+                    <GridView>
+                        <GridView.Columns>
+                            <GridViewColumn CellTemplate="{x:Reference FirstCell}" Width="30"/>
+                            <GridViewColumn Header="Kurs-Nr." DisplayMemberBinding="{Binding StrKursNr}"/>
+                            <GridViewColumn Header="Kursname" DisplayMemberBinding="{Binding StrKursTitel}"/>
+                            <GridViewColumn Header="Beginn" DisplayMemberBinding="{Binding DateBeginn}"/>
+                            <GridViewColumn Header="Ende" DisplayMemberBinding="{Binding DateEnde}"/>
+                            <GridViewColumn Header="Ort" DisplayMemberBinding="{Binding StrOrt}"/>
+                            <GridViewColumn Header="Preis" DisplayMemberBinding="{Binding IPreis}"/>
+                            <GridViewColumn Header="Garantie" DisplayMemberBinding="{Binding BoolGarantieTermin}"/>
+                        </GridView.Columns>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </GroupBox>
+        <GroupBox Header="TechData -> IDS" BorderThickness="2" BorderBrush="Black" Grid.Row="3">
+            <ListView Name="lstViewTechData" SelectionMode="Multiple">
+                <ListView.View>
+                    <GridView>
+                        <GridView.Columns>
+                            <GridViewColumn CellTemplate="{x:Reference FirstCell}" Width="30"/>
+                            <GridViewColumn Header="Kurs-Nr." DisplayMemberBinding="{Binding StrKursNr}"/>
+                            <GridViewColumn Header="Kursname" DisplayMemberBinding="{Binding StrKursTitel}"/>
+                            <GridViewColumn Header="Beginn" DisplayMemberBinding="{Binding DateBeginn}"/>
+                            <GridViewColumn Header="Ende" DisplayMemberBinding="{Binding DateEnde}"/>
+                            <GridViewColumn Header="Ort" DisplayMemberBinding="{Binding StrOrt}"/>
+                            <GridViewColumn Header="Preis" DisplayMemberBinding="{Binding IPreis}"/>
+                            <GridViewColumn Header="Garantie" DisplayMemberBinding="{Binding BoolGarantieTermin}"/>
+                        </GridView.Columns>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </GroupBox>
+        <GroupBox Header="IDS -> TechData" BorderThickness="2" BorderBrush="Black" Grid.Row="4">
+            <ListView Name="lstViewIDSTechData" SelectionMode="Multiple">
+                <ListView.View>
+                    <GridView>
+                        <GridView.Columns>
+                            <GridViewColumn CellTemplate="{x:Reference FirstCell}" Width="30"/>
+                            <GridViewColumn Header="Kurs-Nr." DisplayMemberBinding="{Binding StrKursNr}"/>
+                            <GridViewColumn Header="Kursname" DisplayMemberBinding="{Binding StrKursTitel}"/>
+                            <GridViewColumn Header="Beginn" DisplayMemberBinding="{Binding DateBeginn}"/>
+                            <GridViewColumn Header="Ende" DisplayMemberBinding="{Binding DateEnde}"/>
+                            <GridViewColumn Header="Ort" DisplayMemberBinding="{Binding StrOrt}"/>
+                            <GridViewColumn Header="Preis" DisplayMemberBinding="{Binding IPreis}"/>
+                            <GridViewColumn Header="Garantie" DisplayMemberBinding="{Binding BoolGarantieTermin}"/>
+                        </GridView.Columns>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </GroupBox>
+        <GroupBox Header="Logs" BorderThickness="2" BorderBrush="Black" Grid.Row="5">
+            <ListView Name="lstViewLogs" SelectionMode="Multiple">
+                <ListView.View>
+                    <GridView>
+                        <GridView.Columns>
+                            <GridViewColumn Header="Zeit" DisplayMemberBinding="{Binding Time}"/>
+                            <GridViewColumn Header="Grund" DisplayMemberBinding="{Binding Reason}"/>
+                        </GridView.Columns>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </GroupBox>
     </Grid>
-</UserControl>
+</Window>

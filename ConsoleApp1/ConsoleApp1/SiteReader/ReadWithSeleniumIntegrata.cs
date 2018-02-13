@@ -5,6 +5,8 @@ using CourseChecker.Course;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.PhantomJS;
+using System.Threading.Tasks;
 
 namespace CourseChecker.SiteReader
 {
@@ -22,11 +24,13 @@ namespace CourseChecker.SiteReader
 
         private void GetKurse(Queue<Uri> queue)
         {
-            using(IWebDriver driver = new ChromeDriver()) {
+            using (IWebDriver driver = new PhantomJSDriver()) {
                 Console.Clear();
                 foreach(Uri url in queue) {
+                //Parallel.ForEach(queue, url => { 
                     driver.Url = url.AbsoluteUri;
                     GetData(driver);
+                //});
                 }
             }
         }

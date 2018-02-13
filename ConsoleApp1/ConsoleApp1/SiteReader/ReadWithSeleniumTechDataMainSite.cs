@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.PhantomJS;
 
 namespace CourseChecker.SiteReader
 {
@@ -12,7 +13,7 @@ namespace CourseChecker.SiteReader
         public ReadWithSeleniumTechDataMainSite(String url)
         {
             listUrl = new List<String>();
-            using (IWebDriver driver = new ChromeDriver()) {
+            using (IWebDriver driver = new PhantomJSDriver()) {
                 Console.Clear();
                 driver.Url = url;
                 System.Threading.Thread.Sleep(2000);
@@ -23,7 +24,6 @@ namespace CourseChecker.SiteReader
                 System.Threading.Thread.Sleep(5000);
                 AddUrl(driver);
             }
-
         }
 
         private void AddUrl(IWebDriver driver)

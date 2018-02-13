@@ -5,6 +5,7 @@ using OpenQA.Selenium.Chrome;
 using CourseChecker.Course;
 using System.Text.RegularExpressions;
 using System.Linq;
+using OpenQA.Selenium.PhantomJS;
 
 namespace CourseChecker.SiteReader
 {
@@ -21,7 +22,7 @@ namespace CourseChecker.SiteReader
             int iPrice = 0;
             String[] kursNr_Title = null;
             
-            using (IWebDriver driver = new ChromeDriver()) {
+            using (IWebDriver driver = new PhantomJSDriver()) {
                 Console.Clear();
                 foreach (String url in ListUrl) {
                     driver.Url = url;
@@ -100,7 +101,6 @@ namespace CourseChecker.SiteReader
                 }
             }
         }
-
         public List<Kurse> ListKurse => listKurse;
 
     }

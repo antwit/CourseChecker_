@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CourseChecker.Course
 {
-    class Kurse
+    public class Kurse
     {
         private String strKursNr;
         private String strKursTitel;

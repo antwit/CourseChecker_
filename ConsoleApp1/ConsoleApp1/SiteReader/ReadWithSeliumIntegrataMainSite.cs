@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.PhantomJS;
 
 namespace CourseChecker.SiteReader
 {
@@ -24,7 +25,7 @@ namespace CourseChecker.SiteReader
 
         private void CollectUrls()
         {
-            using (IWebDriver driver = new ChromeDriver()) {
+            using (IWebDriver driver = new PhantomJSDriver()) {
                 for (int i = 0; i < listURIs.Count; i++) {
                     Console.Clear();
                     driver.Url = this.listURIs[i].AbsoluteUri;
