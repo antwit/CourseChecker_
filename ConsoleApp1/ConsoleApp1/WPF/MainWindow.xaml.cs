@@ -52,13 +52,16 @@ namespace CourseChecker.WPF
 
         private void BtnStart(object sender, RoutedEventArgs e)
         {
-            IDS ids = new IDS();
-            List<Kurse> idsAll = ids.GetCourse;
-            List<Kurse> idsIntegrata = ids.GetCourseIntegrata;
-            List<Kurse> idsTechData = ids.GetCourseTechData;
+            Task<IDS> taskIDS = Task<IDS>.Factory.StartNew(() => new IDS());
+            Task<Integrata> taskIntegrata = Task<Integrata>.Factory.StartNew(() => new Integrata());
+            Task<Techdata> taskTechData = Task<Techdata>.Factory.StartNew(d =>  new Techdata((List<string>) d) , Program.listExcludeForTechData);
+
+            List<Kurse> idsAll = taskIDS.Result.GetCourse;
+            List<Kurse> idsIntegrata = taskIDS.Result.GetCourseIntegrata;
+            List<Kurse> idsTechData = taskIDS.Result.GetCourseTechData;
+            List<Kurse> techdata = taskTechData.Result.GetCourse;
+            List<Kurse> integrata = taskIntegrata.Result.GetCourse;
             
-            List<Kurse> integrata = (new Integrata()).GetCourse;
-            List<Kurse> techdata = (new Techdata(Program.listExcludeForTechData)).GetCourse;
 
             RemoveMatches(integrata, idsIntegrata);
             RemoveMatches(techdata, idsTechData);

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using CourseChecker.Course;
 using System.Text.RegularExpressions;
 using System.Linq;
 using OpenQA.Selenium.PhantomJS;
+using System.Threading.Tasks;
 
 namespace CourseChecker.SiteReader
 {
@@ -18,13 +18,14 @@ namespace CourseChecker.SiteReader
             String pattern = ".*?(\\d+\\.?\\d+)";
             Regex r = new Regex(pattern, RegexOptions.IgnoreCase);
             listKurse = new List<Kurse>();
-            List<String>[] arrLocDate = null;
-            int iPrice = 0;
-            String[] kursNr_Title = null;
-            
-            using (IWebDriver driver = new PhantomJSDriver()) {
-                Console.Clear();
-                foreach (String url in ListUrl) {
+
+            Parallel.ForEach(ListUrl, url => {
+                List<String>[] arrLocDate = null;
+                int iPrice = 0;
+                String[] kursNr_Title = null;
+
+                using (IWebDriver driver = new PhantomJSDriver()) {
+                    Console.Clear();
                     driver.Url = url;
                     IWebElement keywords = driver.FindElement(By.Name("keywords"));
                     IList<IWebElement> location = driver.FindElements(By.ClassName("location"));
@@ -36,18 +37,14 @@ namespace CourseChecker.SiteReader
                         IList<IWebElement> list = driver.FindElements(By.XPath("/html/body/div[4]/div/div/div/div[3]/div[2]/div/div/div[2]/ul/li[" + i + "]"));
 
                         IList<IWebElement> garantie = list.ElementAt(0).FindElements(By.ClassName("date"));
-                        foreach (IWebElement gar in garantie)
-                        {
-                            try
-                            {
+                        foreach (IWebElement gar in garantie) {
+                            try {
                                 IWebElement garTMP = gar.FindElement(By.ClassName("sprite-promo-icons-guaranteed-course"));
-                                if (garTMP.GetAttribute("title").Equals("Guaranteed course")) { 
+                                if (garTMP.GetAttribute("title").Equals("Guaranteed course")) {
                                     boolGarantie = true;
                                     strSearchForDate = gar.Text;
                                 }
-                            }
-                            catch (NoSuchElementException)
-                            {
+                            } catch (NoSuchElementException) {
 
                             }
                         }
@@ -76,10 +73,10 @@ namespace CourseChecker.SiteReader
 
                     try {
                         if (listExclude.Contains(kursNr_Title[0].Trim()))
-                            throw new NoSuchElementException();                        
+                            throw new NoSuchElementException();
 
                         for (int i = 0; i < arrLocDate.Length; i++) {
-                            for (int j = 1; j < arrLocDate[i].Count; j+=3) {
+                            for (int j = 1; j < arrLocDate[i].Count; j += 3) {
                                 String[] splitDate = arrLocDate[i].ElementAt(j).Split('-');
                                 DateTime dateBegin = DateTime.Parse(splitDate[0].Trim());
                                 DateTime dateEnd = DateTime.Parse(splitDate[1].Trim());
@@ -98,8 +95,9 @@ namespace CourseChecker.SiteReader
                     } catch (NoSuchElementException) {
                         Console.Out.WriteLine("Keine Termine für: {0}  {1}", kursNr_Title[0], kursNr_Title[1]);
                     }
+                    driver.Quit();
                 }
-            }
+            });
         }
         public List<Kurse> ListKurse => listKurse;
 

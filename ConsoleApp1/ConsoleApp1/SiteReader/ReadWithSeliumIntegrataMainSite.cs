@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.PhantomJS;
+using System.Threading.Tasks;
 
 namespace CourseChecker.SiteReader
 {
@@ -25,13 +25,14 @@ namespace CourseChecker.SiteReader
 
         private void CollectUrls()
         {
-            using (IWebDriver driver = new PhantomJSDriver()) {
-                for (int i = 0; i < listURIs.Count; i++) {
+            Parallel.For(0, listURIs.Count, i => {
+                using (IWebDriver driver = new PhantomJSDriver()) {
                     Console.Clear();
                     driver.Url = this.listURIs[i].AbsoluteUri;
                     GetSinglesURLs(driver, this.listIDs[i]);
+                    driver.Quit();
                 }
-            }
+            });
         }
 
         private void GetSinglesURLs(IWebDriver driver, string strID)
@@ -40,7 +41,7 @@ namespace CourseChecker.SiteReader
             wait.Until<IWebElement>(d => d.FindElement(By.ClassName("column-group__sub-item-title")));
             IWebElement iWebElementDB2_LUW = driver.FindElement(By.Id(strID));
             IList<IWebElement> iListDB2_LUW = iWebElementDB2_LUW.FindElements(By.ClassName("column-group__sub-item-link"));
-            foreach(IWebElement tmp in iListDB2_LUW) {
+            foreach (IWebElement tmp in iListDB2_LUW) {
                 Uri tmpo = new Uri(tmp.GetAttribute("href"));
                 this.setsOfUrls.Enqueue(tmpo);
             }

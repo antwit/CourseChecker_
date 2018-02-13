@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using CourseChecker.Course;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.PhantomJS;
 using System.Threading.Tasks;
@@ -24,15 +23,13 @@ namespace CourseChecker.SiteReader
 
         private void GetKurse(Queue<Uri> queue)
         {
-            using (IWebDriver driver = new PhantomJSDriver()) {
-                Console.Clear();
-                foreach(Uri url in queue) {
-                //Parallel.ForEach(queue, url => { 
+            Parallel.ForEach(queue, url => {
+                using (IWebDriver driver = new PhantomJSDriver()) {
                     driver.Url = url.AbsoluteUri;
                     GetData(driver);
-                //});
+                    driver.Quit();
                 }
-            }
+            });
         }
 
         private void GetData(IWebDriver driver)
@@ -48,10 +45,10 @@ namespace CourseChecker.SiteReader
                 IWebElement price = wait.Until<IWebElement>(d => d.FindElement(By.ClassName("side-tabs__info")));
                 iPrice = GetPrice(price.Text);
                 IList<IWebElement> placeDate = driver.FindElements(By.ClassName("city-item"));
-                foreach(IWebElement ele in placeDate) {
+                foreach (IWebElement ele in placeDate) {
                     String[] strArrgetDatePlace = new String[4];
                     IList<IWebElement> singleDate = ele.FindElements(By.ClassName("row"));
-                    foreach(IWebElement eleDate in singleDate) {
+                    foreach (IWebElement eleDate in singleDate) {
                         //Kursbezeichnung
                         strTitle = eleDate.FindElement(By.XPath("meta[1]")).GetAttribute("content");
                         Match match = Regex.Match(strTitle, patternKursNummer);
