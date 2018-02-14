@@ -3,26 +3,38 @@ using System.Collections.Generic;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.PhantomJS;
+using System.Threading.Tasks;
 
 namespace CourseChecker.SiteReader
 {
     class ReadWithSeleniumTechDataMainSite
     {
         List<String> listUrl;
-        public ReadWithSeleniumTechDataMainSite(String url)
+        public ReadWithSeleniumTechDataMainSite(Uri url, List<String> listManuelCheck, Uri uriSearch)
         {
             listUrl = new List<String>();
             using (IWebDriver driver = new PhantomJSDriver()) {
-                Console.Clear();
-                driver.Url = url;
-                System.Threading.Thread.Sleep(2000);
+                driver.Url = url.AbsoluteUri;
+                System.Threading.Thread.Sleep(3000);
                 AddUrl(driver);
 
                 IWebElement getButtom = driver.FindElement(By.LinkText("»"));
                 getButtom.Click();
-                System.Threading.Thread.Sleep(5000);
+                System.Threading.Thread.Sleep(3000);
                 AddUrl(driver);
+                driver.Quit();
             }
+
+            Parallel.ForEach(listManuelCheck, list => {
+                using (IWebDriver driver = new PhantomJSDriver())
+                {
+                    driver.Url = uriSearch.AbsoluteUri + list;
+                    System.Threading.Thread.Sleep(2000);
+                    AddUrl(driver);
+
+                    driver.Quit();
+                }
+            });
         }
 
         private void AddUrl(IWebDriver driver)

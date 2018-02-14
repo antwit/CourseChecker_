@@ -8,6 +8,38 @@ namespace CourseChecker.Course
     abstract class CourseProvider
     {
         public List<Kurse> GetCourse { get; set; }
+
+        internal static void RemoveMatches(List<Kurse> course, List<Kurse> idsCourse)
+        {
+            List<Kurse> deleteCourse = new List<Kurse>();
+            List<Kurse> deleteIDSCourse = new List<Kurse>();
+
+            foreach (Kurse kurs in course)
+            {
+                foreach (Kurse kursIDS in idsCourse)
+                {
+                    if (kurs.Contains(kursIDS))
+                    {
+                        deleteCourse.Add(kurs);
+                        deleteIDSCourse.Add(kursIDS);
+                    }
+                    else if (kurs.ContainsForIDS(kursIDS))
+                    {
+                        deleteIDSCourse.Add(kursIDS);
+                    }
+                }
+            }
+
+            foreach (Kurse m in deleteCourse)
+            {
+                course.Remove(m);
+            }
+
+            foreach (Kurse m in deleteIDSCourse)
+            {
+                idsCourse.Remove(m);
+            }
+        }
     }
 
     class Integrata:CourseProvider
@@ -49,8 +81,10 @@ namespace CourseChecker.Course
     {
         public Techdata(List<String> listExclude)
         {
+            Uri uriSearch = new Uri("https://academy.techdata.com/de/search/index/#?country=DE&selectedVendor=&searchTerm=");
+            Uri uriSearchDb2 = new Uri("https://academy.techdata.com/de/search/index/#?country=DE&selectedVendor=5&searchTerm=db2&modality=classroom"); 
             GetCourse = new List<Kurse>();
-            ReadWithSeleniumTechDataMainSite collectUrl = new ReadWithSeleniumTechDataMainSite("https://academy.techdata.com/de/search/index/#?country=DE&selectedVendor=5&searchTerm=db2&modality=classroom");
+            ReadWithSeleniumTechDataMainSite collectUrl = new ReadWithSeleniumTechDataMainSite(uriSearchDb2, Program.listManualCheck, uriSearch);
             CollectCourseTechData collectCourseTechData = new CollectCourseTechData(collectUrl.ListUrl, listExclude);
             GetCourse = collectCourseTechData.Kurse;
         }

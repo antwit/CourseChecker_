@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using CourseChecker.Course;
 using CourseChecker.WPF;
-using System.Threading;
 using System.Windows;
-using System.Windows.Threading;
 
 namespace CourseChecker
 {
 
     class Program
     {
-        private readonly static List<String> listManualCheck = new List<string> {
+        internal readonly static List<String> listManualCheck = new List<string> {
                 "TD-TS6S",
                 "KM423G"
         };

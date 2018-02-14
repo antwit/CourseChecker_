@@ -14,7 +14,6 @@ namespace CourseChecker.CollectCourses
             Kurse = new List<Kurse>();
             ReadWithSeleniumTechDataSite getCours = new ReadWithSeleniumTechDataSite(strSite, listExclude);
             Kurse.AddRange(getCours.ListKurse);
-
         }
     }
 }

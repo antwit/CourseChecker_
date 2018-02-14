@@ -3,17 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        
              xmlns:local="clr-namespace:CourseChecker.WPF"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="600">
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" MinHeight="100"/>
-            <RowDefinition Height="Auto" MinHeight="100"/>
-            <RowDefinition Height="Auto" MinHeight="100"/>
-            <RowDefinition Height="Auto" MinHeight="100"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="200" />
         </Grid.RowDefinitions>
         <DockPanel>
@@ -23,14 +24,14 @@
                 <Button Name="btnPDF" ButtonBase.Click="BtnPDF">Erstelle PDF</Button>
             </ToolBar>
         </DockPanel>
-        <GroupBox Header="Integrat -> IDS" BorderThickness="2" BorderBrush="Black" Grid.Row="1">
-            <ListView Name="lstViewIntegrata" SelectionMode="Multiple">
+        <GroupBox Header="Integrat -> IDS" BorderThickness="2" BorderBrush="Black" Grid.Row="1" >
+            <ListView Name="lstViewIntegrata" SelectionMode="Multiple" Margin="1">
                 <ListView.ItemTemplate>
                     <DataTemplate x:Name="FirstCell">
-                        <StackPanel Orientation="Horizontal">
+                        <Grid>
                             <CheckBox IsChecked="{Binding Path=IsSelected, 
                                 RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}}"/>
-                        </StackPanel>
+                        </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
                 <ListView.View>
@@ -39,8 +40,8 @@
                             <GridViewColumn CellTemplate="{x:Reference FirstCell}" Width="30"/>
                             <GridViewColumn Header="Kurs-Nr." DisplayMemberBinding="{Binding StrKursNr}" />
                             <GridViewColumn Header="Kursname" DisplayMemberBinding="{Binding StrKursTitel}"/>
-                            <GridViewColumn Header="Beginn" DisplayMemberBinding="{Binding DateBeginn}"/>
-                            <GridViewColumn Header="Ende" DisplayMemberBinding="{Binding DateEnde}"/>
+                            <GridViewColumn Header="Beginn" DisplayMemberBinding="{Binding DateBeginn, StringFormat=d, ConverterCulture='de-DE'}"/>
+                            <GridViewColumn Header="Ende" DisplayMemberBinding="{Binding DateEnde, StringFormat=d, ConverterCulture='de-DE'}"/>
                             <GridViewColumn Header="Ort" DisplayMemberBinding="{Binding StrOrt}"/>
                             <GridViewColumn Header="Preis" DisplayMemberBinding="{Binding IPreis}"/>
                             <GridViewColumn Header="Garantie" DisplayMemberBinding="{Binding BoolGarantieTermin}"/>
@@ -50,15 +51,15 @@
             </ListView>
         </GroupBox>
         <GroupBox Header="IDS -> Integrat" BorderThickness="2" BorderBrush="Black" Grid.Row="2">
-            <ListView Name="lstViewIDSIntegrata" SelectionMode="Multiple">
+            <ListView Name="lstViewIDSIntegrata" SelectionMode="Multiple" Margin="1">
                 <ListView.View>
                     <GridView>
                         <GridView.Columns>
                             <GridViewColumn CellTemplate="{x:Reference FirstCell}" Width="30"/>
                             <GridViewColumn Header="Kurs-Nr." DisplayMemberBinding="{Binding StrKursNr}"/>
                             <GridViewColumn Header="Kursname" DisplayMemberBinding="{Binding StrKursTitel}"/>
-                            <GridViewColumn Header="Beginn" DisplayMemberBinding="{Binding DateBeginn}"/>
-                            <GridViewColumn Header="Ende" DisplayMemberBinding="{Binding DateEnde}"/>
+                            <GridViewColumn Header="Beginn" DisplayMemberBinding="{Binding DateBeginn, StringFormat=d, ConverterCulture='de-DE'}"/>
+                            <GridViewColumn Header="Ende" DisplayMemberBinding="{Binding DateEnde, StringFormat=d, ConverterCulture='de-DE'}"/>
                             <GridViewColumn Header="Ort" DisplayMemberBinding="{Binding StrOrt}"/>
                             <GridViewColumn Header="Preis" DisplayMemberBinding="{Binding IPreis}"/>
                             <GridViewColumn Header="Garantie" DisplayMemberBinding="{Binding BoolGarantieTermin}"/>
@@ -68,15 +69,15 @@
             </ListView>
         </GroupBox>
         <GroupBox Header="TechData -> IDS" BorderThickness="2" BorderBrush="Black" Grid.Row="3">
-            <ListView Name="lstViewTechData" SelectionMode="Multiple">
+            <ListView Name="lstViewTechData" SelectionMode="Multiple" Margin="1">
                 <ListView.View>
                     <GridView>
                         <GridView.Columns>
                             <GridViewColumn CellTemplate="{x:Reference FirstCell}" Width="30"/>
                             <GridViewColumn Header="Kurs-Nr." DisplayMemberBinding="{Binding StrKursNr}"/>
                             <GridViewColumn Header="Kursname" DisplayMemberBinding="{Binding StrKursTitel}"/>
-                            <GridViewColumn Header="Beginn" DisplayMemberBinding="{Binding DateBeginn}"/>
-                            <GridViewColumn Header="Ende" DisplayMemberBinding="{Binding DateEnde}"/>
+                            <GridViewColumn Header="Beginn" DisplayMemberBinding="{Binding DateBeginn, StringFormat=d, ConverterCulture='de-DE'}"/>
+                            <GridViewColumn Header="Ende" DisplayMemberBinding="{Binding DateEnde, StringFormat=d, ConverterCulture='de-DE'}"/>
                             <GridViewColumn Header="Ort" DisplayMemberBinding="{Binding StrOrt}"/>
                             <GridViewColumn Header="Preis" DisplayMemberBinding="{Binding IPreis}"/>
                             <GridViewColumn Header="Garantie" DisplayMemberBinding="{Binding BoolGarantieTermin}"/>
@@ -86,15 +87,15 @@
             </ListView>
         </GroupBox>
         <GroupBox Header="IDS -> TechData" BorderThickness="2" BorderBrush="Black" Grid.Row="4">
-            <ListView Name="lstViewIDSTechData" SelectionMode="Multiple">
+            <ListView Name="lstViewIDSTechData" SelectionMode="Multiple" Margin="1">
                 <ListView.View>
                     <GridView>
                         <GridView.Columns>
                             <GridViewColumn CellTemplate="{x:Reference FirstCell}" Width="30"/>
                             <GridViewColumn Header="Kurs-Nr." DisplayMemberBinding="{Binding StrKursNr}"/>
                             <GridViewColumn Header="Kursname" DisplayMemberBinding="{Binding StrKursTitel}"/>
-                            <GridViewColumn Header="Beginn" DisplayMemberBinding="{Binding DateBeginn}"/>
-                            <GridViewColumn Header="Ende" DisplayMemberBinding="{Binding DateEnde}"/>
+                            <GridViewColumn Header="Beginn" DisplayMemberBinding="{Binding DateBeginn, StringFormat=d, ConverterCulture='de-DE'}"/>
+                            <GridViewColumn Header="Ende" DisplayMemberBinding="{Binding DateEnde, StringFormat=d, ConverterCulture='de-DE'}"/>
                             <GridViewColumn Header="Ort" DisplayMemberBinding="{Binding StrOrt}"/>
                             <GridViewColumn Header="Preis" DisplayMemberBinding="{Binding IPreis}"/>
                             <GridViewColumn Header="Garantie" DisplayMemberBinding="{Binding BoolGarantieTermin}"/>
@@ -103,8 +104,8 @@
                 </ListView.View>
             </ListView>
         </GroupBox>
-        <GroupBox Header="Logs" BorderThickness="2" BorderBrush="Black" Grid.Row="5">
-            <ListView Name="lstViewLogs" SelectionMode="Multiple">
+        <GroupBox Header="Logs" BorderThickness="2" BorderBrush="Black" Grid.Row="6">
+            <ListView Name="lstViewLogs" SelectionMode="Multiple" Margin="1">
                 <ListView.View>
                     <GridView>
                         <GridView.Columns>

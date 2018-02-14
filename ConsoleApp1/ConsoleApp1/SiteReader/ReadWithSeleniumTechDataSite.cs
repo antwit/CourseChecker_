@@ -16,6 +16,7 @@ namespace CourseChecker.SiteReader
         public ReadWithSeleniumTechDataSite(List<String> ListUrl, List<String> listExclude)
         {
             String pattern = ".*?(\\d+\\.?\\d+)";
+            String patternName = "([\\w-\\d]+)\\s-\\s(.*)";
             Regex r = new Regex(pattern, RegexOptions.IgnoreCase);
             listKurse = new List<Kurse>();
 
@@ -65,12 +66,19 @@ namespace CourseChecker.SiteReader
                         }
                     }
 
-                    kursNr_Title = keywords.GetAttribute("content").Split('-');
-                    if (kursNr_Title.Length > 2) {
-                        for (int i = 2; i < kursNr_Title.Length; i++)
-                            kursNr_Title[1] = kursNr_Title[1].Trim() + " - " + kursNr_Title[i].Trim();
+                    kursNr_Title = new string[2] {"",""};
+                    foreach (Match matchName in Regex.Matches(keywords.GetAttribute("content"), patternName))
+                    {
+                        if (matchName.Groups.Count == 3)
+                        {
+                            kursNr_Title[0] = matchName.Groups[1].Value;
+                            kursNr_Title[1] = matchName.Groups[2].Value;
+                        }else if(matchName.Groups.Count < 3)
+                        {
+                            kursNr_Title[1] = matchName.Groups[0].Value;
+                        }
                     }
-
+                    
                     try {
                         if (listExclude.Contains(kursNr_Title[0].Trim()))
                             throw new NoSuchElementException();
@@ -99,7 +107,7 @@ namespace CourseChecker.SiteReader
                 }
             });
         }
-        public List<Kurse> ListKurse => listKurse;
 
+        public List<Kurse> ListKurse => listKurse;
     }
 }

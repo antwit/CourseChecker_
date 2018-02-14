@@ -8,6 +8,7 @@ namespace CourseChecker.Course
         private String strKursNr;
         private String strKursTitel;
         private DateTime dateBeginn;
+
         private DateTime dateEnde;
         private String strOrt;
         private int iPreis;

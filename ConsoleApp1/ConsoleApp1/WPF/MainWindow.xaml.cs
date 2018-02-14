@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Threading.Tasks;
-using System.Windows.Controls;
-using CourseChecker;
+using CourseChecker.PDF;
 
 namespace CourseChecker.WPF
 {
@@ -11,66 +10,54 @@ namespace CourseChecker.WPF
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow:Window
+    public partial class MainWindow : Window
     {
+        private List<Kurse> idsIntegrata;
+        private List<Kurse> idsTechData;
+        private List<Kurse> techdata;
+        private List<Kurse> integrata;
+        private List<Kurse> idsAll;
+
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void RemoveMatches(List<Kurse> course, List<Kurse> idsCourse)
+        private async void BtnStart(object sender, RoutedEventArgs e)
         {
-            List<Kurse> deleteCourse = new List<Kurse>();
-            List<Kurse> deleteIDSCourse = new List<Kurse>();
+            await GetItemsAsync();
 
-            foreach (Kurse kurs in course) {
-                foreach (Kurse kursIDS in idsCourse) {
-                    if (kurs.Contains(kursIDS)) {
-                        deleteCourse.Add(kurs);
-                        deleteIDSCourse.Add(kursIDS);
-                    } else if (kurs.ContainsForIDS(kursIDS)) {
-                        deleteIDSCourse.Add(kursIDS);
-                    }
-                }
-            }
-
-            foreach (Kurse m in deleteCourse) {
-                course.Remove(m);
-            }
-
-            foreach (Kurse m in deleteIDSCourse) {
-                idsCourse.Remove(m);
-            }
-        }
-
-        private void BtnStart(object sender, RoutedEventArgs e)
-        {
-            //Task.Factory.StartNew(() => {
-                Task<IDS> taskIDS = Task<IDS>.Factory.StartNew(() => new IDS());
-                Task<Integrata> taskIntegrata = Task<Integrata>.Factory.StartNew(() => new Integrata());
-                Task<Techdata> taskTechData = Task<Techdata>.Factory.StartNew(d => new Techdata((List<string>) d), Program.listExcludeForTechData);
-                Task.WaitAll(new Task[] { taskIDS, taskIntegrata, taskTechData });
-
-                List<Kurse> idsAll = taskIDS.Result.GetCourse;
-                List<Kurse> idsIntegrata = taskIDS.Result.GetCourseIntegrata;
-                List<Kurse> idsTechData = taskIDS.Result.GetCourseTechData;
-                List<Kurse> techdata = taskTechData.Result.GetCourse;
-                List<Kurse> integrata = taskIntegrata.Result.GetCourse;
-
-
-                RemoveMatches(integrata, idsIntegrata);
-                RemoveMatches(techdata, idsTechData);
-
-                lstViewIntegrata.ItemsSource = integrata;
-                lstViewIDSIntegrata.ItemsSource = idsIntegrata;
-                lstViewTechData.ItemsSource = techdata;
-                lstViewIDSTechData.ItemsSource = idsTechData;
-            //});
+            lstViewIntegrata.ItemsSource = integrata;
+            lstViewIDSIntegrata.ItemsSource = idsIntegrata;
+            lstViewTechData.ItemsSource = techdata;
+            lstViewIDSTechData.ItemsSource = idsTechData;
         }
 
         private void BtnPDF(object sender, RoutedEventArgs e)
         {
+            new CreatePDF();
+        }
 
+        private Task GetItemsAsync()
+        {
+            Task task = Task.Run(() =>
+            {
+                Task<IDS> taskIDS = Task<IDS>.Factory.StartNew(() => new IDS());
+                //Task<Integrata> taskIntegrata = Task<Integrata>.Factory.StartNew(() => new Integrata());
+                //Task<Techdata> taskTechData = Task<Techdata>.Factory.StartNew(d => new Techdata((List<string>)d), Program.listExcludeForTechData);
+                //Task.WaitAll(new Task[] { taskIDS, taskIntegrata, taskTechData });
+                
+                idsAll = taskIDS.Result.GetCourse;
+                idsIntegrata = taskIDS.Result.GetCourseIntegrata;
+                idsTechData = taskIDS.Result.GetCourseTechData;
+                //techdata = taskTechData.Result.GetCourse;
+                //integrata = taskIntegrata.Result.GetCourse;
+
+                //CourseProvider.RemoveMatches(integrata, idsIntegrata);
+                //CourseProvider.RemoveMatches(techdata, idsTechData);
+
+            });
+            return task;
         }
     }
 }
