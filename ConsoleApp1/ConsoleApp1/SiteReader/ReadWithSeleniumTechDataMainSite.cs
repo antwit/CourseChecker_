@@ -10,6 +10,8 @@ namespace CourseChecker.SiteReader
     class ReadWithSeleniumTechDataMainSite
     {
         List<String> listUrl;
+        public List<String> ListUrl => listUrl;
+
         public ReadWithSeleniumTechDataMainSite(Uri url, List<String> listManuelCheck, Uri uriSearch)
         {
             listUrl = new List<String>();
@@ -29,7 +31,7 @@ namespace CourseChecker.SiteReader
                 using (IWebDriver driver = new PhantomJSDriver())
                 {
                     driver.Url = uriSearch.AbsoluteUri + list;
-                    System.Threading.Thread.Sleep(2000);
+                    System.Threading.Thread.Sleep(3000);
                     AddUrl(driver);
 
                     driver.Quit();
@@ -46,7 +48,5 @@ namespace CourseChecker.SiteReader
                 this.listUrl.Add(b.GetAttribute("href"));
             }
         }
-
-        public List<String> ListUrl => listUrl;
     }
 }

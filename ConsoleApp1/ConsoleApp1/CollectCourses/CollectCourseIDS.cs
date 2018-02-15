@@ -10,7 +10,7 @@ namespace CourseChecker.CollectCourses
     {
         private List<Kurse> kurseIDS;
 
-        public CollectCourseIDS(String strSite)
+        public CollectCourseIDS(String strSite, String strAnbieter)
         {
             List<String> listSection = SectionTableEntry(strSite);
             kurseIDS = new List<Kurse>();
@@ -18,7 +18,7 @@ namespace CourseChecker.CollectCourses
             foreach (String strElement in listSection) {
                 List<String> listTmp = SplitSection(strElement);
                 kurseIDS.Add(new Kurse(listTmp.ElementAt(0), listTmp.ElementAt(1), DateTime.Parse(listTmp.ElementAt(2)),
-                                DateTime.Parse(listTmp.ElementAt(3)), listTmp.ElementAt(4), Convert.ToInt32(listTmp.ElementAt(5))));
+                                DateTime.Parse(listTmp.ElementAt(3)), listTmp.ElementAt(4), Convert.ToInt32(listTmp.ElementAt(5)), strAnbieter));
             }
 
         }

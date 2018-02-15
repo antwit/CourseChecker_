@@ -44,6 +44,7 @@
                             <GridViewColumn Header="Ende" DisplayMemberBinding="{Binding DateEnde, StringFormat=d, ConverterCulture='de-DE'}"/>
                             <GridViewColumn Header="Ort" DisplayMemberBinding="{Binding StrOrt}"/>
                             <GridViewColumn Header="Preis" DisplayMemberBinding="{Binding IPreis}"/>
+                            <GridViewColumn Header="Anbieter" DisplayMemberBinding="{Binding StrAnbieter}"/>
                             <GridViewColumn Header="Garantie" DisplayMemberBinding="{Binding BoolGarantieTermin}"/>
                         </GridView.Columns>
                     </GridView>
@@ -62,6 +63,7 @@
                             <GridViewColumn Header="Ende" DisplayMemberBinding="{Binding DateEnde, StringFormat=d, ConverterCulture='de-DE'}"/>
                             <GridViewColumn Header="Ort" DisplayMemberBinding="{Binding StrOrt}"/>
                             <GridViewColumn Header="Preis" DisplayMemberBinding="{Binding IPreis}"/>
+                            <GridViewColumn Header="Anbieter" DisplayMemberBinding="{Binding StrAnbieter}"/>
                             <GridViewColumn Header="Garantie" DisplayMemberBinding="{Binding BoolGarantieTermin}"/>
                         </GridView.Columns>
                     </GridView>
@@ -80,6 +82,7 @@
                             <GridViewColumn Header="Ende" DisplayMemberBinding="{Binding DateEnde, StringFormat=d, ConverterCulture='de-DE'}"/>
                             <GridViewColumn Header="Ort" DisplayMemberBinding="{Binding StrOrt}"/>
                             <GridViewColumn Header="Preis" DisplayMemberBinding="{Binding IPreis}"/>
+                            <GridViewColumn Header="Anbieter" DisplayMemberBinding="{Binding StrAnbieter}"/>
                             <GridViewColumn Header="Garantie" DisplayMemberBinding="{Binding BoolGarantieTermin}"/>
                         </GridView.Columns>
                     </GridView>
@@ -98,6 +101,7 @@
                             <GridViewColumn Header="Ende" DisplayMemberBinding="{Binding DateEnde, StringFormat=d, ConverterCulture='de-DE'}"/>
                             <GridViewColumn Header="Ort" DisplayMemberBinding="{Binding StrOrt}"/>
                             <GridViewColumn Header="Preis" DisplayMemberBinding="{Binding IPreis}"/>
+                            <GridViewColumn Header="Anbieter" DisplayMemberBinding="{Binding StrAnbieter}"/>
                             <GridViewColumn Header="Garantie" DisplayMemberBinding="{Binding BoolGarantieTermin}"/>
                         </GridView.Columns>
                     </GridView>

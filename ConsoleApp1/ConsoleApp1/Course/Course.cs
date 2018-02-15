@@ -23,7 +23,7 @@ namespace CourseChecker.Course
         };
 
         
-        public Kurse(String strKursNr, String strKursTitel, DateTime dateBeginn, DateTime dateEnde, String strOrt, int iPreis)
+        public Kurse(String strKursNr, String strKursTitel, DateTime dateBeginn, DateTime dateEnde, String strOrt, int iPreis, String strAnbieter)
         {
             this.strKursNr = strKursNr;
             this.strKursTitel = strKursTitel;
@@ -33,9 +33,10 @@ namespace CourseChecker.Course
             this.iPreis = iPreis;
             this.boolGarantieTermin = false;
             this.strReason = "";
+            this.StrAnbieter = strAnbieter;
         }
 
-        public Kurse(String strKursNr, String strKursTitel, DateTime dateBeginn, DateTime dateEnde, String strOrt, int iPreis, Boolean boolGarantieTermin)
+        public Kurse(String strKursNr, String strKursTitel, DateTime dateBeginn, DateTime dateEnde, String strOrt, int iPreis, Boolean boolGarantieTermin, String strAnbieter)
         {
             this.strKursNr = strKursNr;
             this.strKursTitel = strKursTitel;
@@ -45,6 +46,7 @@ namespace CourseChecker.Course
             this.iPreis = iPreis;
             this.boolGarantieTermin = boolGarantieTermin;
             this.strReason = "";
+            this.StrAnbieter = strAnbieter;
         }
 
         public String StrOrt => strOrt;
@@ -55,6 +57,7 @@ namespace CourseChecker.Course
         public String StrKursTitel => strKursTitel;
         public String StrKursNr => strKursNr;
         public String StrReason => strReason;
+        public String StrAnbieter { get; set; }
 
         public Boolean Contains(Kurse kursCheck)
         {

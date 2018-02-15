@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Threading.Tasks;
 using CourseChecker.PDF;
+using System;
+using System.Collections;
+using Microsoft.Win32;
 
 namespace CourseChecker.WPF
 {
@@ -17,6 +20,7 @@ namespace CourseChecker.WPF
         private List<Kurse> techdata;
         private List<Kurse> integrata;
         private List<Kurse> idsAll;
+        private List<Kurse> listSelected;
 
         public MainWindow()
         {
@@ -35,7 +39,33 @@ namespace CourseChecker.WPF
 
         private void BtnPDF(object sender, RoutedEventArgs e)
         {
-            new CreatePDF();
+            IList tmp = lstViewIDSIntegrata.SelectedItems;
+            IList tmp2 = lstViewIntegrata.SelectedItems;
+            IList tmp3 = lstViewIDSTechData.SelectedItems;
+            IList tmp4 = lstViewTechData.SelectedItems;
+
+            listSelected = new List<Kurse>();
+            //Scheiß C#
+            AddListSelected(tmp);
+            AddListSelected(tmp2);
+            AddListSelected(tmp3);
+            AddListSelected(tmp4);
+
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            dlg.DefaultExt = ".pdf";
+            if(dlg.ShowDialog() == true)
+            {
+                new CreatePDF(listSelected, dlg.FileName);
+            }
+        }
+
+        private void AddListSelected(IList tmp)
+        {
+            foreach (object tmpo in tmp)
+            {
+                this.listSelected.Add((Kurse)tmpo);
+            }
         }
 
         private Task GetItemsAsync()
@@ -43,19 +73,18 @@ namespace CourseChecker.WPF
             Task task = Task.Run(() =>
             {
                 Task<IDS> taskIDS = Task<IDS>.Factory.StartNew(() => new IDS());
-                //Task<Integrata> taskIntegrata = Task<Integrata>.Factory.StartNew(() => new Integrata());
-                //Task<Techdata> taskTechData = Task<Techdata>.Factory.StartNew(d => new Techdata((List<string>)d), Program.listExcludeForTechData);
-                //Task.WaitAll(new Task[] { taskIDS, taskIntegrata, taskTechData });
-                
+                Task<Integrata> taskIntegrata = Task<Integrata>.Factory.StartNew(() => new Integrata());
+                Task<Techdata> taskTechData = Task<Techdata>.Factory.StartNew(d => new Techdata((List<string>)d), Program.listExcludeForTechData);
+                Task.WaitAll(new Task[] { taskIDS, taskIntegrata, taskTechData });
+
                 idsAll = taskIDS.Result.GetCourse;
                 idsIntegrata = taskIDS.Result.GetCourseIntegrata;
                 idsTechData = taskIDS.Result.GetCourseTechData;
-                //techdata = taskTechData.Result.GetCourse;
-                //integrata = taskIntegrata.Result.GetCourse;
+                techdata = taskTechData.Result.GetCourse;
+                integrata = taskIntegrata.Result.GetCourse;
 
-                //CourseProvider.RemoveMatches(integrata, idsIntegrata);
-                //CourseProvider.RemoveMatches(techdata, idsTechData);
-
+                CourseProvider.RemoveMatches(integrata, idsIntegrata);
+                CourseProvider.RemoveMatches(techdata, idsTechData);
             });
             return task;
         }

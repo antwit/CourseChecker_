@@ -45,9 +45,7 @@ namespace CourseChecker.SiteReader
                                     boolGarantie = true;
                                     strSearchForDate = gar.Text;
                                 }
-                            } catch (NoSuchElementException) {
-
-                            }
+                            } catch (NoSuchElementException) {}
                         }
 
                         String[] listSplit = list.ElementAt(0).Text.Split('\n');
@@ -97,7 +95,7 @@ namespace CourseChecker.SiteReader
                                         iPrice = Int32.Parse(m.Groups[1].ToString());
                                     }
                                 }
-                                listKurse.Add(new Kurse(kursNr_Title[0].Trim(), kursNr_Title[1].Trim(), dateBegin, dateEnd, arrLocDate[i].ElementAt(0).ToString(), iPrice, isGuaranteed));
+                                listKurse.Add(new Kurse(kursNr_Title[0].Trim(), kursNr_Title[1].Trim(), dateBegin, dateEnd, arrLocDate[i].ElementAt(0).ToString(), iPrice, isGuaranteed, "TechData"));
                             }
                         }
                     } catch (NoSuchElementException) {

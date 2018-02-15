@@ -87,7 +87,7 @@ namespace CourseChecker.SiteReader
                     DateTime.TryParse(strArr[2], out endDate);
                     Boolean boolgarantie = new Boolean();
                     Boolean.TryParse(strArr[3], out boolgarantie);
-                    listKurse.Add(new Kurse(strNumber, strTitle, startDate, endDate, strArr[0], iPrice, boolgarantie));
+                    listKurse.Add(new Kurse(strNumber, strTitle, startDate, endDate, strArr[0], iPrice, boolgarantie, "Integrata"));
                 }
             }
         }

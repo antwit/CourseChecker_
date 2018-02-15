@@ -99,14 +99,18 @@ namespace CourseChecker.Course
         {
             GetCourse = new List<Kurse>();
             GetCourseIntegrata = new List<Kurse>();
+
             GetCourseTechData = new List<Kurse>();
+            String strIntegrata = "Integrata";
+            String strTechData = "TechData";
+            String strNAN = "NAN";
 
             ReadSite readSiteIDS_2 = new ReadSite("http://www.ids-system.de/leistung/schulungen/tutor/2");
-            CollectCourseIDS collectIDS_2 = new CollectCourseIDS(readSiteIDS_2.GetSite());
+            CollectCourseIDS collectIDS_2 = new CollectCourseIDS(readSiteIDS_2.GetSite(), strIntegrata);
             ReadSite readSiteIDS_3 = new ReadSite("http://www.ids-system.de/leistung/schulungen/tutor/3");
-            CollectCourseIDS collectIDS_3 = new CollectCourseIDS(readSiteIDS_3.GetSite());
+            CollectCourseIDS collectIDS_3 = new CollectCourseIDS(readSiteIDS_3.GetSite(), strTechData);
             ReadSite readSiteIDS = new ReadSite("http://www.ids-system.de/component/seminarman/2-100-durchfuehrungsgarantie?Itemid=585");
-            CollectCourseIDS collectIDS = new CollectCourseIDS(readSiteIDS.GetSite());
+            CollectCourseIDS collectIDS = new CollectCourseIDS(readSiteIDS.GetSite(), strNAN);
 
             for (int i = 0; i < collectIDS.KurseIDS.Count; i++) {
                 Vergleich(i, collectIDS, collectIDS_2);
