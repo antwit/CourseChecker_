@@ -100,6 +100,9 @@
     <Compile Include="SiteReader\ReadSite.cs" />
     <Compile Include="SiteReader\ReadWithSeleniumTechDataMainSite.cs" />
     <Compile Include="SiteReader\ReadWithSeleniumTechDataSite.cs" />
+    <Compile Include="WPF\Progressbar.xaml.cs">
+      <DependentUpon>Progressbar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WPF\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -121,6 +124,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="WPF\Progressbar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="WPF\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

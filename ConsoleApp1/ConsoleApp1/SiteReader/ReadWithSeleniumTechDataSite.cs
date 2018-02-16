@@ -45,7 +45,9 @@ namespace CourseChecker.SiteReader
                                     boolGarantie = true;
                                     strSearchForDate = gar.Text;
                                 }
-                            } catch (NoSuchElementException) {}
+                            } catch (NoSuchElementException e) {
+                                Console.WriteLine(e);
+                            }
                         }
 
                         String[] listSplit = list.ElementAt(0).Text.Split('\n');

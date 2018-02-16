@@ -29,7 +29,13 @@ namespace CourseChecker.WPF
 
         private async void BtnStart(object sender, RoutedEventArgs e)
         {
+            Progressbar pb =  new Progressbar();
+            pb.Width = 200;
+            pb.Height = 60;
+            pb.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            pb.Show();
             await GetItemsAsync();
+            pb.Close();
 
             lstViewIntegrata.ItemsSource = integrata;
             lstViewIDSIntegrata.ItemsSource = idsIntegrata;

@@ -21,7 +21,7 @@
             <ToolBar DockPanel.Dock="Top" Name="mnuMenu">
                 <Button Name="btnStart" ButtonBase.Click="BtnStart">Suche starten ...</Button>
                 <Separator/>
-                <Button Name="btnPDF" ButtonBase.Click="BtnPDF">Erstelle PDF</Button>
+                <Button Name="btnPDF" ButtonBase.Click="BtnPDF">PDF erstellen</Button>
             </ToolBar>
         </DockPanel>
         <GroupBox Header="Integrat -> IDS" BorderThickness="2" BorderBrush="Black" Grid.Row="1" >

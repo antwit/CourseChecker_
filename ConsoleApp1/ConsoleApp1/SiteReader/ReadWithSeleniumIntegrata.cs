@@ -35,6 +35,7 @@ namespace CourseChecker.SiteReader
         private void GetData(IWebDriver driver)
         {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(By.ClassName("side-tabs__info")));
             String strTitle = "";
             String strNumber = "";
             List<String[]> listStrArrPlaceDate = new List<string[]>();
@@ -42,7 +43,7 @@ namespace CourseChecker.SiteReader
             int iPrice = 0;
 
             try {
-                IWebElement price = wait.Until<IWebElement>(d => d.FindElement(By.ClassName("side-tabs__info")));
+                IWebElement price = driver.FindElement(By.ClassName("side-tabs__info"));
                 iPrice = GetPrice(price.Text);
                 IList<IWebElement> placeDate = driver.FindElements(By.ClassName("city-item"));
                 foreach (IWebElement ele in placeDate) {

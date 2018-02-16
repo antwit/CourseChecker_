@@ -38,7 +38,7 @@ namespace CourseChecker.SiteReader
         private void GetSinglesURLs(IWebDriver driver, string strID)
         {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            wait.Until<IWebElement>(d => d.FindElement(By.ClassName("column-group__sub-item-title")));
+            wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(By.ClassName("column-group__sub-item-title")));
             IWebElement iWebElementDB2_LUW = driver.FindElement(By.Id(strID));
             IList<IWebElement> iListDB2_LUW = iWebElementDB2_LUW.FindElements(By.ClassName("column-group__sub-item-link"));
             foreach (IWebElement tmp in iListDB2_LUW) {

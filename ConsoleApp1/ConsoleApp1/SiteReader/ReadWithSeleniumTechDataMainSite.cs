@@ -17,12 +17,10 @@ namespace CourseChecker.SiteReader
             listUrl = new List<String>();
             using (IWebDriver driver = new PhantomJSDriver()) {
                 driver.Url = url.AbsoluteUri;
-                System.Threading.Thread.Sleep(3000);
                 AddUrl(driver);
 
                 IWebElement getButtom = driver.FindElement(By.LinkText("»"));
                 getButtom.Click();
-                System.Threading.Thread.Sleep(3000);
                 AddUrl(driver);
                 driver.Quit();
             }
@@ -31,9 +29,7 @@ namespace CourseChecker.SiteReader
                 using (IWebDriver driver = new PhantomJSDriver())
                 {
                     driver.Url = uriSearch.AbsoluteUri + list;
-                    System.Threading.Thread.Sleep(3000);
                     AddUrl(driver);
-
                     driver.Quit();
                 }
             });
@@ -42,7 +38,7 @@ namespace CourseChecker.SiteReader
         private void AddUrl(IWebDriver driver)
         {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            wait.Until<IWebElement>(d => d.FindElement(By.CssSelector(".btn-sm")));
+            wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.CssSelector(".btn-sm")));
             IList<IWebElement> test = driver.FindElements(By.CssSelector(".btn-sm"));
             foreach (IWebElement b in test) {
                 this.listUrl.Add(b.GetAttribute("href"));

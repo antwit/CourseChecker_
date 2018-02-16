@@ -12,28 +12,6 @@ C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\bin\Debug\WebDri
 C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker.csprojResolveAssemblyReference.cache
 C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker.exe
 C:\Course Checker\CourseChecker_-master\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker.pdb
-C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\phantomjs.exe
-C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\phantomjs-license.txt
-C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\CourseChecker.exe.config
-C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\CourseChecker.exe
-C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\CourseChecker.pdb
-C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\Selenium.WebDriverBackedSelenium.dll
-C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\ThoughtWorks.Selenium.Core.dll
-C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\WebDriver.dll
-C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\WebDriver.Support.dll
-C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\Selenium.WebDriverBackedSelenium.xml
-C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\ThoughtWorks.Selenium.Core.xml
-C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\WebDriver.xml
-C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\WebDriver.Support.xml
-C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\WPF\MainWindow.g.cs
-C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker_Content.g.cs
-C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker_MarkupCompile.cache
-C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker_MarkupCompile.lref
-C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\WPF\MainWindow.baml
-C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker.g.resources
-C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker.csproj.CoreCompileInputs.cache
-C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker.exe
-C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker.pdb
 C:\Users\anwiids01\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\CourseChecker.exe.config
 C:\Users\anwiids01\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\CourseChecker.exe
 C:\Users\anwiids01\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\CourseChecker.pdb
@@ -55,3 +33,26 @@ C:\Users\anwiids01\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug
 C:\Users\anwiids01\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker.exe
 C:\Users\anwiids01\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker.pdb
 C:\Users\anwiids01\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker.csprojResolveAssemblyReference.cache
+C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\CourseChecker.exe.config
+C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\CourseChecker.exe
+C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\CourseChecker.pdb
+C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\GemBox.Spreadsheet.dll
+C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\Selenium.WebDriverBackedSelenium.dll
+C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\ThoughtWorks.Selenium.Core.dll
+C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\WebDriver.dll
+C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\WebDriver.Support.dll
+C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\GemBox.Spreadsheet.xml
+C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\Selenium.WebDriverBackedSelenium.xml
+C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\ThoughtWorks.Selenium.Core.xml
+C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\WebDriver.xml
+C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\WebDriver.Support.xml
+C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\WPF\Progressbar.g.cs
+C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\WPF\MainWindow.g.cs
+C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker_MarkupCompile.cache
+C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker_MarkupCompile.lref
+C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\WPF\Progressbar.baml
+C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\WPF\MainWindow.baml
+C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker.g.resources
+C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker.csproj.CoreCompileInputs.cache
+C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker.exe
+C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker.pdb
