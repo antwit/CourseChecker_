@@ -63,6 +63,8 @@ namespace CourseChecker.Course
             ReadWithSeliumIntegrataMainSite urlsPartOne = new ReadWithSeliumIntegrataMainSite(listURIs, listIDs);
 
             AddRange(queueUrls, urlsPartOne.SetsOfUrls);
+            Program.iNumberOfCourses += queueUrls.Count;
+            Program.boolIntegrata = true;
 
             ReadWithSeleniumIntegrata getKurse = new ReadWithSeleniumIntegrata(queueUrls);
             GetCourse.AddRange(getKurse.GetListKurse());
@@ -85,6 +87,8 @@ namespace CourseChecker.Course
             Uri uriSearchDb2 = new Uri("https://academy.techdata.com/de/search/index/#?country=DE&selectedVendor=5&searchTerm=db2&modality=classroom"); 
             GetCourse = new List<Kurse>();
             ReadWithSeleniumTechDataMainSite collectUrl = new ReadWithSeleniumTechDataMainSite(uriSearchDb2, Program.listManualCheck, uriSearch);
+            Program.iNumberOfCourses += collectUrl.ListUrl.Count;
+            Program.boolTechData = true;
             CollectCourseTechData collectCourseTechData = new CollectCourseTechData(collectUrl.ListUrl, listExclude);
             GetCourse = collectCourseTechData.Kurse;
         }
@@ -106,11 +110,13 @@ namespace CourseChecker.Course
             String strNAN = "NAN";
 
             ReadSite readSiteIDS_2 = new ReadSite("http://www.ids-system.de/leistung/schulungen/tutor/2");
-            CollectCourseIDS collectIDS_2 = new CollectCourseIDS(readSiteIDS_2.GetSite(), strIntegrata);
             ReadSite readSiteIDS_3 = new ReadSite("http://www.ids-system.de/leistung/schulungen/tutor/3");
-            CollectCourseIDS collectIDS_3 = new CollectCourseIDS(readSiteIDS_3.GetSite(), strTechData);
             ReadSite readSiteIDS = new ReadSite("http://www.ids-system.de/component/seminarman/2-100-durchfuehrungsgarantie?Itemid=585");
+            Program.boolIDS = true;
+
             CollectCourseIDS collectIDS = new CollectCourseIDS(readSiteIDS.GetSite(), strNAN);
+            CollectCourseIDS collectIDS_2 = new CollectCourseIDS(readSiteIDS_2.GetSite(), strIntegrata);
+            CollectCourseIDS collectIDS_3 = new CollectCourseIDS(readSiteIDS_3.GetSite(), strTechData);
 
             for (int i = 0; i < collectIDS.KurseIDS.Count; i++) {
                 Vergleich(i, collectIDS, collectIDS_2);

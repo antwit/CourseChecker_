@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Linq;
 using OpenQA.Selenium.PhantomJS;
 using System.Threading.Tasks;
+using OpenQA.Selenium.Support.UI;
 
 namespace CourseChecker.SiteReader
 {
@@ -28,6 +29,8 @@ namespace CourseChecker.SiteReader
                 using (IWebDriver driver = new PhantomJSDriver()) {
                     Console.Clear();
                     driver.Url = url;
+                    WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+                    wait.Until(ExpectedConditions.PresenceOfAllElementsLocatedBy(By.Name("keywords")));
                     IWebElement keywords = driver.FindElement(By.Name("keywords"));
                     IList<IWebElement> location = driver.FindElements(By.ClassName("location"));
                     arrLocDate = new List<String>[location.Count];
@@ -104,6 +107,14 @@ namespace CourseChecker.SiteReader
                         Console.Out.WriteLine("Keine Termine für: {0}  {1}", kursNr_Title[0], kursNr_Title[1]);
                     }
                     driver.Quit();
+                }
+                if (Program.boolIDS & Program.boolIntegrata & Program.boolTechData)
+                {
+                    Program.bw.ReportProgress((int)((double)Program.iCounter++ / (double)Program.iNumberOfCourses * 100));
+                }
+                else
+                {
+                    Program.bw.ReportProgress((int)((double)Program.iCounter++ / (double)Program.iThousend * 100));
                 }
             });
         }

@@ -48,7 +48,7 @@ namespace CourseChecker.PDF
             }
 
             ws.Rows[0].Style.Font.Weight = ExcelFont.BoldWeight;
-            ws.Cells.Style.Font.Size = 8 * 20;
+            ws.Cells.Style.Font.Size = 9 * 20;
             ws.Columns[6].Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
             ws.Columns[2].Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
             ws.Columns[3].Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;

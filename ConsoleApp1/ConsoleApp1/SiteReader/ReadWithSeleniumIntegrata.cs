@@ -29,6 +29,14 @@ namespace CourseChecker.SiteReader
                     GetData(driver);
                     driver.Quit();
                 }
+                if (Program.boolIDS & Program.boolIntegrata & Program.boolTechData)
+                {
+                    Program.bw.ReportProgress((int)((double)Program.iCounter++ / (double)Program.iNumberOfCourses * 100));
+                }
+                else
+                {
+                    Program.bw.ReportProgress((int)((double)Program.iCounter++ / (double)Program.iThousend * 100));
+                }
             });
         }
 

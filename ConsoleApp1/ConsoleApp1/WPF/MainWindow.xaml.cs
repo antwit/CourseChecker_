@@ -6,20 +6,20 @@ using CourseChecker.PDF;
 using System;
 using System.Collections;
 using Microsoft.Win32;
+using System.Windows.Threading;
+using System.Threading;
+using System.ComponentModel;
 
 namespace CourseChecker.WPF
 {
-
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        private List<Kurse> idsIntegrata;
-        private List<Kurse> idsTechData;
-        private List<Kurse> techdata;
-        private List<Kurse> integrata;
-        private List<Kurse> idsAll;
+
+        
+        Progressbar proBar = new Progressbar();
         private List<Kurse> listSelected;
 
         public MainWindow()
@@ -27,20 +27,51 @@ namespace CourseChecker.WPF
             InitializeComponent();
         }
 
-        private async void BtnStart(object sender, RoutedEventArgs e)
+        private void bw_DoWork(object sender, DoWorkEventArgs e)
         {
-            Progressbar pb =  new Progressbar();
-            pb.Width = 200;
-            pb.Height = 60;
-            pb.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            pb.Show();
-            await GetItemsAsync();
-            pb.Close();
+            Task<IDS> taskIDS = Task<IDS>.Factory.StartNew(() => new IDS());
+            Task<Integrata> taskIntegrata = Task<Integrata>.Factory.StartNew(() => new Integrata());
+            Task<Techdata> taskTechData = Task<Techdata>.Factory.StartNew(d => new Techdata((List<string>)d), Program.listExcludeForTechData);
+            Task.WaitAll(new Task[] { taskIDS, taskIntegrata, taskTechData });
 
-            lstViewIntegrata.ItemsSource = integrata;
-            lstViewIDSIntegrata.ItemsSource = idsIntegrata;
-            lstViewTechData.ItemsSource = techdata;
-            lstViewIDSTechData.ItemsSource = idsTechData;
+            List<Kurse> idsAll = taskIDS.Result.GetCourse;
+            List<Kurse> idsIntegrata = taskIDS.Result.GetCourseIntegrata;
+            List<Kurse> idsTechData = taskIDS.Result.GetCourseTechData;
+            List<Kurse> techdata = taskTechData.Result.GetCourse;
+            List<Kurse> integrata = taskIntegrata.Result.GetCourse;
+
+            CourseProvider.RemoveMatches(integrata, idsIntegrata);
+            CourseProvider.RemoveMatches(techdata, idsTechData);
+
+            lstViewIntegrata.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
+                                                        (ThreadStart)delegate ()
+                                                        {
+                                                            lstViewIntegrata.ItemsSource = integrata;
+                                                            lstViewIDSIntegrata.ItemsSource = idsIntegrata;
+                                                            lstViewTechData.ItemsSource = techdata;
+                                                            lstViewIDSTechData.ItemsSource = idsTechData;
+                                                        });
+        }
+
+        private void bw_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            proBar.prgBar.Value = e.ProgressPercentage;
+        }
+
+        private void bw_RunworkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            proBar.Close();
+        }
+
+        private void BtnStart(object sender, RoutedEventArgs e)
+        {
+            Program.bw.WorkerReportsProgress = true;
+            Program.bw.DoWork += bw_DoWork;
+            Program.bw.ProgressChanged += bw_ProgressChanged;
+            Program.bw.RunWorkerCompleted += bw_RunworkerCompleted;
+            Program.bw.RunWorkerAsync();
+
+            proBar.Show();
         }
 
         private void BtnPDF(object sender, RoutedEventArgs e)
@@ -52,10 +83,10 @@ namespace CourseChecker.WPF
 
             listSelected = new List<Kurse>();
             //Scheiß C#
-            AddListSelected(tmp);
-            AddListSelected(tmp2);
-            AddListSelected(tmp3);
-            AddListSelected(tmp4);
+            AddToListSelected(tmp);
+            AddToListSelected(tmp2);
+            AddToListSelected(tmp3);
+            AddToListSelected(tmp4);
 
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
@@ -66,33 +97,12 @@ namespace CourseChecker.WPF
             }
         }
 
-        private void AddListSelected(IList tmp)
+        private void AddToListSelected(IList tmp)
         {
             foreach (object tmpo in tmp)
             {
                 this.listSelected.Add((Kurse)tmpo);
             }
-        }
-
-        private Task GetItemsAsync()
-        {
-            Task task = Task.Run(() =>
-            {
-                Task<IDS> taskIDS = Task<IDS>.Factory.StartNew(() => new IDS());
-                Task<Integrata> taskIntegrata = Task<Integrata>.Factory.StartNew(() => new Integrata());
-                Task<Techdata> taskTechData = Task<Techdata>.Factory.StartNew(d => new Techdata((List<string>)d), Program.listExcludeForTechData);
-                Task.WaitAll(new Task[] { taskIDS, taskIntegrata, taskTechData });
-
-                idsAll = taskIDS.Result.GetCourse;
-                idsIntegrata = taskIDS.Result.GetCourseIntegrata;
-                idsTechData = taskIDS.Result.GetCourseTechData;
-                techdata = taskTechData.Result.GetCourse;
-                integrata = taskIntegrata.Result.GetCourse;
-
-                CourseProvider.RemoveMatches(integrata, idsIntegrata);
-                CourseProvider.RemoveMatches(techdata, idsTechData);
-            });
-            return task;
         }
     }
 }
