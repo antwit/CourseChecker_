@@ -29,28 +29,29 @@ namespace CourseChecker.WPF
 
         private void bw_DoWork(object sender, DoWorkEventArgs e)
         {
-            Task<IDS> taskIDS = Task<IDS>.Factory.StartNew(() => new IDS());
+            //Task<IDS> taskIDS = Task<IDS>.Factory.StartNew(() => new IDS());
             Task<Integrata> taskIntegrata = Task<Integrata>.Factory.StartNew(() => new Integrata());
-            Task<Techdata> taskTechData = Task<Techdata>.Factory.StartNew(d => new Techdata((List<string>)d), Program.listExcludeForTechData);
-            Task.WaitAll(new Task[] { taskIDS, taskIntegrata, taskTechData });
+            //Task<Techdata> taskTechData = Task<Techdata>.Factory.StartNew(d => new Techdata((List<string>)d), Program.listExcludeForTechData);
+            //Task.WaitAll(new Task[] { taskIDS, taskIntegrata, taskTechData });
+            //Task.WaitAll(new Task[] { taskIDS, taskIntegrata });
 
-            List<Kurse> idsAll = taskIDS.Result.GetCourse;
-            List<Kurse> idsIntegrata = taskIDS.Result.GetCourseIntegrata;
-            List<Kurse> idsTechData = taskIDS.Result.GetCourseTechData;
-            List<Kurse> techdata = taskTechData.Result.GetCourse;
+            //List<Kurse> idsAll = taskIDS.Result.GetCourse;
+            //List<Kurse> idsIntegrata = taskIDS.Result.GetCourseIntegrata;
+            //List<Kurse> idsTechData = taskIDS.Result.GetCourseTechData;
+            //List<Kurse> techdata = taskTechData.Result.GetCourse;
             List<Kurse> integrata = taskIntegrata.Result.GetCourse;
 
-            CourseProvider.RemoveMatches(integrata, idsIntegrata);
-            CourseProvider.RemoveMatches(techdata, idsTechData);
+            //CourseProvider.RemoveMatches(integrata, idsIntegrata);
+            //CourseProvider.RemoveMatches(techdata, idsTechData);
 
-            lstViewIntegrata.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
-                                                        (ThreadStart)delegate ()
-                                                        {
-                                                            lstViewIntegrata.ItemsSource = integrata;
-                                                            lstViewIDSIntegrata.ItemsSource = idsIntegrata;
-                                                            lstViewTechData.ItemsSource = techdata;
-                                                            lstViewIDSTechData.ItemsSource = idsTechData;
-                                                        });
+            //lstViewIntegrata.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
+            //                                            (ThreadStart)delegate ()
+            //                                            {
+            //                                                lstViewIntegrata.ItemsSource = integrata;
+            //                                                lstViewIDSIntegrata.ItemsSource = idsIntegrata;
+            //                                                lstViewTechData.ItemsSource = techdata;
+            //                                                lstViewIDSTechData.ItemsSource = idsTechData;
+            //                                            });
         }
 
         private void bw_ProgressChanged(object sender, ProgressChangedEventArgs e)

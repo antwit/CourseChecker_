@@ -60,14 +60,16 @@ namespace CourseChecker.Course
             };
 
 
-            ReadWithSeliumIntegrataMainSite urlsPartOne = new ReadWithSeliumIntegrataMainSite(listURIs, listIDs);
+            //ReadWithSeliumIntegrataMainSite urlsPartOne = new ReadWithSeliumIntegrataMainSite(listURIs, listIDs);
+            GetCourseUrlsFromIntegrata urlsFromIntegrata = new GetCourseUrlsFromIntegrata(listURIs, listIDs);
 
-            AddRange(queueUrls, urlsPartOne.SetsOfUrls);
+            AddRange(queueUrls, urlsFromIntegrata.SetsOfUrls);
             Program.iNumberOfCourses += queueUrls.Count;
             Program.boolIntegrata = true;
 
-            ReadWithSeleniumIntegrata getKurse = new ReadWithSeleniumIntegrata(queueUrls);
-            GetCourse.AddRange(getKurse.GetListKurse());
+            GetCourse.AddRange((new GetCoursesFromIntegrata(queueUrls)).GetListKurse);
+            //ReadWithSeleniumIntegrata getKurse = new ReadWithSeleniumIntegrata(queueUrls);
+            //GetCourse.AddRange(getKurse.GetListKurse());
         }
 
         private void AddRange(Queue<Uri> queue, Queue<Uri> input)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CourseChecker.WPF;
 using System.Windows;
 using System.ComponentModel;
+using System.Threading;
 
 namespace CourseChecker
 {
