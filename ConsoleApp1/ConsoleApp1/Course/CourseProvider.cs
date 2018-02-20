@@ -3,49 +3,37 @@ using System.Collections.Generic;
 using CourseChecker.CollectCourses;
 using CourseChecker.SiteReader;
 
-namespace CourseChecker.Course
-{
-    abstract class CourseProvider
-    {
+namespace CourseChecker.Course {
+    abstract class CourseProvider {
         public List<Kurse> GetCourse { get; set; }
 
-        internal static void RemoveMatches(List<Kurse> course, List<Kurse> idsCourse)
-        {
+        internal static void RemoveMatches(List<Kurse> course, List<Kurse> idsCourse) {
             List<Kurse> deleteCourse = new List<Kurse>();
             List<Kurse> deleteIDSCourse = new List<Kurse>();
 
-            foreach (Kurse kurs in course)
-            {
-                foreach (Kurse kursIDS in idsCourse)
-                {
-                    if (kurs.Contains(kursIDS))
-                    {
+            foreach (Kurse kurs in course) {
+                foreach (Kurse kursIDS in idsCourse) {
+                    if (kurs.Contains(kursIDS)) {
                         deleteCourse.Add(kurs);
                         deleteIDSCourse.Add(kursIDS);
-                    }
-                    else if (kurs.ContainsForIDS(kursIDS))
-                    {
+                    } else if (kurs.ContainsForIDS(kursIDS)) {
                         deleteIDSCourse.Add(kursIDS);
                     }
                 }
             }
 
-            foreach (Kurse m in deleteCourse)
-            {
+            foreach (Kurse m in deleteCourse) {
                 course.Remove(m);
             }
 
-            foreach (Kurse m in deleteIDSCourse)
-            {
+            foreach (Kurse m in deleteIDSCourse) {
                 idsCourse.Remove(m);
             }
         }
     }
 
-    class Integrata:CourseProvider
-    {
-        public Integrata()
-        {
+    class Integrata : CourseProvider {
+        public Integrata() {
             GetCourse = new List<Kurse>();
             Queue<Uri> queueUrls = new Queue<Uri>();
             List<String> listIDs = new List<string>() {
@@ -72,8 +60,7 @@ namespace CourseChecker.Course
             //GetCourse.AddRange(getKurse.GetListKurse());
         }
 
-        private void AddRange(Queue<Uri> queue, Queue<Uri> input)
-        {
+        private void AddRange(Queue<Uri> queue, Queue<Uri> input) {
             foreach (Uri temp in input) {
                 queue.Enqueue(temp);
             }
@@ -81,12 +68,10 @@ namespace CourseChecker.Course
 
     }
 
-    class Techdata:CourseProvider
-    {
-        public Techdata(List<String> listExclude)
-        {
+    class Techdata : CourseProvider {
+        public Techdata(List<String> listExclude) {
             Uri uriSearch = new Uri("https://academy.techdata.com/de/search/index/#?country=DE&selectedVendor=&searchTerm=");
-            Uri uriSearchDb2 = new Uri("https://academy.techdata.com/de/search/index/#?country=DE&selectedVendor=5&searchTerm=db2&modality=classroom"); 
+            Uri uriSearchDb2 = new Uri("https://academy.techdata.com/de/search/index/#?country=DE&selectedVendor=5&searchTerm=db2&modality=classroom");
             GetCourse = new List<Kurse>();
             ReadWithSeleniumTechDataMainSite collectUrl = new ReadWithSeleniumTechDataMainSite(uriSearchDb2, Program.ListManualCheckForTechData, uriSearch);
             Program.iNumberOfCourses += collectUrl.ListUrl.Count;
@@ -96,13 +81,11 @@ namespace CourseChecker.Course
         }
     }
 
-    class IDS:CourseProvider
-    {
+    class IDS : CourseProvider {
         public List<Kurse> GetCourseIntegrata { get; set; }
         public List<Kurse> GetCourseTechData { get; set; }
 
-        public IDS()
-        {
+        public IDS() {
             GetCourse = new List<Kurse>();
             GetCourseIntegrata = new List<Kurse>();
 
@@ -131,8 +114,7 @@ namespace CourseChecker.Course
             GetCourse.AddRange(collectIDS_3.KurseIDS);
         }
 
-        private void Vergleich(int i, CollectCourseIDS collectIDS, CollectCourseIDS collectIDS_2)
-        {
+        private void Vergleich(int i, CollectCourseIDS collectIDS, CollectCourseIDS collectIDS_2) {
             for (int j = 0; j < collectIDS_2.KurseIDS.Count; j++) {
                 if (collectIDS_2.KurseIDS[j].Contains(collectIDS.KurseIDS[i])) {
                     collectIDS_2.KurseIDS[j].BoolGarantieTermin = true;

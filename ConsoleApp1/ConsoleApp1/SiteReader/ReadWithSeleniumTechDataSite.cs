@@ -69,18 +69,18 @@ namespace CourseChecker.SiteReader
                         }
                     }
 
-                    kursNr_Title = new string[2] {"",""};
-                    foreach (Match matchName in Regex.Matches(keywords.GetAttribute("content"), patternName))
-                    {
-                        if (matchName.Groups.Count == 3)
-                        {
-                            kursNr_Title[0] = matchName.Groups[1].Value;
-                            kursNr_Title[1] = matchName.Groups[2].Value;
-                        }else if(matchName.Groups.Count < 3)
-                        {
-                            kursNr_Title[1] = matchName.Groups[0].Value;
-                        }
-                    }
+                    //kursNr_Title = new string[2] {"",""};
+                    //foreach (Match matchName in Regex.Matches(keywords.GetAttribute("content"), patternName))
+                    //{
+                    //    if (matchName.Groups.Count == 3)
+                    //    {
+                    //        kursNr_Title[0] = matchName.Groups[1].Value;
+                    //        kursNr_Title[1] = matchName.Groups[2].Value;
+                    //    }else if(matchName.Groups.Count < 3)
+                    //    {
+                    //        kursNr_Title[1] = matchName.Groups[0].Value;
+                    //    }
+                    //}
                     
                     try {
                         if (listExclude.Contains(kursNr_Title[0].Trim()))

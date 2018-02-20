@@ -12,7 +12,7 @@ namespace CourseChecker.SiteReader {
         private HtmlWeb webContent = new HtmlWeb();
         private List<Kurse> lstKurse = new List<Kurse>();
         delegate int del();
-        internal List<Kurse> GetListKurse { get; set; }        
+        internal List<Kurse> GetListKurse { get; set; }
 
         internal GetCoursesFromIntegrata(Queue<Uri> listSites) {
             GetListKurse = new List<Kurse>();
@@ -21,12 +21,9 @@ namespace CourseChecker.SiteReader {
                 HtmlDocument htmlDoc = webContent.Load(url);
                 GetData(htmlDoc);
 
-                if (Program.boolIDS & Program.boolIntegrata & Program.boolTechData)
-                {
+                if (Program.boolIDS & Program.boolIntegrata & Program.boolTechData) {
                     Program.bw.ReportProgress((int)((double)Program.iCounter++ / (double)Program.iNumberOfCourses * 100));
-                }
-                else
-                {
+                } else {
                     Program.bw.ReportProgress((int)((double)Program.iCounter++ / (double)Program.iThousend * 100));
                 }
             });
@@ -37,7 +34,7 @@ namespace CourseChecker.SiteReader {
             String strNumber = "";
             String patternKursNummer = "IBM\\s+([\\d\\w]+)\\s+-";
             List<String[]> listStrArrPlaceDate = new List<string[]>();
-            int iPrice  = 0;
+            int iPrice = 0;
 
             try {
                 String strPrice = htmlDoc.DocumentNode

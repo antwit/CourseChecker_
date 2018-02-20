@@ -31,7 +31,7 @@ namespace CourseChecker.SiteReader {
 
         private void GetSingleUrls(HtmlDocument htmlDoc, string strID) {
             HtmlNode nodeID = htmlDoc.DocumentNode.SelectSingleNode("//*[@id='" + strID + "']");
-            HtmlNodeCollection collNode = nodeID.SelectNodes("ul/li/a[@class='column-group__sub-item-link']");
+            HtmlNodeCollection collNode = nodeID.SelectNodes(".//a[@class='column-group__sub-item-link']");
             foreach(HtmlNode singleNode in collNode) {
                 Uri uri = new Uri(singleNode.Attributes["href"].Value);
                 SetsOfUrls.Enqueue(uri);

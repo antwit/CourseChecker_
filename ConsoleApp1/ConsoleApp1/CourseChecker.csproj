@@ -100,6 +100,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SiteReader\GetCoursesFromIntegrata.cs" />
+    <Compile Include="SiteReader\GetCoursesFromTechData.cs" />
     <Compile Include="SiteReader\GetCourseUrlsFromIntegrata.cs" />
     <Compile Include="SiteReader\ReadSite.cs" />
     <Compile Include="SiteReader\ReadWithSeleniumTechDataMainSite.cs" />

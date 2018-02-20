@@ -4,12 +4,9 @@ using System.Data;
 using System.Collections.Generic;
 using CourseChecker.Course;
 
-namespace CourseChecker.PDF
-{
-    class CreatePDF
-    {
-        public CreatePDF(List<Kurse> kurse, String path)
-        {
+namespace CourseChecker.PDF {
+    class CreatePDF {
+        public CreatePDF(List<Kurse> kurse, String path) {
             String date = DateTime.Now.ToShortDateString();
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
             ExcelFile ef = new ExcelFile();
@@ -28,22 +25,17 @@ namespace CourseChecker.PDF
             dt.Columns.Add("Preis", typeof(int));
             dt.Rows.Add(new Object[] { "", "", null, null, "", "", null });
 
-            try
-            {
+            try {
                 int j = 0;
-                foreach (Kurse kurs in kurse)
-                {
-                    if (j < 20)
-                    {
+                foreach (Kurse kurs in kurse) {
+                    if (j < 20) {
                         dt.Rows.Add(new Object[] { kurs.StrKursNr, kurs.StrKursTitel, kurs.DateBeginn, kurs.DateEnde, kurs.StrOrt, kurs.StrAnbieter, 0, kurs.IPreis });
                         dt.Rows.Add(new Object[] { "", kurs.StrReason, null, null, "", "", null });
                         dt.Rows.Add(new Object[] { "", "", null, null, "", "", null });
                     }
                     j++;
                 }
-            }
-            catch (NullReferenceException)
-            {
+            } catch (NullReferenceException) {
                 Console.WriteLine("Leeres PDF Dokument erzeugt!");
             }
 
@@ -57,8 +49,7 @@ namespace CourseChecker.PDF
             ws.Columns[3].Style.NumberFormat = "[$-409]dd.mm.yyyy";
             ws.Columns[7].Style.NumberFormat = "#,##0.00 \"€\"";
             ws.InsertDataTable(dt,
-                new InsertDataTableOptions()
-                {
+                new InsertDataTableOptions() {
                     ColumnHeaders = true,
                     StartRow = 0,
                 });
@@ -66,7 +57,7 @@ namespace CourseChecker.PDF
             var columnCount = ws.CalculateMaxUsedColumns();
             for (int i = 0; i < columnCount; i++)
                 ws.Columns[i].AutoFit();
-            
+
             ef.Save(path, new PdfSaveOptions() { SelectionType = SelectionType.EntireFile });
         }
     }

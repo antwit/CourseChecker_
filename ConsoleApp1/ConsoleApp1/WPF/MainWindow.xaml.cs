@@ -10,25 +10,21 @@ using System.Windows.Threading;
 using System.Threading;
 using System.ComponentModel;
 
-namespace CourseChecker.WPF
-{
+namespace CourseChecker.WPF {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
-    {
+    public partial class MainWindow : Window {
 
-        
+
         Progressbar proBar;
         private List<Kurse> listSelected;
 
-        public MainWindow()
-        {
+        public MainWindow() {
             InitializeComponent();
         }
 
-        private void Bw_DoWork(object sender, DoWorkEventArgs e)
-        {
+        private void Bw_DoWork(object sender, DoWorkEventArgs e) {
             Task<IDS> taskIDS = Task<IDS>.Factory.StartNew(() => new IDS());
             Task<Integrata> taskIntegrata = Task<Integrata>.Factory.StartNew(() => new Integrata());
             Task<Techdata> taskTechData = Task<Techdata>.Factory.StartNew(d => new Techdata((List<string>)d), Program.listExcludeForTechData);
@@ -45,8 +41,7 @@ namespace CourseChecker.WPF
             CourseProvider.RemoveMatches(techdata, idsTechData);
 
             lstViewIntegrata.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
-                                                        (ThreadStart)delegate ()
-                                                        {
+                                                        (ThreadStart)delegate () {
                                                             lstViewIntegrata.ItemsSource = integrata;
                                                             lstViewIDSIntegrata.ItemsSource = idsIntegrata;
                                                             lstViewTechData.ItemsSource = techdata;
@@ -54,18 +49,15 @@ namespace CourseChecker.WPF
                                                         });
         }
 
-        private void Bw_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
+        private void Bw_ProgressChanged(object sender, ProgressChangedEventArgs e) {
             proBar.prgBar.Value = e.ProgressPercentage;
         }
 
-        private void Bw_RunworkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
+        private void Bw_RunworkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
             proBar.Close();
         }
 
-        private void BtnStart(object sender, RoutedEventArgs e)
-        {
+        private void BtnStart(object sender, RoutedEventArgs e) {
             proBar = new Progressbar();
             Program.boolIDS = Program.boolIntegrata = Program.boolTechData = false;
             Program.bw.WorkerReportsProgress = true;
@@ -77,8 +69,7 @@ namespace CourseChecker.WPF
             proBar.Show();
         }
 
-        private void BtnPDF(object sender, RoutedEventArgs e)
-        {
+        private void BtnPDF(object sender, RoutedEventArgs e) {
             IList tmp = lstViewIDSIntegrata.SelectedItems;
             IList tmp2 = lstViewIntegrata.SelectedItems;
             IList tmp3 = lstViewIDSTechData.SelectedItems;
@@ -91,22 +82,18 @@ namespace CourseChecker.WPF
             AddToListSelected(tmp3);
             AddToListSelected(tmp4);
 
-            SaveFileDialog dlg = new SaveFileDialog()
-            {
+            SaveFileDialog dlg = new SaveFileDialog() {
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
                 DefaultExt = ".pdf"
             };
 
-            if (dlg.ShowDialog() == true)
-            {
+            if (dlg.ShowDialog() == true) {
                 new CreatePDF(listSelected, dlg.FileName);
             }
         }
 
-        private void AddToListSelected(IList tmp)
-        {
-            foreach (object tmpo in tmp)
-            {
+        private void AddToListSelected(IList tmp) {
+            foreach (object tmpo in tmp) {
                 this.listSelected.Add((Kurse)tmpo);
             }
         }

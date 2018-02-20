@@ -5,11 +5,9 @@ using System.Windows;
 using System.ComponentModel;
 using System.Threading;
 
-namespace CourseChecker
-{
+namespace CourseChecker {
 
-    class Program
-    {
+    class Program {
         private readonly static List<String> listManualCheckForTechData = new List<string> {
                 "TD-TS6S",
                 "KM423G"
@@ -35,8 +33,7 @@ namespace CourseChecker
         internal static List<string> ListManualCheckForTechData => listManualCheckForTechData;
 
         [STAThread]
-        static void Main(string[] args)
-        {
+        static void Main(string[] args) {
             Application app = new Application();
             app.Run(new MainWindow());
         }
