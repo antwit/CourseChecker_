@@ -60,3 +60,7 @@ C:\Users\anwiids01\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug
 C:\Users\anwiids01\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker.g.resources
 C:\Users\anwiids01\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker.exe
 C:\Users\anwiids01\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker.pdb
+C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\HtmlAgilityPack.dll
+C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\HtmlAgilityPack.pdb
+C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\HtmlAgilityPack.xml
+C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker.csprojResolveAssemblyReference.cache

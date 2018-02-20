@@ -101,8 +101,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SiteReader\GetCoursesFromIntegrata.cs" />
     <Compile Include="SiteReader\GetCourseUrlsFromIntegrata.cs" />
-    <Compile Include="SiteReader\ReadWithSeleniumIntegrata.cs" />
-    <Compile Include="SiteReader\ReadWithSeliumIntegrataMainSite.cs" />
     <Compile Include="SiteReader\ReadSite.cs" />
     <Compile Include="SiteReader\ReadWithSeleniumTechDataMainSite.cs" />
     <Compile Include="SiteReader\ReadWithSeleniumTechDataSite.cs" />

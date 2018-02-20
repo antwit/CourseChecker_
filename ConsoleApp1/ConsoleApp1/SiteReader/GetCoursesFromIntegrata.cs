@@ -20,6 +20,15 @@ namespace CourseChecker.SiteReader {
             Parallel.ForEach(listSites, url => {
                 HtmlDocument htmlDoc = webContent.Load(url);
                 GetData(htmlDoc);
+
+                if (Program.boolIDS & Program.boolIntegrata & Program.boolTechData)
+                {
+                    Program.bw.ReportProgress((int)((double)Program.iCounter++ / (double)Program.iNumberOfCourses * 100));
+                }
+                else
+                {
+                    Program.bw.ReportProgress((int)((double)Program.iCounter++ / (double)Program.iThousend * 100));
+                }
             });
         }
 

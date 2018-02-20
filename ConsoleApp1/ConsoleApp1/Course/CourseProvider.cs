@@ -88,7 +88,7 @@ namespace CourseChecker.Course
             Uri uriSearch = new Uri("https://academy.techdata.com/de/search/index/#?country=DE&selectedVendor=&searchTerm=");
             Uri uriSearchDb2 = new Uri("https://academy.techdata.com/de/search/index/#?country=DE&selectedVendor=5&searchTerm=db2&modality=classroom"); 
             GetCourse = new List<Kurse>();
-            ReadWithSeleniumTechDataMainSite collectUrl = new ReadWithSeleniumTechDataMainSite(uriSearchDb2, Program.listManualCheck, uriSearch);
+            ReadWithSeleniumTechDataMainSite collectUrl = new ReadWithSeleniumTechDataMainSite(uriSearchDb2, Program.ListManualCheckForTechData, uriSearch);
             Program.iNumberOfCourses += collectUrl.ListUrl.Count;
             Program.boolTechData = true;
             CollectCourseTechData collectCourseTechData = new CollectCourseTechData(collectUrl.ListUrl, listExclude);

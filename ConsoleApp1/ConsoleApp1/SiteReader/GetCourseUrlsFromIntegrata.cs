@@ -15,6 +15,7 @@ namespace CourseChecker.SiteReader {
         internal List<Kurse> GetCourses { get; set; }
 
         public GetCourseUrlsFromIntegrata(List<Uri> listUris, List<String> listIDs) {
+            SetsOfUrls = new Queue<Uri>();
             this.listIDs.AddRange(listIDs);
             this.listURI.AddRange(listUris);
 

@@ -10,7 +10,7 @@ namespace CourseChecker
 
     class Program
     {
-        internal readonly static List<String> listManualCheck = new List<string> {
+        private readonly static List<String> listManualCheckForTechData = new List<string> {
                 "TD-TS6S",
                 "KM423G"
         };
@@ -31,6 +31,8 @@ namespace CourseChecker
         internal static int iNumberOfCourses;
         internal static int iCounter;
         internal static BackgroundWorker bw = new BackgroundWorker();
+
+        internal static List<string> ListManualCheckForTechData => listManualCheckForTechData;
 
         [STAThread]
         static void Main(string[] args)

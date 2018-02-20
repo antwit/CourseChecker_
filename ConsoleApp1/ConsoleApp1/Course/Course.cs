@@ -16,8 +16,8 @@ namespace CourseChecker.Course
         private String strReason;
         private static readonly Dictionary<String, String> dictReason = new Dictionary<string, string>() {
             { "Preis", "Kurspreis wurde geändert;"},
-            { "Garantie", "Kurs ist Garantietermin;" },
-            { "!Garantie", "Kurs ist nicht mehr Garantietermin;" },
+            { "Garantie", "Kurs ist nun ein Garantietermin;" },
+            { "!Garantie", "Kurs ist nicht mehr ein Garantietermin;" },
             { "!Kurs", "Kurs entfernt;" },
             { "Kurs", "Kurs hinzugefügt;" }
         };
