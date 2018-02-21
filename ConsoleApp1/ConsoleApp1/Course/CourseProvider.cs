@@ -46,9 +46,7 @@ namespace CourseChecker.Course {
                 new Uri("https://www.integrata.de/seminarangebot/ibm-operations/"),
                 new Uri("https://www.integrata.de/seminarangebot/ibm-development/#db2-zos")
             };
-
-
-            //ReadWithSeliumIntegrataMainSite urlsPartOne = new ReadWithSeliumIntegrataMainSite(listURIs, listIDs);
+            
             GetCourseUrlsFromIntegrata urlsFromIntegrata = new GetCourseUrlsFromIntegrata(listURIs, listIDs);
 
             AddRange(queueUrls, urlsFromIntegrata.SetsOfUrls);
@@ -56,8 +54,6 @@ namespace CourseChecker.Course {
             Program.boolIntegrata = true;
 
             GetCourse.AddRange((new GetCoursesFromIntegrata(queueUrls)).GetListKurse);
-            //ReadWithSeleniumIntegrata getKurse = new ReadWithSeleniumIntegrata(queueUrls);
-            //GetCourse.AddRange(getKurse.GetListKurse());
         }
 
         private void AddRange(Queue<Uri> queue, Queue<Uri> input) {
