@@ -92,8 +92,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CollectCourses\CollectCourseIDS.cs" />
-    <Compile Include="CollectCourses\CollectCourseTechData.cs" />
     <Compile Include="Course\Course.cs" />
     <Compile Include="Course\CourseProvider.cs" />
     <Compile Include="PDF\CreatePDF.cs" />
@@ -102,7 +100,7 @@
     <Compile Include="SiteReader\GetCoursesFromIntegrata.cs" />
     <Compile Include="SiteReader\GetCoursesFromTechData.cs" />
     <Compile Include="SiteReader\GetCourseUrlsFromIntegrata.cs" />
-    <Compile Include="SiteReader\ReadSite.cs" />
+    <Compile Include="SiteReader\GetCoursesFromIDS.cs" />
     <Compile Include="SiteReader\ReadWithSeleniumTechDataMainSite.cs" />
     <Compile Include="WPF\Progressbar.xaml.cs">
       <DependentUpon>Progressbar.xaml</DependentUpon>

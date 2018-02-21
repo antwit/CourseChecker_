@@ -1,23 +1,25 @@
 ﻿using CourseChecker.Course;
-using CourseChecker.WPF;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
 
-namespace CourseChecker.CollectCourses {
-    class CollectCourseIDS {
-        private List<Kurse> kurseIDS;
+namespace CourseChecker.SiteReader {
+    class GetCoursesFromIDS {
+        internal List<Kurse> KurseIDS { get; set; }
 
-        public CollectCourseIDS(String strSite, String strAnbieter) {
+        public GetCoursesFromIDS(Uri url, String strAnbieter) {
+            String strSite = GetSite(url);
             List<String> listSection = SectionTableEntry(strSite);
-            kurseIDS = new List<Kurse>();
+            KurseIDS = new List<Kurse>();
 
             Program.iNumberOfCourses += listSection.Count;
 
             foreach(String strElement in listSection) {
                 List<String> listTmp = SplitSection(strElement);
-                kurseIDS.Add(new Kurse(listTmp.ElementAt(0), listTmp.ElementAt(1), DateTime.Parse(listTmp.ElementAt(2)),
+                KurseIDS.Add(new Kurse(listTmp.ElementAt(0), listTmp.ElementAt(1), DateTime.Parse(listTmp.ElementAt(2)),
                                 DateTime.Parse(listTmp.ElementAt(3)), listTmp.ElementAt(4), Convert.ToInt32(listTmp.ElementAt(5)), strAnbieter));
                 if(Program.boolIDS & Program.boolIntegrata & Program.boolTechData) {
                     Program.bw.ReportProgress((int)((double)Program.iCounter++ / (double)Program.iNumberOfCourses * 100));
@@ -25,10 +27,19 @@ namespace CourseChecker.CollectCourses {
                     Program.bw.ReportProgress((int)((double)Program.iCounter++ / (double)Program.iThousend * 100));
                 }
             }
-
         }
 
-        internal List<Kurse> KurseIDS => kurseIDS;
+        public String GetSite(Uri url) {
+            String strInhalt;
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            StreamReader sr = new StreamReader(response.GetResponseStream());
+            strInhalt = sr.ReadToEnd();
+            sr.Close();
+            response.Close();
+
+            return strInhalt;
+        }
 
         private List<String> SectionTableEntry(String strSite) {
             List<String> listSections = new List<String>();
