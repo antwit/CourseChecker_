@@ -51,10 +51,6 @@ namespace CourseChecker.WPF {
 
         private void Bw_ProgressChanged(object sender, ProgressChangedEventArgs e) {
             proBar.prgBar.Value = e.ProgressPercentage;
-            lstViewLogs.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
-               (ThreadStart)delegate () {
-                   lstViewLogs.Items.Refresh();
-               });
         }
 
         private void Bw_RunworkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
@@ -63,12 +59,10 @@ namespace CourseChecker.WPF {
             this.btnPDF.IsEnabled = true;
 
             logger.Info("Suche fertiggestellt!");
-            lstViewLogs.Items.Refresh();
         }
 
         private void BtnStart(object sender, RoutedEventArgs e) {
             logger.Info("Suche gestartet...");
-            lstViewLogs.Items.Refresh();
             proBar = new Progressbar();
             Program.boolIDS = Program.boolIntegrata = Program.boolTechData = false;
             Program.iCounter = 0;
@@ -119,7 +113,6 @@ namespace CourseChecker.WPF {
                 new CreatePDF(listSelected, dlg.FileName);
             }
             logger.Info("PDF erstellt!");
-            lstViewLogs.Items.Refresh();
         }
 
         private void AddToListSelected(IList tmp) {

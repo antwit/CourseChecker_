@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace CourseChecker.Logging {
 
@@ -19,10 +18,12 @@ namespace CourseChecker.Logging {
             }
         }
 
-        internal static List<LogInfo> GetLogging { get; set; } = new List<LogInfo>();
+        internal static ICollection<LogInfo> GetLogging { get; private set; } = new ObservableCollection<LogInfo>();
 
         public static void LoggerNLog(String strLevel, String strMessage, String strTime) {
-            GetLogging.Add(new LogInfo(strTime, strLevel, strMessage));
+            Application.Current.Dispatcher.Invoke((System.Action)delegate {
+                GetLogging.Add(new LogInfo(strTime, strLevel, strMessage));
+            });
         }
     }
 }

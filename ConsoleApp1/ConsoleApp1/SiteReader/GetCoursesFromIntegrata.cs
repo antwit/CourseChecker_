@@ -83,7 +83,7 @@ namespace CourseChecker.SiteReader {
                 }
             } catch(Exception) {
                 //Course not found
-                logger.Info("Keine Integrata Termine gefunden für: {0}", strTitle);
+                logger.Info("[Integrata] Keine Termine gefunden für: {0}", strTitle);
             }
 
             if(listStrArrPlaceDate.Count > 0) {

@@ -57,13 +57,13 @@ namespace CourseChecker.SiteReader {
                 }
 
                 if (listExcluded.Contains(kursNr_Title[0])) {
-                    logger.Info("Kurs " + kursNr_Title[0] + " wurde aussortiert, da es sich in der Excludeliste befand.");
+                    logger.Info("[TechData] Kurs '" + kursNr_Title[0] + "' wurde aussortiert, da es sich in der Excludeliste befand.");
                     throw new Exception();
                 }
                 //find all locations
                 HtmlNodeCollection collNodeLocation = htmlDoc.DocumentNode.SelectNodes("//*[@class='location']");
                 if (collNodeLocation.Count < 1) {
-                    logger.Info("Kurs '" + kursNr_Title[0] + "' wurde aussortiert, da es keine Termine von TechData gibt.");
+                    logger.Info("[TechData] Kein Termine gefunden für: " + kursNr_Title[0]);
                     throw new Exception();
                 }
 

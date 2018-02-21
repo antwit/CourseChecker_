@@ -56,10 +56,10 @@ namespace CourseChecker.Course {
             AddRange(queueUrls, urlsFromIntegrata.SetsOfUrls);
             Program.iNumberOfCourses += queueUrls.Count;
             Program.boolIntegrata = true;
-            logger.Info("Links zu den entsprechenden Kursen aus Integrata extrahiert!");
+            logger.Info("[Integrata] Links zu den entsprechenden Kursen aus Integrata extrahiert!");
 
             GetCourse.AddRange((new GetCoursesFromIntegrata(queueUrls)).GetListKurse);
-            logger.Info("Es wurden {0} Kurse aus Integrata extrahiert.", GetCourse.Count);
+            logger.Info("[Integrata] Es wurden {0} Kurse aus Integrata extrahiert.", GetCourse.Count);
         }
 
         private void AddRange(Queue<Uri> queue, Queue<Uri> input) {
@@ -81,11 +81,11 @@ namespace CourseChecker.Course {
             ReadWithSeleniumTechDataMainSite collectUrl = new ReadWithSeleniumTechDataMainSite(uriSearchDb2, Program.ListManualCheckForTechData, uriSearch);
             Program.iNumberOfCourses += collectUrl.ListUrl.Count;
             Program.boolTechData = true;
-            logger.Info("Links zu den entsprechenden Kursen aus TechData extrahiert!");
+            logger.Info("[TechData] Links zu den entsprechenden Kursen aus TechData extrahiert!");
 
             GetCoursesFromTechData collectCourseTechData = new GetCoursesFromTechData(collectUrl.ListUrl, listExclude);
             GetCourse = collectCourseTechData.ListKurse;
-            logger.Info("Es wurden {0} Kurse aus TechData extrahiert!", GetCourse.Count);
+            logger.Info("[TechData] Es wurden {0} Kurse aus TechData extrahiert!", GetCourse.Count);
         }
     }
 
@@ -118,7 +118,7 @@ namespace CourseChecker.Course {
             GetCourse.AddRange(readSiteIDS_3.KurseIDS);
 
             Program.boolIDS = true;
-            logger.Info("Es wurden {0} Kurse aus IDS extrahiert!", GetCourse.Count);
+            logger.Info("[IDS] Es wurden {0} Kurse aus IDS extrahiert!", GetCourse.Count);
         }
 
         private void Vergleich(int i, GetCoursesFromIDS collectIDS, GetCoursesFromIDS collectIDS_2) {
