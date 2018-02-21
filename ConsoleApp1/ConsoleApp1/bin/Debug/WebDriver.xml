@@ -268,6 +268,18 @@
             are attempting to run the Chrome driver remotely, use <see cref="T:OpenQA.Selenium.Remote.RemoteWebDriver" />
             in conjunction with a standalone WebDriver server.</remarks>
         </member>
+        <member name="P:OpenQA.Selenium.Chrome.ChromeDriver.NetworkConditions">
+            <summary>
+            Gets or sets the network condition emulation for Chrome.
+            </summary>
+        </member>
+        <member name="M:OpenQA.Selenium.Chrome.ChromeDriver.ExecuteChromeCommand(System.String,System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            Executes a custom Chrome command.
+            </summary>
+            <param name="commandName">Name of the command to execute.</param>
+            <param name="commandParameters">Parameters of the command to execute.</param>
+        </member>
         <member name="T:OpenQA.Selenium.Chrome.ChromeDriverService">
             <summary>
             Exposes the service provided by the native ChromeDriver executable.
@@ -392,6 +404,31 @@
             <summary>
             Gets or sets a value indicating whether touch events should be enabled by
             the browser when emulating a mobile device. Defaults to <see langword="true" />.
+            </summary>
+        </member>
+        <member name="T:OpenQA.Selenium.Chrome.ChromeNetworkConditions">
+            <summary>
+            Provides manipulation of getting and setting network conditions from Chrome.
+            </summary>
+        </member>
+        <member name="P:OpenQA.Selenium.Chrome.ChromeNetworkConditions.IsOffline">
+            <summary>
+            Gets or sets a value indicating whether the network is offline. Defaults to <see langword="false" />.
+            </summary>
+        </member>
+        <member name="P:OpenQA.Selenium.Chrome.ChromeNetworkConditions.Latency">
+            <summary>
+            Gets or sets the simulated latency of the connection. Typically given in milliseconds.
+            </summary>
+        </member>
+        <member name="P:OpenQA.Selenium.Chrome.ChromeNetworkConditions.DownloadThroughput">
+            <summary>
+            Gets or sets the throughput of the network connection in kb/second for downloading.
+            </summary>
+        </member>
+        <member name="P:OpenQA.Selenium.Chrome.ChromeNetworkConditions.UploadThroughput">
+            <summary>
+            Gets or sets the throughput of the network connection in kb/second for uploading.
             </summary>
         </member>
         <member name="T:OpenQA.Selenium.Chrome.ChromeOptions">
@@ -1030,6 +1067,16 @@
             <summary>
             Gets the Uri of the service.
             </summary>
+        </member>
+        <member name="P:OpenQA.Selenium.DriverService.HostName">
+            <summary>
+            Gets or sets the host name of the service. Defaults to "localhost."
+            </summary>
+            <remarks>
+            Most driver service executables do not allow connections from remote
+            (non-local) machines. This property can be used as a workaround so
+            that an IP address (like "127.0.0.1" or "::1") can be used instead.
+            </remarks>
         </member>
         <member name="P:OpenQA.Selenium.DriverService.Port">
             <summary>

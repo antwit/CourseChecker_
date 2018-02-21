@@ -1,41 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.PhantomJS;
+using System.Threading.Tasks;
 
-namespace CourseChecker.SiteReader
-{
-    class ReadWithSeleniumTechDataMainSite
-    {
+namespace CourseChecker.SiteReader {
+    class ReadWithSeleniumTechDataMainSite {
         List<String> listUrl;
-        public ReadWithSeleniumTechDataMainSite(String url)
-        {
+        public List<String> ListUrl => listUrl;
+
+        public ReadWithSeleniumTechDataMainSite(Uri url, List<String> listManuelCheck, Uri uriSearch) {
             listUrl = new List<String>();
-            using (IWebDriver driver = new ChromeDriver()) {
-                Console.Clear();
-                driver.Url = url;
-                System.Threading.Thread.Sleep(2000);
+            using(IWebDriver driver = new PhantomJSDriver()) {
+                driver.Url = url.AbsoluteUri;
                 AddUrl(driver);
 
                 IWebElement getButtom = driver.FindElement(By.LinkText("»"));
                 getButtom.Click();
-                System.Threading.Thread.Sleep(5000);
                 AddUrl(driver);
+                driver.Quit();
             }
 
+            Parallel.ForEach(listManuelCheck, list => {
+                using(IWebDriver driver = new PhantomJSDriver()) {
+                    driver.Url = uriSearch.AbsoluteUri + list;
+                    AddUrl(driver);
+                    driver.Quit();
+                }
+            });
         }
 
-        private void AddUrl(IWebDriver driver)
-        {
+        private void AddUrl(IWebDriver driver) {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            wait.Until<IWebElement>(d => d.FindElement(By.CssSelector(".btn-sm")));
+            wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.CssSelector(".btn-sm")));
             IList<IWebElement> test = driver.FindElements(By.CssSelector(".btn-sm"));
-            foreach (IWebElement b in test) {
+            foreach(IWebElement b in test) {
                 this.listUrl.Add(b.GetAttribute("href"));
             }
         }
-
-        public List<String> ListUrl => listUrl;
     }
 }

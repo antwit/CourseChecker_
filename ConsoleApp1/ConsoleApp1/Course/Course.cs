@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CourseChecker.Course
-{
-    class Kurse
-    {
+namespace CourseChecker.Course {
+    public class Kurse {
         private String strKursNr;
         private String strKursTitel;
         private DateTime dateBeginn;
+
         private DateTime dateEnde;
         private String strOrt;
         private int iPreis;
@@ -15,15 +14,14 @@ namespace CourseChecker.Course
         private String strReason;
         private static readonly Dictionary<String, String> dictReason = new Dictionary<string, string>() {
             { "Preis", "Kurspreis wurde geändert;"},
-            { "Garantie", "Kurs ist Garantietermin;" },
-            { "!Garantie", "Kurs ist nicht mehr Garantietermin;" },
+            { "Garantie", "Kurs ist nun ein Garantietermin;" },
+            { "!Garantie", "Kurs ist nicht mehr ein Garantietermin;" },
             { "!Kurs", "Kurs entfernt;" },
             { "Kurs", "Kurs hinzugefügt;" }
         };
 
-        
-        public Kurse(String strKursNr, String strKursTitel, DateTime dateBeginn, DateTime dateEnde, String strOrt, int iPreis)
-        {
+
+        public Kurse(String strKursNr, String strKursTitel, DateTime dateBeginn, DateTime dateEnde, String strOrt, int iPreis, String strAnbieter) {
             this.strKursNr = strKursNr;
             this.strKursTitel = strKursTitel;
             this.dateBeginn = dateBeginn;
@@ -32,10 +30,10 @@ namespace CourseChecker.Course
             this.iPreis = iPreis;
             this.boolGarantieTermin = false;
             this.strReason = "";
+            this.StrAnbieter = strAnbieter;
         }
 
-        public Kurse(String strKursNr, String strKursTitel, DateTime dateBeginn, DateTime dateEnde, String strOrt, int iPreis, Boolean boolGarantieTermin)
-        {
+        public Kurse(String strKursNr, String strKursTitel, DateTime dateBeginn, DateTime dateEnde, String strOrt, int iPreis, Boolean boolGarantieTermin, String strAnbieter) {
             this.strKursNr = strKursNr;
             this.strKursTitel = strKursTitel;
             this.dateBeginn = dateBeginn;
@@ -44,6 +42,7 @@ namespace CourseChecker.Course
             this.iPreis = iPreis;
             this.boolGarantieTermin = boolGarantieTermin;
             this.strReason = "";
+            this.StrAnbieter = strAnbieter;
         }
 
         public String StrOrt => strOrt;
@@ -54,11 +53,11 @@ namespace CourseChecker.Course
         public String StrKursTitel => strKursTitel;
         public String StrKursNr => strKursNr;
         public String StrReason => strReason;
+        public String StrAnbieter { get; set; }
 
-        public Boolean Contains(Kurse kursCheck)
-        {
+        public Boolean Contains(Kurse kursCheck) {
             Boolean retEqual = false;
-            if (this.strKursNr.Length > 0)
+            if(this.strKursNr.Length > 0)
                 retEqual = this.strKursNr.ToLowerInvariant().Equals(kursCheck.StrKursNr.ToLowerInvariant())
                         & this.dateBeginn.Equals(kursCheck.DateBeginn)
                         & this.dateEnde.Equals(kursCheck.DateEnde)
@@ -74,24 +73,23 @@ namespace CourseChecker.Course
                         & this.boolGarantieTermin.Equals(kursCheck.BoolGarantieTermin)
                         & this.strKursTitel.ToLowerInvariant().Replace("–", "-").Replace("/", "").Replace("ibm ", "").Replace(":", "").Trim().Equals(kursCheck.StrKursTitel.ToLowerInvariant().Replace("–", "-").Replace("/", "").Replace("ibm ", "").Replace(":", "").Trim());
 
-            if (!retEqual && this.strKursTitel.ToLowerInvariant().Replace("–", "-").Replace("/", "").Replace("ibm ", "").Replace(":", "").Trim().Equals(kursCheck.StrKursTitel.ToLowerInvariant().Replace("–", "-").Replace("/", "").Replace("ibm ", "").Replace(":", "").Trim()) && this.dateBeginn.Equals(kursCheck.DateBeginn) && this.strOrt.ToLowerInvariant().Equals(kursCheck.StrOrt.ToLowerInvariant())) {
-                if (!this.iPreis.Equals(kursCheck.IPreis))
+            if(!retEqual && this.strKursTitel.ToLowerInvariant().Replace("–", "-").Replace("/", "").Replace("ibm ", "").Replace(":", "").Trim().Equals(kursCheck.StrKursTitel.ToLowerInvariant().Replace("–", "-").Replace("/", "").Replace("ibm ", "").Replace(":", "").Trim()) && this.dateBeginn.Equals(kursCheck.DateBeginn) && this.strOrt.ToLowerInvariant().Equals(kursCheck.StrOrt.ToLowerInvariant())) {
+                if(!this.iPreis.Equals(kursCheck.IPreis))
                     this.strReason = dictReason["Preis"];
                 if(!this.boolGarantieTermin.Equals(kursCheck.BoolGarantieTermin) && this.boolGarantieTermin)
                     this.strReason = dictReason["Garantie"];
-                if (!this.boolGarantieTermin.Equals(kursCheck.BoolGarantieTermin) && kursCheck.BoolGarantieTermin)
+                if(!this.boolGarantieTermin.Equals(kursCheck.BoolGarantieTermin) && kursCheck.BoolGarantieTermin)
                     this.strReason = dictReason["!Garantie"];
-            }else if (!retEqual && !(this.strReason.Length > 1)) {
+            } else if(!retEqual && !(this.strReason.Length > 1)) {
                 this.strReason = dictReason["Kurs"];
             }
 
             return retEqual;
         }
 
-        public Boolean ContainsForIDS(Kurse kursCheck)
-        {
+        public Boolean ContainsForIDS(Kurse kursCheck) {
             Boolean retEqual = false;
-            if (this.strKursNr.Length > 0)
+            if(this.strKursNr.Length > 0)
                 retEqual = this.strKursNr.ToLowerInvariant().Equals(kursCheck.StrKursNr.ToLowerInvariant())
                         & this.dateBeginn.Equals(kursCheck.DateBeginn)
                         & this.dateEnde.Equals(kursCheck.DateEnde)
@@ -104,14 +102,14 @@ namespace CourseChecker.Course
                         & this.strKursTitel.ToLowerInvariant().Replace("–", "-").Replace("/", "").Replace("ibm ", "").Replace(":", "").Trim().Equals(kursCheck.StrKursTitel.ToLowerInvariant().Replace("–", "-").Replace("/", "").Replace("ibm ", "").Replace(":", "").Trim());
 
 
-            if (!retEqual && this.strKursTitel.ToLowerInvariant().Replace("–", "-").Replace("/", "").Replace("ibm ", "").Replace(":", "").Trim().Equals(kursCheck.StrKursTitel.ToLowerInvariant().Replace("–", "-").Replace("/", "").Replace("ibm ", "").Replace(":", "").Trim()) && this.dateBeginn.Equals(kursCheck.DateBeginn) && this.strOrt.ToLowerInvariant().Equals(kursCheck.StrOrt.ToLowerInvariant())) {
-                if (!this.iPreis.Equals(kursCheck.IPreis) && this.strKursNr.ToLowerInvariant().Equals(kursCheck.StrKursNr.ToLowerInvariant()))
+            if(!retEqual && this.strKursTitel.ToLowerInvariant().Replace("–", "-").Replace("/", "").Replace("ibm ", "").Replace(":", "").Trim().Equals(kursCheck.StrKursTitel.ToLowerInvariant().Replace("–", "-").Replace("/", "").Replace("ibm ", "").Replace(":", "").Trim()) && this.dateBeginn.Equals(kursCheck.DateBeginn) && this.strOrt.ToLowerInvariant().Equals(kursCheck.StrOrt.ToLowerInvariant())) {
+                if(!this.iPreis.Equals(kursCheck.IPreis) && this.strKursNr.ToLowerInvariant().Equals(kursCheck.StrKursNr.ToLowerInvariant()))
                     kursCheck.strReason = dictReason["Preis"];
-                if (!this.boolGarantieTermin.Equals(kursCheck.BoolGarantieTermin) && this.boolGarantieTermin)
+                if(!this.boolGarantieTermin.Equals(kursCheck.BoolGarantieTermin) && this.boolGarantieTermin)
                     kursCheck.strReason = dictReason["Garantie"];
-                if (!this.boolGarantieTermin.Equals(kursCheck.BoolGarantieTermin) && kursCheck.BoolGarantieTermin)
+                if(!this.boolGarantieTermin.Equals(kursCheck.BoolGarantieTermin) && kursCheck.BoolGarantieTermin)
                     kursCheck.strReason = dictReason["!Garantie"];
-            }else if (!retEqual) {
+            } else if(!retEqual) {
                 kursCheck.strReason = dictReason["!Kurs"];
             }
 
