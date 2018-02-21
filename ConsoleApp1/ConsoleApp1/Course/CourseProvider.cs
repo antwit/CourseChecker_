@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using CourseChecker.CollectCourses;
 using CourseChecker.SiteReader;
 
 namespace CourseChecker.Course {
@@ -41,14 +40,13 @@ namespace CourseChecker.Course {
                 "db2-z-os",
                 "db2-z-os"
             };
+
             List<Uri> listURIs = new List<Uri>() {
                 new Uri("https://www.integrata.de/seminarangebot/ibm-operations/"),
                 new Uri("https://www.integrata.de/seminarangebot/ibm-operations/"),
                 new Uri("https://www.integrata.de/seminarangebot/ibm-development/#db2-zos")
             };
 
-
-            //ReadWithSeliumIntegrataMainSite urlsPartOne = new ReadWithSeliumIntegrataMainSite(listURIs, listIDs);
             GetCourseUrlsFromIntegrata urlsFromIntegrata = new GetCourseUrlsFromIntegrata(listURIs, listIDs);
 
             AddRange(queueUrls, urlsFromIntegrata.SetsOfUrls);
@@ -56,8 +54,6 @@ namespace CourseChecker.Course {
             Program.boolIntegrata = true;
 
             GetCourse.AddRange((new GetCoursesFromIntegrata(queueUrls)).GetListKurse);
-            //ReadWithSeleniumIntegrata getKurse = new ReadWithSeleniumIntegrata(queueUrls);
-            //GetCourse.AddRange(getKurse.GetListKurse());
         }
 
         private void AddRange(Queue<Uri> queue, Queue<Uri> input) {
@@ -73,11 +69,13 @@ namespace CourseChecker.Course {
             Uri uriSearch = new Uri("https://academy.techdata.com/de/search/index/#?country=DE&selectedVendor=&searchTerm=");
             Uri uriSearchDb2 = new Uri("https://academy.techdata.com/de/search/index/#?country=DE&selectedVendor=5&searchTerm=db2&modality=classroom");
             GetCourse = new List<Kurse>();
+
             ReadWithSeleniumTechDataMainSite collectUrl = new ReadWithSeleniumTechDataMainSite(uriSearchDb2, Program.ListManualCheckForTechData, uriSearch);
             Program.iNumberOfCourses += collectUrl.ListUrl.Count;
             Program.boolTechData = true;
-            CollectCourseTechData collectCourseTechData = new CollectCourseTechData(collectUrl.ListUrl, listExclude);
-            GetCourse = collectCourseTechData.Kurse;
+
+            GetCoursesFromTechData collectCourseTechData = new GetCoursesFromTechData(collectUrl.ListUrl, listExclude);
+            GetCourse = collectCourseTechData.ListKurse;
         }
     }
 
@@ -94,27 +92,23 @@ namespace CourseChecker.Course {
             String strTechData = "TechData";
             String strNAN = "NAN";
 
-            ReadSite readSiteIDS_2 = new ReadSite("http://www.ids-system.de/leistung/schulungen/tutor/2");
-            ReadSite readSiteIDS_3 = new ReadSite("http://www.ids-system.de/leistung/schulungen/tutor/3");
-            ReadSite readSiteIDS = new ReadSite("http://www.ids-system.de/component/seminarman/2-100-durchfuehrungsgarantie?Itemid=585");
+            GetCoursesFromIDS readSiteIDS_2 = new GetCoursesFromIDS(new Uri("http://www.ids-system.de/leistung/schulungen/tutor/2"), strIntegrata);
+            GetCoursesFromIDS readSiteIDS_3 = new GetCoursesFromIDS(new Uri("http://www.ids-system.de/leistung/schulungen/tutor/3"), strTechData);
+            GetCoursesFromIDS readSiteIDS = new GetCoursesFromIDS(new Uri("http://www.ids-system.de/component/seminarman/2-100-durchfuehrungsgarantie?Itemid=585"), strNAN);
             Program.boolIDS = true;
 
-            CollectCourseIDS collectIDS = new CollectCourseIDS(readSiteIDS.GetSite(), strNAN);
-            CollectCourseIDS collectIDS_2 = new CollectCourseIDS(readSiteIDS_2.GetSite(), strIntegrata);
-            CollectCourseIDS collectIDS_3 = new CollectCourseIDS(readSiteIDS_3.GetSite(), strTechData);
-
-            for (int i = 0; i < collectIDS.KurseIDS.Count; i++) {
-                Vergleich(i, collectIDS, collectIDS_2);
-                Vergleich(i, collectIDS, collectIDS_3);
+            for (int i = 0; i < readSiteIDS.KurseIDS.Count; i++) {
+                Vergleich(i, readSiteIDS, readSiteIDS_2);
+                Vergleich(i, readSiteIDS, readSiteIDS_3);
             }
 
-            GetCourseIntegrata.AddRange(collectIDS_2.KurseIDS);
-            GetCourseTechData.AddRange(collectIDS_3.KurseIDS);
-            GetCourse.AddRange(collectIDS_2.KurseIDS);
-            GetCourse.AddRange(collectIDS_3.KurseIDS);
+            GetCourseIntegrata.AddRange(readSiteIDS_2.KurseIDS);
+            GetCourseTechData.AddRange(readSiteIDS_3.KurseIDS);
+            GetCourse.AddRange(readSiteIDS_2.KurseIDS);
+            GetCourse.AddRange(readSiteIDS_3.KurseIDS);
         }
 
-        private void Vergleich(int i, CollectCourseIDS collectIDS, CollectCourseIDS collectIDS_2) {
+        private void Vergleich(int i, GetCoursesFromIDS collectIDS, GetCoursesFromIDS collectIDS_2) {
             for (int j = 0; j < collectIDS_2.KurseIDS.Count; j++) {
                 if (collectIDS_2.KurseIDS[j].Contains(collectIDS.KurseIDS[i])) {
                     collectIDS_2.KurseIDS[j].BoolGarantieTermin = true;
