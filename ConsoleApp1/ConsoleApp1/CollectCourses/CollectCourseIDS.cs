@@ -15,11 +15,11 @@ namespace CourseChecker.CollectCourses {
 
             Program.iNumberOfCourses += listSection.Count;
 
-            foreach (String strElement in listSection) {
+            foreach(String strElement in listSection) {
                 List<String> listTmp = SplitSection(strElement);
                 kurseIDS.Add(new Kurse(listTmp.ElementAt(0), listTmp.ElementAt(1), DateTime.Parse(listTmp.ElementAt(2)),
                                 DateTime.Parse(listTmp.ElementAt(3)), listTmp.ElementAt(4), Convert.ToInt32(listTmp.ElementAt(5)), strAnbieter));
-                if (Program.boolIDS & Program.boolIntegrata & Program.boolTechData) {
+                if(Program.boolIDS & Program.boolIntegrata & Program.boolTechData) {
                     Program.bw.ReportProgress((int)((double)Program.iCounter++ / (double)Program.iNumberOfCourses * 100));
                 } else {
                     Program.bw.ReportProgress((int)((double)Program.iCounter++ / (double)Program.iThousend * 100));
@@ -36,7 +36,7 @@ namespace CourseChecker.CollectCourses {
             int iEnd = 0;
             int itmp = strSite.Length;
 
-            while (strSite.IndexOf("<tr class=\"sectiontableentry\"><td headers=", iStart) != -1) {
+            while(strSite.IndexOf("<tr class=\"sectiontableentry\"><td headers=", iStart) != -1) {
                 iStart = strSite.IndexOf("<tr class=\"sectiontableentry\"><td headers=", iStart);
                 iEnd = iStart;
                 iEnd = strSite.IndexOf("</tr>", iEnd);
@@ -54,12 +54,12 @@ namespace CourseChecker.CollectCourses {
             String replace = "";
             Regex rgx = new Regex(pattern, RegexOptions.IgnoreCase);
 
-            for (int i = 0; i < strTmp.Length; i++) {
-                if (i == 2 || i == 3) {
+            for(int i = 0; i < strTmp.Length; i++) {
+                if(i == 2 || i == 3) {
                     listData.Add((rgx.Replace(strTmp[i], replace)).Replace('ä', 'a'));
-                } else if (i == 1) {
+                } else if(i == 1) {
                     listData.Add(rgx.Replace(strTmp[i], replace));
-                } else if (i < 6) {
+                } else if(i < 6) {
                     listData.Add(rgx.Replace(strTmp[i], replace));
                 }
             }

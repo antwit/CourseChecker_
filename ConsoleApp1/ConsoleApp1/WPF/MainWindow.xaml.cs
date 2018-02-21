@@ -87,13 +87,13 @@ namespace CourseChecker.WPF {
                 DefaultExt = ".pdf"
             };
 
-            if (dlg.ShowDialog() == true) {
+            if(dlg.ShowDialog() == true) {
                 new CreatePDF(listSelected, dlg.FileName);
             }
         }
 
         private void AddToListSelected(IList tmp) {
-            foreach (object tmpo in tmp) {
+            foreach(object tmpo in tmp) {
                 this.listSelected.Add((Kurse)tmpo);
             }
         }

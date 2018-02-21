@@ -5,17 +5,14 @@ using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.PhantomJS;
 using System.Threading.Tasks;
 
-namespace CourseChecker.SiteReader
-{
-    class ReadWithSeleniumTechDataMainSite
-    {
+namespace CourseChecker.SiteReader {
+    class ReadWithSeleniumTechDataMainSite {
         List<String> listUrl;
         public List<String> ListUrl => listUrl;
 
-        public ReadWithSeleniumTechDataMainSite(Uri url, List<String> listManuelCheck, Uri uriSearch)
-        {
+        public ReadWithSeleniumTechDataMainSite(Uri url, List<String> listManuelCheck, Uri uriSearch) {
             listUrl = new List<String>();
-            using (IWebDriver driver = new PhantomJSDriver()) {
+            using(IWebDriver driver = new PhantomJSDriver()) {
                 driver.Url = url.AbsoluteUri;
                 AddUrl(driver);
 
@@ -26,8 +23,7 @@ namespace CourseChecker.SiteReader
             }
 
             Parallel.ForEach(listManuelCheck, list => {
-                using (IWebDriver driver = new PhantomJSDriver())
-                {
+                using(IWebDriver driver = new PhantomJSDriver()) {
                     driver.Url = uriSearch.AbsoluteUri + list;
                     AddUrl(driver);
                     driver.Quit();
@@ -35,12 +31,11 @@ namespace CourseChecker.SiteReader
             });
         }
 
-        private void AddUrl(IWebDriver driver)
-        {
+        private void AddUrl(IWebDriver driver) {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.CssSelector(".btn-sm")));
             IList<IWebElement> test = driver.FindElements(By.CssSelector(".btn-sm"));
-            foreach (IWebElement b in test) {
+            foreach(IWebElement b in test) {
                 this.listUrl.Add(b.GetAttribute("href"));
             }
         }

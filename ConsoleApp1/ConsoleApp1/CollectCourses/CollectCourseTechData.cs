@@ -10,7 +10,6 @@ namespace CourseChecker.CollectCourses {
         public CollectCourseTechData(List<String> strSite, List<String> listExclude) {
             Kurse = new List<Kurse>();
             GetCoursesFromTechData getCourses = new GetCoursesFromTechData(strSite, listExclude);
-            //ReadWithSeleniumTechDataSite getCours = new ReadWithSeleniumTechDataSite(strSite, listExclude);
             Kurse.AddRange(getCourses.ListKurse);
         }
     }

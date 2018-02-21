@@ -2,8 +2,6 @@
 using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -21,7 +19,7 @@ namespace CourseChecker.SiteReader {
                 HtmlDocument htmlDoc = webContent.Load(url);
                 GetData(htmlDoc);
 
-                if (Program.boolIDS & Program.boolIntegrata & Program.boolTechData) {
+                if(Program.boolIDS & Program.boolIntegrata & Program.boolTechData) {
                     Program.bw.ReportProgress((int)((double)Program.iCounter++ / (double)Program.iNumberOfCourses * 100));
                 } else {
                     Program.bw.ReportProgress((int)((double)Program.iCounter++ / (double)Program.iThousend * 100));
@@ -43,17 +41,18 @@ namespace CourseChecker.SiteReader {
                 iPrice = Convert.ToInt32(Regex.Match(strPrice, "(\\d[\\d\\.]+)").Value.Replace(".", ""));
                 //get all locations
                 HtmlNodeCollection placeDate = htmlDoc.DocumentNode.SelectNodes("//*[@class='city-item']");
-                if (placeDate == null) throw new Exception();
+                if(placeDate == null)
+                    throw new Exception();
 
-                foreach (HtmlNode node in placeDate) {
+                foreach(HtmlNode node in placeDate) {
                     String[] strArrGetDatePlace = new String[4];
                     //Select all appointments for specific location
                     HtmlNodeCollection singleDate = node.SelectNodes("*/div/div[@class='row']");
-                    foreach (HtmlNode eleDate in singleDate) {
+                    foreach(HtmlNode eleDate in singleDate) {
                         //Course identifier
                         strTitle = eleDate.SelectSingleNode("meta[1]").GetAttributeValue("Content", "");
                         Match match = Regex.Match(strTitle, patternKursNummer);
-                        if (match.Success) {
+                        if(match.Success) {
                             strNumber = match.Groups[1].Value;
                             strTitle = strTitle.Split('-')[1].Trim();
                         } else {
@@ -77,13 +76,13 @@ namespace CourseChecker.SiteReader {
                         listStrArrPlaceDate.Add(strArrGetDatePlace);
                     }
                 }
-            } catch (Exception) {
+            } catch(Exception) {
                 //Course not found
                 Console.Out.WriteLine("Keine Termine für: {0}  {1}", strNumber, strTitle);
             }
 
-            if (listStrArrPlaceDate.Count > 0) {
-                foreach (string[] strArr in listStrArrPlaceDate) {
+            if(listStrArrPlaceDate.Count > 0) {
+                foreach(string[] strArr in listStrArrPlaceDate) {
                     DateTime startDate = new DateTime();
                     DateTime.TryParse(strArr[1], out startDate);
                     DateTime endDate = new DateTime();
