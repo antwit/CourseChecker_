@@ -29,8 +29,6 @@ namespace CourseChecker {
         internal static int iNumberOfCourses;
         internal static int iCounter;
         internal static BackgroundWorker bw = new BackgroundWorker();
-        internal static BackgroundWorker bwLogger = new BackgroundWorker();
-
         internal static List<string> ListManualCheckForTechData => listManualCheckForTechData;
 
         [STAThread]
