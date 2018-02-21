@@ -1,4 +1,5 @@
 ﻿using CourseChecker.Course;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,7 +8,9 @@ using System.Net;
 using System.Text.RegularExpressions;
 
 namespace CourseChecker.SiteReader {
+
     class GetCoursesFromIDS {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         internal List<Kurse> KurseIDS { get; set; }
 
         public GetCoursesFromIDS(Uri url, String strAnbieter) {
@@ -21,6 +24,7 @@ namespace CourseChecker.SiteReader {
                 List<String> listTmp = SplitSection(strElement);
                 KurseIDS.Add(new Kurse(listTmp.ElementAt(0), listTmp.ElementAt(1), DateTime.Parse(listTmp.ElementAt(2)),
                                 DateTime.Parse(listTmp.ElementAt(3)), listTmp.ElementAt(4), Convert.ToInt32(listTmp.ElementAt(5)), strAnbieter));
+
                 if(Program.boolIDS & Program.boolIntegrata & Program.boolTechData) {
                     Program.bw.ReportProgress((int)((double)Program.iCounter++ / (double)Program.iNumberOfCourses * 100));
                 } else {

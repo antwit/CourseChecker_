@@ -4,9 +4,12 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.PhantomJS;
 using System.Threading.Tasks;
+using NLog;
 
 namespace CourseChecker.SiteReader {
+
     class ReadWithSeleniumTechDataMainSite {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         List<String> listUrl;
         public List<String> ListUrl => listUrl;
 

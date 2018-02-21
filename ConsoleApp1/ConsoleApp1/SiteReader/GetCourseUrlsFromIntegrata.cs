@@ -1,11 +1,14 @@
 ﻿using CourseChecker.Course;
 using HtmlAgilityPack;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CourseChecker.SiteReader {
+
     class GetCourseUrlsFromIntegrata {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         private HtmlWeb webContent = new HtmlWeb();
         internal Queue<Uri> SetsOfUrls { get; set; }
         private List<Uri> listURI = new List<Uri>();

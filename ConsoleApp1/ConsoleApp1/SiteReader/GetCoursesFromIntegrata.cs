@@ -1,12 +1,15 @@
 ﻿using CourseChecker.Course;
 using HtmlAgilityPack;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace CourseChecker.SiteReader {
+
     class GetCoursesFromIntegrata {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         private HtmlWeb webContent = new HtmlWeb();
         private List<Kurse> lstKurse = new List<Kurse>();
         delegate int del();
@@ -41,8 +44,10 @@ namespace CourseChecker.SiteReader {
                 iPrice = Convert.ToInt32(Regex.Match(strPrice, "(\\d[\\d\\.]+)").Value.Replace(".", ""));
                 //get all locations
                 HtmlNodeCollection placeDate = htmlDoc.DocumentNode.SelectNodes("//*[@class='city-item']");
-                if(placeDate == null)
+                if (placeDate == null) {
+                    strTitle = Regex.Match(htmlDoc.DocumentNode.SelectSingleNode("//title").InnerText, ".*?:(.*)?- Training, Seminar").Groups[1].Value;
                     throw new Exception();
+                }
 
                 foreach(HtmlNode node in placeDate) {
                     String[] strArrGetDatePlace = new String[4];
@@ -78,7 +83,7 @@ namespace CourseChecker.SiteReader {
                 }
             } catch(Exception) {
                 //Course not found
-                Console.Out.WriteLine("Keine Termine für: {0}  {1}", strNumber, strTitle);
+                logger.Info("Keine Integrata Termine gefunden für: {0}", strTitle);
             }
 
             if(listStrArrPlaceDate.Count > 0) {

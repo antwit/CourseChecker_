@@ -9,6 +9,7 @@ using Microsoft.Win32;
 using System.Windows.Threading;
 using System.Threading;
 using System.ComponentModel;
+using CourseChecker.Logging;
 
 namespace CourseChecker.WPF {
     /// <summary>
@@ -16,7 +17,7 @@ namespace CourseChecker.WPF {
     /// </summary>
     public partial class MainWindow : Window {
 
-
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         Progressbar proBar;
         private List<Kurse> listSelected;
 
@@ -29,7 +30,6 @@ namespace CourseChecker.WPF {
             Task<Integrata> taskIntegrata = Task<Integrata>.Factory.StartNew(() => new Integrata());
             Task<Techdata> taskTechData = Task<Techdata>.Factory.StartNew(d => new Techdata((List<string>)d), Program.listExcludeForTechData);
             Task.WaitAll(new Task[] { taskIDS, taskIntegrata, taskTechData });
-            Task.WaitAll(new Task[] { taskIDS, taskIntegrata });
 
             List<Kurse> idsAll = taskIDS.Result.GetCourse;
             List<Kurse> idsIntegrata = taskIDS.Result.GetCourseIntegrata;
@@ -51,21 +51,49 @@ namespace CourseChecker.WPF {
 
         private void Bw_ProgressChanged(object sender, ProgressChangedEventArgs e) {
             proBar.prgBar.Value = e.ProgressPercentage;
+            lstViewLogs.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
+               (ThreadStart)delegate () {
+                   lstViewLogs.Items.Refresh();
+               });
         }
 
         private void Bw_RunworkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
             proBar.Close();
+            this.btnStart.IsEnabled = true;
+            this.btnPDF.IsEnabled = true;
+
+            logger.Info("Suche fertiggestellt!");
+            lstViewLogs.Items.Refresh();
         }
 
         private void BtnStart(object sender, RoutedEventArgs e) {
+            logger.Info("Suche gestartet...");
+            lstViewLogs.Items.Refresh();
             proBar = new Progressbar();
             Program.boolIDS = Program.boolIntegrata = Program.boolTechData = false;
-            Program.bw.WorkerReportsProgress = true;
-            Program.bw.DoWork += Bw_DoWork;
-            Program.bw.ProgressChanged += Bw_ProgressChanged;
-            Program.bw.RunWorkerCompleted += Bw_RunworkerCompleted;
-            Program.bw.RunWorkerAsync();
+            Program.iCounter = 0;
+            Program.iNumberOfCourses = 0;
 
+            lstViewLogs.ItemsSource = null;
+            lstViewIntegrata.ItemsSource = null;
+            lstViewIDSIntegrata.ItemsSource = null;
+            lstViewTechData.ItemsSource = null;
+            lstViewIDSTechData.ItemsSource = null;
+
+            if (!Program.bw.WorkerReportsProgress) {
+                Program.bw.WorkerReportsProgress = true;
+                Program.bw.DoWork += Bw_DoWork;
+                Program.bw.ProgressChanged += Bw_ProgressChanged;
+                Program.bw.RunWorkerCompleted += Bw_RunworkerCompleted;
+            }
+
+            if (!Program.bw.IsBusy) {
+                Program.bw.RunWorkerAsync();
+                this.btnStart.IsEnabled = false;
+                this.btnPDF.IsEnabled = false;
+            }
+
+            lstViewLogs.ItemsSource = Logger.GetLogging;
             proBar.Show();
         }
 
@@ -87,13 +115,15 @@ namespace CourseChecker.WPF {
                 DefaultExt = ".pdf"
             };
 
-            if(dlg.ShowDialog() == true) {
+            if (dlg.ShowDialog() == true) {
                 new CreatePDF(listSelected, dlg.FileName);
             }
+            logger.Info("PDF erstellt!");
+            lstViewLogs.Items.Refresh();
         }
 
         private void AddToListSelected(IList tmp) {
-            foreach(object tmpo in tmp) {
+            foreach (object tmpo in tmp) {
                 this.listSelected.Add((Kurse)tmpo);
             }
         }

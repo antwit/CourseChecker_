@@ -114,6 +114,7 @@
                     <GridView>
                         <GridView.Columns>
                             <GridViewColumn Header="Zeit" DisplayMemberBinding="{Binding Time}"/>
+                            <GridViewColumn Header="Log Level" DisplayMemberBinding="{Binding LogLvl}"/>
                             <GridViewColumn Header="Grund" DisplayMemberBinding="{Binding Reason}"/>
                         </GridView.Columns>
                     </GridView>

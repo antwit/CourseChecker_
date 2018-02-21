@@ -1,8 +1,11 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 
 namespace CourseChecker.Course {
-    public class Kurse {
+
+    internal class Kurse {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         private String strKursNr;
         private String strKursTitel;
         private DateTime dateBeginn;
@@ -19,8 +22,7 @@ namespace CourseChecker.Course {
             { "!Kurs", "Kurs entfernt;" },
             { "Kurs", "Kurs hinzugefügt;" }
         };
-
-
+        
         public Kurse(String strKursNr, String strKursTitel, DateTime dateBeginn, DateTime dateEnde, String strOrt, int iPreis, String strAnbieter) {
             this.strKursNr = strKursNr;
             this.strKursTitel = strKursTitel;
@@ -83,7 +85,6 @@ namespace CourseChecker.Course {
             } else if(!retEqual && !(this.strReason.Length > 1)) {
                 this.strReason = dictReason["Kurs"];
             }
-
             return retEqual;
         }
 
@@ -112,9 +113,7 @@ namespace CourseChecker.Course {
             } else if(!retEqual) {
                 kursCheck.strReason = dictReason["!Kurs"];
             }
-
             return retEqual;
         }
-
     }
 }

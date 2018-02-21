@@ -3,9 +3,13 @@ using System;
 using System.Data;
 using System.Collections.Generic;
 using CourseChecker.Course;
+using NLog;
 
 namespace CourseChecker.PDF {
+
     class CreatePDF {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         public CreatePDF(List<Kurse> kurse, String path) {
             String date = DateTime.Now.ToShortDateString();
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");

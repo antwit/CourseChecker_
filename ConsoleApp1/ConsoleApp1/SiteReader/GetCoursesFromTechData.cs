@@ -1,5 +1,6 @@
 ﻿using CourseChecker.Course;
 using HtmlAgilityPack;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,9 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace CourseChecker.SiteReader {
+
     class GetCoursesFromTechData {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         private HtmlWeb webContent = new HtmlWeb();
         internal List<Kurse> ListKurse { get; set; }
 
@@ -53,12 +56,16 @@ namespace CourseChecker.SiteReader {
                     throw new Exception("Title wurde nicht gefunden!");
                 }
 
-                if (listExcluded.Contains(kursNr_Title[0]))
-                    throw new Exception("Kurs " + kursNr_Title[0] + " wurde aussortiert, da es sich in der Excludeliste befand!");
+                if (listExcluded.Contains(kursNr_Title[0])) {
+                    logger.Info("Kurs " + kursNr_Title[0] + " wurde aussortiert, da es sich in der Excludeliste befand.");
+                    throw new Exception();
+                }
                 //find all locations
                 HtmlNodeCollection collNodeLocation = htmlDoc.DocumentNode.SelectNodes("//*[@class='location']");
-                if (collNodeLocation.Count < 1)
-                    throw new Exception("Kurs " + kursNr_Title[0] + " wurde aussortiert, da es keine Termine gibt!");
+                if (collNodeLocation.Count < 1) {
+                    logger.Info("Kurs '" + kursNr_Title[0] + "' wurde aussortiert, da es keine Termine von TechData gibt.");
+                    throw new Exception();
+                }
 
                 arrLocDate = new List<string>[collNodeLocation.Count];
                 for (int i = 0; i < collNodeLocation.Count; i++) {
