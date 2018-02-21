@@ -27,3 +27,6 @@ C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\Cou
 C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker.exe
 C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker.pdb
 C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker.csprojResolveAssemblyReference.cache
+C:\Users\anwiids01\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\bin\Debug\CourseChecker.exe.config
+C:\Users\anwiids01\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker.exe
+C:\Users\anwiids01\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker.pdb
