@@ -21,6 +21,8 @@
             <ToolBar DockPanel.Dock="Top" Name="mnuMenu">
                 <Button Name="btnStart" ButtonBase.Click="BtnStart">Suche starten ...</Button>
                 <Separator/>
+                <Button Name="btnBuchungen" ButtonBase.Click="BtnBuchungen">Anzahl der Buchungen ändern</Button>
+                <Separator/>
                 <Button Name="btnPDF" ButtonBase.Click="BtnPDF">PDF erstellen</Button>
             </ToolBar>
         </DockPanel>
@@ -115,7 +117,7 @@
                         <GridView.Columns>
                             <GridViewColumn Header="Zeit" DisplayMemberBinding="{Binding Time}"/>
                             <GridViewColumn Header="Log Level" DisplayMemberBinding="{Binding LogLvl}"/>
-                            <GridViewColumn Header="Grund" DisplayMemberBinding="{Binding Reason}"/>
+                            <GridViewColumn Width="700" Header="Grund" DisplayMemberBinding="{Binding Reason}"/>
                         </GridView.Columns>
                     </GridView>
                 </ListView.View>

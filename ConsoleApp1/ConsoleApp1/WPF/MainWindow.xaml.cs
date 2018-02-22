@@ -120,5 +120,9 @@ namespace CourseChecker.WPF {
                 this.listSelected.Add((Kurse)tmpo);
             }
         }
+
+        private void BtnBuchungen(object sender, RoutedEventArgs e) {
+
+        }
     }
 }
