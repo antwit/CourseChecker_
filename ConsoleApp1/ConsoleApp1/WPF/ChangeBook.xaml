@@ -14,7 +14,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="2">
-            <Button Name="btnClose" Grid.Column="1" Margin="10" Click="btn_Click" IsDefault="True" Content="Schließen"/> 
+            <Button Name="btnClose" Grid.Column="1" Margin="10" Click="btn_Click" IsDefault="True" Content="Schließen" HorizontalAlignment="Center" Width="150" FontWeight="Bold" FontSize="15" /> 
         </Grid>
         <GroupBox Header="Datensatz" BorderThickness="2" BorderBrush="Black">
             <DataGrid Name="dataGridCourses" ItemsSource="{Binding}" Margin="5"/>
