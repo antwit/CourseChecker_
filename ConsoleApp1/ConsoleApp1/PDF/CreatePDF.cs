@@ -33,7 +33,7 @@ namespace CourseChecker.PDF {
                 int j = 0;
                 foreach (Kurse kurs in kurse) {
                     if (j < 20) {
-                        dt.Rows.Add(new Object[] { kurs.StrKursNr, kurs.StrKursTitel, kurs.DateBeginn, kurs.DateEnde, kurs.StrOrt, kurs.StrAnbieter, 0, kurs.IPreis });
+                        dt.Rows.Add(new Object[] { kurs.StrKursNr, kurs.StrKursTitel, kurs.DateBeginn, kurs.DateEnde, kurs.StrOrt, kurs.StrAnbieter, kurs.IBuchungen, kurs.IPreis });
                         dt.Rows.Add(new Object[] { "", kurs.StrReason, null, null, "", "", null });
                         dt.Rows.Add(new Object[] { "", "", null, null, "", "", null });
                     }

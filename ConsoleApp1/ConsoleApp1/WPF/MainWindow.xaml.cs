@@ -19,7 +19,9 @@ namespace CourseChecker.WPF {
 
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         Progressbar proBar;
+        ChangeBook changeBook;
         private List<Kurse> listSelected;
+        private List<Kurse> listSelectedChange;
 
         public MainWindow() {
             InitializeComponent();
@@ -46,6 +48,15 @@ namespace CourseChecker.WPF {
                                                             lstViewIDSIntegrata.ItemsSource = idsIntegrata;
                                                             lstViewTechData.ItemsSource = techdata;
                                                             lstViewIDSTechData.ItemsSource = idsTechData;
+
+                                                            if (integrata.Count < 1)
+                                                                lstViewIntegrata.Visibility = Visibility.Collapsed;
+                                                            if (idsIntegrata.Count < 1)
+                                                                lstViewIDSIntegrata.Visibility = Visibility.Collapsed;
+                                                            if (techdata.Count < 1)
+                                                                lstViewTechData.Visibility = Visibility.Collapsed;
+                                                            if (idsTechData.Count < 1)
+                                                                lstViewIDSTechData.Visibility = Visibility.Collapsed;
                                                         });
         }
 
@@ -57,6 +68,7 @@ namespace CourseChecker.WPF {
             proBar.Close();
             this.btnStart.IsEnabled = true;
             this.btnPDF.IsEnabled = true;
+            this.btnBuchungen.IsEnabled = true;
 
             logger.Info("Suche fertiggestellt!");
         }
@@ -85,6 +97,7 @@ namespace CourseChecker.WPF {
                 Program.bw.RunWorkerAsync();
                 this.btnStart.IsEnabled = false;
                 this.btnPDF.IsEnabled = false;
+                this.btnBuchungen.IsEnabled = false;
             }
 
             lstViewLogs.ItemsSource = Logger.GetLogging;
@@ -99,10 +112,10 @@ namespace CourseChecker.WPF {
 
             listSelected = new List<Kurse>();
             //Scheiß C#
-            AddToListSelected(tmp);
-            AddToListSelected(tmp2);
-            AddToListSelected(tmp3);
-            AddToListSelected(tmp4);
+            AddToListSelected(tmp, this.listSelected);
+            AddToListSelected(tmp2, this.listSelected);
+            AddToListSelected(tmp3, this.listSelected);
+            AddToListSelected(tmp4, this.listSelected);
 
             SaveFileDialog dlg = new SaveFileDialog() {
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
@@ -115,14 +128,29 @@ namespace CourseChecker.WPF {
             logger.Info("PDF erstellt!");
         }
 
-        private void AddToListSelected(IList tmp) {
+        private void AddToListSelected(IList tmp, List<Kurse> list) {
             foreach (object tmpo in tmp) {
-                this.listSelected.Add((Kurse)tmpo);
+                list.Add((Kurse)tmpo);
             }
         }
 
         private void BtnBuchungen(object sender, RoutedEventArgs e) {
+            changeBook = new ChangeBook();
 
+            IList tmp = lstViewIDSIntegrata.SelectedItems;
+            IList tmp2 = lstViewIntegrata.SelectedItems;
+            IList tmp3 = lstViewIDSTechData.SelectedItems;
+            IList tmp4 = lstViewTechData.SelectedItems;
+
+            listSelectedChange = new List<Kurse>();
+            //Scheiß C#
+            AddToListSelected(tmp, this.listSelectedChange);
+            AddToListSelected(tmp2, this.listSelectedChange);
+            AddToListSelected(tmp3, this.listSelectedChange);
+            AddToListSelected(tmp4, this.listSelectedChange);
+
+            changeBook.dataGridCourses.DataContext = listSelectedChange;
+            changeBook.ShowDialog();
         }
     }
 }

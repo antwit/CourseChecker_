@@ -10,24 +10,24 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*"/>
             <RowDefinition Height="200" />
         </Grid.RowDefinitions>
         <DockPanel>
             <ToolBar DockPanel.Dock="Top" Name="mnuMenu">
                 <Button Name="btnStart" ButtonBase.Click="BtnStart">Suche starten ...</Button>
                 <Separator/>
-                <Button Name="btnBuchungen" ButtonBase.Click="BtnBuchungen">Anzahl der Buchungen ändern</Button>
+                <Button Name="btnBuchungen" ButtonBase.Click="BtnBuchungen">Ausgewählte Datensätze ändern</Button>
                 <Separator/>
                 <Button Name="btnPDF" ButtonBase.Click="BtnPDF">PDF erstellen</Button>
             </ToolBar>
         </DockPanel>
         <GroupBox Header="Integrat -> IDS" BorderThickness="2" BorderBrush="Black" Grid.Row="1" >
-            <ListView Name="lstViewIntegrata" SelectionMode="Multiple" Margin="1">
+            <ListView Name="lstViewIntegrata" SelectionMode="Multiple" Margin="1" MaxHeight="225">
                 <ListView.ItemTemplate>
                     <DataTemplate x:Name="FirstCell">
                         <Grid>
@@ -54,7 +54,7 @@
             </ListView>
         </GroupBox>
         <GroupBox Header="IDS -> Integrat" BorderThickness="2" BorderBrush="Black" Grid.Row="2">
-            <ListView Name="lstViewIDSIntegrata" SelectionMode="Multiple" Margin="1">
+            <ListView Name="lstViewIDSIntegrata" SelectionMode="Multiple" Margin="1" MaxHeight="225">
                 <ListView.View>
                     <GridView>
                         <GridView.Columns>
@@ -73,7 +73,7 @@
             </ListView>
         </GroupBox>
         <GroupBox Header="TechData -> IDS" BorderThickness="2" BorderBrush="Black" Grid.Row="3">
-            <ListView Name="lstViewTechData" SelectionMode="Multiple" Margin="1">
+            <ListView Name="lstViewTechData" SelectionMode="Multiple" Margin="1"  MaxHeight="225">
                 <ListView.View>
                     <GridView>
                         <GridView.Columns>
@@ -92,7 +92,7 @@
             </ListView>
         </GroupBox>
         <GroupBox Header="IDS -> TechData" BorderThickness="2" BorderBrush="Black" Grid.Row="4">
-            <ListView Name="lstViewIDSTechData" SelectionMode="Multiple" Margin="1">
+            <ListView Name="lstViewIDSTechData" SelectionMode="Multiple" Margin="1" MaxHeight="225">
                 <ListView.View>
                     <GridView>
                         <GridView.Columns>

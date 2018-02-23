@@ -72,3 +72,5 @@ C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\Cou
 C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker.csproj.CoreCompileInputs.cache
 C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker.exe
 C:\Users\chimp\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\CourseChecker.pdb
+C:\Users\anwiids01\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\WPF\ChangeBook.g.cs
+C:\Users\anwiids01\Source\Repos\CourseChecker_\ConsoleApp1\ConsoleApp1\obj\Debug\WPF\ChangeBook.baml
