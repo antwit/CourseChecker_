@@ -10,14 +10,14 @@
              SizeToContent="WidthAndHeight"
              MaxHeight="1000"
              MaxWidth="2200">
-    <Grid>
+    <Grid VerticalAlignment="Top">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*"/>
             <RowDefinition Height="200" />
         </Grid.RowDefinitions>
         <DockPanel>
@@ -157,7 +157,7 @@
                 </ListView.View>
             </ListView>
         </GroupBox>
-        <GroupBox Header="Logs" BorderThickness="2" BorderBrush="Black" Grid.Row="6">
+        <GroupBox Header="Logs" BorderThickness="2" BorderBrush="Black" Grid.Row="6" Margin="0,20,0,0">
             <ListView Name="lstViewLogs" SelectionMode="Multiple" Margin="1">
                 <ListView.View>
                     <GridView>
