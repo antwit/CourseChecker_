@@ -125,8 +125,8 @@ namespace CourseChecker.WPF {
 
             if (dlg.ShowDialog() == true) {
                 new CreatePDF(listSelected, dlg.FileName);
+                logger.Info("PDF erstellt!");
             }
-            logger.Info("PDF erstellt!");
         }
 
         private void AddToListSelected(IList tmp, List<Kurse> list) {
