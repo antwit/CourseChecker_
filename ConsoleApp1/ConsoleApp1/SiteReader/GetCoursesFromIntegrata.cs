@@ -12,6 +12,7 @@ namespace CourseChecker.SiteReader {
         private static Logger logger = LogManager.GetCurrentClassLogger();
         private HtmlWeb webContent = new HtmlWeb();
         private List<Kurse> lstKurse = new List<Kurse>();
+        private Uri link;
         delegate int del();
         internal List<Kurse> GetListKurse { get; set; }
 
@@ -20,6 +21,7 @@ namespace CourseChecker.SiteReader {
 
             Parallel.ForEach(listSites, url => {
                 HtmlDocument htmlDoc = webContent.Load(url);
+                this.link = url;
                 GetData(htmlDoc);
 
                 if(Program.boolIDS & Program.boolIntegrata & Program.boolTechData) {
@@ -94,7 +96,7 @@ namespace CourseChecker.SiteReader {
                     DateTime.TryParse(strArr[2], out endDate);
                     Boolean boolgarantie = new Boolean();
                     Boolean.TryParse(strArr[3], out boolgarantie);
-                    GetListKurse.Add(new Kurse(strNumber, strTitle, startDate, endDate, strArr[0], iPrice, boolgarantie, "Integrata"));
+                    GetListKurse.Add(new Kurse(strNumber, strTitle, startDate, endDate, strArr[0], iPrice, boolgarantie, "Integrata", this.link));
                 }
             }
         }

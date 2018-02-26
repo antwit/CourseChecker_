@@ -5,8 +5,8 @@
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
             xmlns:local="clr-namespace:CourseChecker.WPF"
             mc:Ignorable="d" 
-            Title="Progressbar" Height="200" Width="300" WindowStartupLocation="CenterOwner" >
-    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            Title="Progressbar" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterOwner" >
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="30">
         <TextBlock Text="Bitte warten ..." FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center" />
         <ProgressBar Name="prgBar" Width="250" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center" />
     </StackPanel>

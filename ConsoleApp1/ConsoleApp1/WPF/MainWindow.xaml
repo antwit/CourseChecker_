@@ -6,7 +6,10 @@
         
              xmlns:local="clr-namespace:CourseChecker.WPF"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="600">
+             WindowStartupLocation="CenterScreen"
+             SizeToContent="WidthAndHeight"
+             MaxHeight="1000"
+             MaxWidth="1900">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -48,6 +51,17 @@
                             <GridViewColumn Header="Preis" DisplayMemberBinding="{Binding IPreis}"/>
                             <GridViewColumn Header="Anbieter" DisplayMemberBinding="{Binding StrAnbieter}"/>
                             <GridViewColumn Header="Garantie" DisplayMemberBinding="{Binding BoolGarantieTermin}"/>
+                            <GridViewColumn Header="Link">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                            <Hyperlink NavigateUri="{Binding Path=Link}" RequestNavigate="Hyperlink_RequestNavigate">
+                                                <TextBlock Text="{Binding Path=Link}"/>
+                                            </Hyperlink>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                         </GridView.Columns>
                     </GridView>
                 </ListView.View>
@@ -67,6 +81,17 @@
                             <GridViewColumn Header="Preis" DisplayMemberBinding="{Binding IPreis}"/>
                             <GridViewColumn Header="Anbieter" DisplayMemberBinding="{Binding StrAnbieter}"/>
                             <GridViewColumn Header="Garantie" DisplayMemberBinding="{Binding BoolGarantieTermin}"/>
+                            <GridViewColumn Header="Link">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                            <Hyperlink NavigateUri="{Binding Path=Link}" RequestNavigate="Hyperlink_RequestNavigate">
+                                                <TextBlock Text="{Binding Path=Link}"/>
+                                            </Hyperlink>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                         </GridView.Columns>
                     </GridView>
                 </ListView.View>
@@ -86,6 +111,17 @@
                             <GridViewColumn Header="Preis" DisplayMemberBinding="{Binding IPreis}"/>
                             <GridViewColumn Header="Anbieter" DisplayMemberBinding="{Binding StrAnbieter}"/>
                             <GridViewColumn Header="Garantie" DisplayMemberBinding="{Binding BoolGarantieTermin}"/>
+                            <GridViewColumn Header="Link">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                            <Hyperlink NavigateUri="{Binding Path=Link}" RequestNavigate="Hyperlink_RequestNavigate">
+                                                <TextBlock Text="{Binding Path=Link}"/>
+                                            </Hyperlink>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                         </GridView.Columns>
                     </GridView>
                 </ListView.View>
@@ -105,6 +141,17 @@
                             <GridViewColumn Header="Preis" DisplayMemberBinding="{Binding IPreis}"/>
                             <GridViewColumn Header="Anbieter" DisplayMemberBinding="{Binding StrAnbieter}"/>
                             <GridViewColumn Header="Garantie" DisplayMemberBinding="{Binding BoolGarantieTermin}"/>
+                            <GridViewColumn Header="Link">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                            <Hyperlink NavigateUri="{Binding Path=Link}" RequestNavigate="Hyperlink_RequestNavigate">
+                                                <TextBlock Text="{Binding Path=Link}"/>
+                                            </Hyperlink>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                         </GridView.Columns>
                     </GridView>
                 </ListView.View>

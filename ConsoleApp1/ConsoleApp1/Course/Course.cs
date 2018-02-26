@@ -17,6 +17,7 @@ namespace CourseChecker.Course {
         public String StrReason { get; set; }
         public String StrAnbieter { get; set; }
         public int IBuchungen { get; set; } = 0;
+        public Uri Link { get; set; }
 
         private static readonly Dictionary<String, String> dictReason = new Dictionary<string, string>() {
             { "Preis", "Kurspreis wurde geändert;"},
@@ -26,7 +27,7 @@ namespace CourseChecker.Course {
             { "Kurs", "Kurs hinzugefügt;" }
         };
         
-        public Kurse(String strKursNr, String strKursTitel, DateTime dateBeginn, DateTime dateEnde, String strOrt, int iPreis, String strAnbieter) {
+        public Kurse(String strKursNr, String strKursTitel, DateTime dateBeginn, DateTime dateEnde, String strOrt, int iPreis, String strAnbieter, Uri link) {
             this.StrKursNr = strKursNr;
             this.StrKursTitel = strKursTitel;
             this.DateBeginn = dateBeginn;
@@ -36,9 +37,10 @@ namespace CourseChecker.Course {
             this.BoolGarantieTermin = false;
             this.StrReason = "";
             this.StrAnbieter = strAnbieter;
+            this.Link = link;
         }
 
-        public Kurse(String strKursNr, String strKursTitel, DateTime dateBeginn, DateTime dateEnde, String strOrt, int iPreis, Boolean boolGarantieTermin, String strAnbieter) {
+        public Kurse(String strKursNr, String strKursTitel, DateTime dateBeginn, DateTime dateEnde, String strOrt, int iPreis, Boolean boolGarantieTermin, String strAnbieter, Uri link) {
             this.StrKursNr = strKursNr;
             this.StrKursTitel = strKursTitel;
             this.DateBeginn = dateBeginn;
@@ -48,6 +50,7 @@ namespace CourseChecker.Course {
             this.StrReason = "";
             this.StrAnbieter = strAnbieter;
             this.BoolGarantieTermin = boolGarantieTermin;
+            this.Link = link;
         }
         
         public Boolean Contains(Kurse kursCheck) {

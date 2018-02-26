@@ -13,15 +13,17 @@ namespace CourseChecker.SiteReader {
     class GetCoursesFromTechData {
         private static Logger logger = LogManager.GetCurrentClassLogger();
         private HtmlWeb webContent = new HtmlWeb();
+        private Uri link;
         internal List<Kurse> ListKurse { get; set; }
 
-        public GetCoursesFromTechData(List<String> listUrl, List<String> listExcluded) {
+        public GetCoursesFromTechData(List<Uri> listUrl, List<String> listExcluded) {
             ListKurse = new List<Kurse>();
             webContent.AutoDetectEncoding = false;
             webContent.OverrideEncoding = Encoding.UTF8;
 
             Parallel.ForEach(listUrl, url => {
                 HtmlDocument htmlDoc = webContent.Load(url);
+                this.link = url;
                 GetCourses(htmlDoc, listExcluded);
 
                 if (Program.boolIDS & Program.boolIntegrata & Program.boolTechData) {
@@ -102,7 +104,7 @@ namespace CourseChecker.SiteReader {
                         int iPrice = Int32.Parse(arrLocDate[i].ElementAt(j+2));
                         Boolean boolGuar = Boolean.Parse(arrLocDate[i].ElementAt(j + 3));
 
-                        ListKurse.Add(new Kurse(kursNr_Title[0], kursNr_Title[1], dateBegin, dateEnd, arrLocDate[i].ElementAt(0), iPrice, boolGuar, "TechData"));
+                        ListKurse.Add(new Kurse(kursNr_Title[0], kursNr_Title[1], dateBegin, dateEnd, arrLocDate[i].ElementAt(0), iPrice, boolGuar, "TechData", this.link));
                     }
                 }
             } catch (Exception e) {

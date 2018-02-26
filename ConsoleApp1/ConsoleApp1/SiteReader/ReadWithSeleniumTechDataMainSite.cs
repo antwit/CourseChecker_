@@ -10,11 +10,10 @@ namespace CourseChecker.SiteReader {
 
     class ReadWithSeleniumTechDataMainSite {
         private static Logger logger = LogManager.GetCurrentClassLogger();
-        List<String> listUrl;
-        public List<String> ListUrl => listUrl;
+        public List<Uri> ListUrl;
 
         public ReadWithSeleniumTechDataMainSite(Uri url, List<String> listManuelCheck, Uri uriSearch) {
-            listUrl = new List<String>();
+            ListUrl = new List<Uri>();
             using(IWebDriver driver = new PhantomJSDriver()) {
                 driver.Url = url.AbsoluteUri;
                 AddUrl(driver);
@@ -39,7 +38,7 @@ namespace CourseChecker.SiteReader {
             wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.CssSelector(".btn-sm")));
             IList<IWebElement> test = driver.FindElements(By.CssSelector(".btn-sm"));
             foreach(IWebElement b in test) {
-                this.listUrl.Add(b.GetAttribute("href"));
+                this.ListUrl.Add(new Uri(b.GetAttribute("href")));
             }
         }
     }

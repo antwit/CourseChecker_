@@ -23,7 +23,7 @@ namespace CourseChecker.SiteReader {
             foreach(String strElement in listSection) {
                 List<String> listTmp = SplitSection(strElement);
                 KurseIDS.Add(new Kurse(listTmp.ElementAt(0), listTmp.ElementAt(1), DateTime.Parse(listTmp.ElementAt(2)),
-                                DateTime.Parse(listTmp.ElementAt(3)), listTmp.ElementAt(4), Convert.ToInt32(listTmp.ElementAt(5)), strAnbieter));
+                                DateTime.Parse(listTmp.ElementAt(3)), listTmp.ElementAt(4), Convert.ToInt32(listTmp.ElementAt(5)), strAnbieter, url));
 
                 if(Program.boolIDS & Program.boolIntegrata & Program.boolTechData) {
                     Program.bw.ReportProgress((int)((double)Program.iCounter++ / (double)Program.iNumberOfCourses * 100));

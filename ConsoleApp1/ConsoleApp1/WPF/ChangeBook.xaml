@@ -6,7 +6,10 @@
              xmlns:local="clr-namespace:CourseChecker.WPF"
              mc:Ignorable="d" 
              Title="Datensatz ändern"
-             d:DesignHeight="300" d:DesignWidth="300">
+             SizeToContent="WidthAndHeight"
+             WindowStartupLocation="CenterOwner"
+             MaxHeight="1000"
+             MaxWidth="1900">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

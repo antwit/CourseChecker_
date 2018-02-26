@@ -10,6 +10,7 @@ using System.Windows.Threading;
 using System.Threading;
 using System.ComponentModel;
 using CourseChecker.Logging;
+using System.Diagnostics;
 
 namespace CourseChecker.WPF {
     /// <summary>
@@ -151,6 +152,13 @@ namespace CourseChecker.WPF {
 
             changeBook.dataGridCourses.DataContext = listSelectedChange;
             changeBook.ShowDialog();
+
+            logger.Info("Kurse angepasst...");
+        }
+
+        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e) {
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            e.Handled = true;
         }
     }
 }
