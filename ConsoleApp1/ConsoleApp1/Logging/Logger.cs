@@ -21,7 +21,7 @@ namespace CourseChecker.Logging {
         internal static ICollection<LogInfo> GetLogging { get; private set; } = new ObservableCollection<LogInfo>();
 
         public static void LoggerNLog(String strLevel, String strMessage, String strTime) {
-            Application.Current.Dispatcher.Invoke((System.Action)delegate {
+            Application.Current.Dispatcher.Invoke(delegate {
                 GetLogging.Add(new LogInfo(strTime, strLevel, strMessage));
             });
         }

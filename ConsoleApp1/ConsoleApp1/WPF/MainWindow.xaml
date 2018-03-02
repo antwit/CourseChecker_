@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-        
              xmlns:local="clr-namespace:CourseChecker.WPF"
              mc:Ignorable="d" 
              WindowStartupLocation="CenterScreen"
@@ -29,50 +28,70 @@
                 <Button Name="btnPDF" ButtonBase.Click="BtnPDF">PDF erstellen</Button>
             </ToolBar>
         </DockPanel>
-        <GroupBox Header="Integrat -> IDS" BorderThickness="2" BorderBrush="Black" Grid.Row="1" >
-            <ListView Name="lstViewIntegrata" SelectionMode="Multiple" Margin="1" MaxHeight="225">
-                <ListView.ItemTemplate>
+        <GroupBox Header="Integrat -> IDS" BorderThickness="2" BorderBrush="Black" Grid.Row="1"  Margin="0,10,0,0">
+            <ListView Name="lstViewIntegrata" SelectionMode="Multiple" Margin="1" MaxHeight="225" SelectionChanged="lstViewIntegrata_SelectionChanged">
+                <!--<ListView.ItemTemplate>
                     <DataTemplate x:Name="FirstCell">
-                        <Grid>
-                            <CheckBox IsChecked="{Binding Path=IsSelected, 
+                        <CheckBox IsChecked="{Binding Path=IsSelected, 
                                 RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}}"/>
-                        </Grid>
                     </DataTemplate>
-                </ListView.ItemTemplate>
+                </ListView.ItemTemplate>-->
                 <ListView.View>
-                    <GridView>
-                        <GridView.Columns>
-                            <GridViewColumn CellTemplate="{x:Reference FirstCell}" Width="30"/>
-                            <GridViewColumn Header="Kurs-Nr." DisplayMemberBinding="{Binding StrKursNr}" />
-                            <GridViewColumn Header="Kursname" DisplayMemberBinding="{Binding StrKursTitel}"/>
-                            <GridViewColumn Header="Beginn" DisplayMemberBinding="{Binding DateBeginn, StringFormat=d, ConverterCulture='de-DE'}"/>
-                            <GridViewColumn Header="Ende" DisplayMemberBinding="{Binding DateEnde, StringFormat=d, ConverterCulture='de-DE'}"/>
-                            <GridViewColumn Header="Ort" DisplayMemberBinding="{Binding StrOrt}"/>
-                            <GridViewColumn Header="Preis" DisplayMemberBinding="{Binding IPreis}"/>
-                            <GridViewColumn Header="Anbieter" DisplayMemberBinding="{Binding StrAnbieter}"/>
-                            <GridViewColumn Header="Garantie" DisplayMemberBinding="{Binding BoolGarantieTermin}"/>
-                            <GridViewColumn Header="Link">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock>
+                    <GridView AllowsColumnReorder="True">
+                        <GridView.ColumnHeaderContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Aufsteigend" Click="MenuItem_Click"/>
+                                <MenuItem Header="Absteigend" />
+                            </ContextMenu>
+                        </GridView.ColumnHeaderContextMenu>
+                        <GridViewColumn Width="30">
+                            <GridViewColumn.Header>
+                                <CheckBox Name="chkBoxSelectAllIntegrata" HorizontalAlignment="Center" VerticalAlignment="Center" Checked="chkBoxSelectAll_Checked" Unchecked="chkBoxSelectAll_Unchecked" IsThreeState="False"/>
+                            </GridViewColumn.Header>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox Name="chkBoxSelectIntegrata" IsChecked="{Binding Path=IsSelected}" HorizontalAlignment="Center" VerticalAlignment="Center" Checked="chkBoxSelect_Checked" Unchecked="chkBoxSelect_Unchecked" IsThreeState="False" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Kurs-Nr." DisplayMemberBinding="{Binding StrKursNr}" />
+                        <GridViewColumn Header="Kursname" DisplayMemberBinding="{Binding StrKursTitel}"/>
+                        <GridViewColumn Header="Beginn" DisplayMemberBinding="{Binding DateBeginn, StringFormat=d, ConverterCulture='de-DE'}"/>
+                        <GridViewColumn Header="Ende" DisplayMemberBinding="{Binding DateEnde, StringFormat=d, ConverterCulture='de-DE'}"/>
+                        <GridViewColumn Header="Ort" DisplayMemberBinding="{Binding StrOrt}"/>
+                        <GridViewColumn Header="Preis" DisplayMemberBinding="{Binding IPreis}"/>
+                        <GridViewColumn Header="Anbieter" DisplayMemberBinding="{Binding StrAnbieter}"/>
+                        <GridViewColumn Header="Garantie" DisplayMemberBinding="{Binding BoolGarantieTermin}"/>
+                        <GridViewColumn Header="Link">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
                                             <Hyperlink NavigateUri="{Binding Path=Link}" RequestNavigate="Hyperlink_RequestNavigate">
                                                 <TextBlock Text="{Binding Path=Link}"/>
                                             </Hyperlink>
                                         </TextBlock>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                        </GridView.Columns>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                     </GridView>
                 </ListView.View>
             </ListView>
         </GroupBox>
-        <GroupBox Header="IDS -> Integrat" BorderThickness="2" BorderBrush="Black" Grid.Row="2">
-            <ListView Name="lstViewIDSIntegrata" SelectionMode="Multiple" Margin="1" MaxHeight="225">
+        <GroupBox Header="IDS -> Integrat" BorderThickness="2" BorderBrush="Black" Grid.Row="2" Margin="0,10,0,0">
+            <ListView Name="lstViewIDSIntegrata" SelectionMode="Multiple" Margin="1" MaxHeight="225" SelectionChanged="lstViewIDSIntegrata_SelectionChanged">
                 <ListView.View>
                     <GridView>
                         <GridView.Columns>
-                            <GridViewColumn CellTemplate="{x:Reference FirstCell}" Width="30"/>
+                            <GridViewColumn Width="30">
+                                <GridViewColumn.Header>
+                                    <CheckBox Name="chkBoxSelectAllIDSIntegrata" HorizontalAlignment="Center" VerticalAlignment="Center" Checked="chkBoxSelectAll_CheckedIDSInte" Unchecked="chkBoxSelectAll_UncheckedIDSInte" IsThreeState="False"/>
+                                </GridViewColumn.Header>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Name="chkBoxSelectIDSIntegrata" IsChecked="{Binding Path=IsSelected}" HorizontalAlignment="Center" VerticalAlignment="Center" Checked="chkBoxSelect_CheckedIDSInte" Unchecked="chkBoxSelect_UncheckedIDSInte" IsThreeState="False" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                             <GridViewColumn Header="Kurs-Nr." DisplayMemberBinding="{Binding StrKursNr}"/>
                             <GridViewColumn Header="Kursname" DisplayMemberBinding="{Binding StrKursTitel}"/>
                             <GridViewColumn Header="Beginn" DisplayMemberBinding="{Binding DateBeginn, StringFormat=d, ConverterCulture='de-DE'}"/>
@@ -97,12 +116,21 @@
                 </ListView.View>
             </ListView>
         </GroupBox>
-        <GroupBox Header="TechData -> IDS" BorderThickness="2" BorderBrush="Black" Grid.Row="3">
-            <ListView Name="lstViewTechData" SelectionMode="Multiple" Margin="1"  MaxHeight="225">
+        <GroupBox Header="TechData -> IDS" BorderThickness="2" BorderBrush="Black" Grid.Row="3" Margin="0,10,0,0">
+            <ListView Name="lstViewTechData" SelectionMode="Multiple" Margin="1"  MaxHeight="225" SelectionChanged="lstViewTechData_SelectionChanged">
                 <ListView.View>
                     <GridView>
                         <GridView.Columns>
-                            <GridViewColumn CellTemplate="{x:Reference FirstCell}" Width="30"/>
+                            <GridViewColumn Width="30">
+                                <GridViewColumn.Header>
+                                    <CheckBox Name="chkBoxSelectAllTechData" HorizontalAlignment="Center" VerticalAlignment="Center" Checked="chkBoxSelectAll_CheckedTechData" Unchecked="chkBoxSelectAll_UncheckedTechData" IsThreeState="False"/>
+                                </GridViewColumn.Header>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Name="chkBoxSelectTechData" IsChecked="{Binding Path=IsSelected}" HorizontalAlignment="Center" VerticalAlignment="Center" Checked="chkBoxSelect_CheckedTechdata" Unchecked="chkBoxSelect_UncheckedTechData" IsThreeState="False" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                             <GridViewColumn Header="Kurs-Nr." DisplayMemberBinding="{Binding StrKursNr}"/>
                             <GridViewColumn Header="Kursname" DisplayMemberBinding="{Binding StrKursTitel}"/>
                             <GridViewColumn Header="Beginn" DisplayMemberBinding="{Binding DateBeginn, StringFormat=d, ConverterCulture='de-DE'}"/>
@@ -127,12 +155,21 @@
                 </ListView.View>
             </ListView>
         </GroupBox>
-        <GroupBox Header="IDS -> TechData" BorderThickness="2" BorderBrush="Black" Grid.Row="4">
-            <ListView Name="lstViewIDSTechData" SelectionMode="Multiple" Margin="1" MaxHeight="225">
+        <GroupBox Header="IDS -> TechData" BorderThickness="2" BorderBrush="Black" Grid.Row="4" Margin="0,10,0,0">
+            <ListView Name="lstViewIDSTechData" SelectionMode="Multiple" Margin="1" MaxHeight="225" SelectionChanged="lstViewIDSTechData_SelectionChanged">
                 <ListView.View>
                     <GridView>
                         <GridView.Columns>
-                            <GridViewColumn CellTemplate="{x:Reference FirstCell}" Width="30"/>
+                            <GridViewColumn Width="30">
+                                <GridViewColumn.Header>
+                                    <CheckBox Name="chkBoxSelectAllIDSTechData" HorizontalAlignment="Center" VerticalAlignment="Center" Checked="chkBoxSelectAll_CheckedIDSTechData" Unchecked="chkBoxSelectAll_UncheckedIDSTechData" IsThreeState="False"/>
+                                </GridViewColumn.Header>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Name="chkBoxSelectIDSTechData" IsChecked="{Binding Path=IsSelected}" HorizontalAlignment="Center" VerticalAlignment="Center" Checked="chkBoxSelect_CheckedIDSTechdata" Unchecked="chkBoxSelect_UncheckedIDSTechData" IsThreeState="False" />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                             <GridViewColumn Header="Kurs-Nr." DisplayMemberBinding="{Binding StrKursNr}"/>
                             <GridViewColumn Header="Kursname" DisplayMemberBinding="{Binding StrKursTitel}"/>
                             <GridViewColumn Header="Beginn" DisplayMemberBinding="{Binding DateBeginn, StringFormat=d, ConverterCulture='de-DE'}"/>
@@ -164,7 +201,7 @@
                         <GridView.Columns>
                             <GridViewColumn Header="Zeit" DisplayMemberBinding="{Binding Time}"/>
                             <GridViewColumn Header="Log Level" DisplayMemberBinding="{Binding LogLvl}"/>
-                            <GridViewColumn Width="700" Header="Grund" DisplayMemberBinding="{Binding Reason}"/>
+                            <GridViewColumn Width="750" Header="Grund" DisplayMemberBinding="{Binding Reason}"/>
                         </GridView.Columns>
                     </GridView>
                 </ListView.View>

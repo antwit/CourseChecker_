@@ -18,6 +18,7 @@ namespace CourseChecker.Course {
         public String StrAnbieter { get; set; }
         public int IBuchungen { get; set; } = 0;
         public Uri Link { get; set; }
+        public bool IsSelected { get; set;}
 
         private static readonly Dictionary<String, String> dictReason = new Dictionary<string, string>() {
             { "Preis", "Kurspreis wurde geändert;"},

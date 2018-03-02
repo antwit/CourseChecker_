@@ -19,7 +19,7 @@
         <Grid Grid.Row="2">
             <Button Name="btnClose" Grid.Column="1" Margin="10" Click="btn_Click" IsDefault="True" Content="Schließen" HorizontalAlignment="Center" Width="150" FontWeight="Bold" FontSize="15" /> 
         </Grid>
-        <GroupBox Header="Datensatz" BorderThickness="2" BorderBrush="Black">
+        <GroupBox Header="Datensatz" BorderThickness="2" BorderBrush="Black" MaxHeight="900">
             <DataGrid Name="dataGridCourses" ItemsSource="{Binding}" Margin="5"/>
         </GroupBox>
     </Grid>

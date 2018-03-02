@@ -11,6 +11,8 @@ using System.Threading;
 using System.ComponentModel;
 using CourseChecker.Logging;
 using System.Diagnostics;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace CourseChecker.WPF {
     /// <summary>
@@ -18,6 +20,10 @@ namespace CourseChecker.WPF {
     /// </summary>
     public partial class MainWindow : Window {
 
+        private static bool IndividualChkBxUnCheckedFlagIntegrata { get; set; }
+        private static bool IndividualChkBxUnCheckedFlagIDSIntegrata { get; set; }
+        private static bool IndividualChkBxUnCheckedFlagTechData { get; set; }
+        private static bool IndividualChkBxUnCheckedFlagIDSTechData { get; set; }
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         Progressbar proBar;
         ChangeBook changeBook;
@@ -26,6 +32,11 @@ namespace CourseChecker.WPF {
 
         public MainWindow() {
             InitializeComponent();
+
+            lstViewIntegrata.Visibility = Visibility.Collapsed;
+            lstViewIDSIntegrata.Visibility = Visibility.Collapsed;
+            lstViewTechData.Visibility = Visibility.Collapsed;
+            lstViewIDSTechData.Visibility = Visibility.Collapsed;
         }
 
         private void Bw_DoWork(object sender, DoWorkEventArgs e) {
@@ -49,6 +60,11 @@ namespace CourseChecker.WPF {
                                                             lstViewIDSIntegrata.ItemsSource = idsIntegrata;
                                                             lstViewTechData.ItemsSource = techdata;
                                                             lstViewIDSTechData.ItemsSource = idsTechData;
+
+                                                            lstViewIntegrata.Visibility = Visibility.Visible;
+                                                            lstViewIDSIntegrata.Visibility = Visibility.Visible;
+                                                            lstViewTechData.Visibility = Visibility.Visible;
+                                                            lstViewIDSTechData.Visibility = Visibility.Visible;
 
                                                             if (integrata.Count < 1)
                                                                 lstViewIntegrata.Visibility = Visibility.Collapsed;
@@ -87,6 +103,11 @@ namespace CourseChecker.WPF {
             lstViewTechData.ItemsSource = null;
             lstViewIDSTechData.ItemsSource = null;
 
+            lstViewIntegrata.Visibility = Visibility.Collapsed;
+            lstViewIDSIntegrata.Visibility = Visibility.Collapsed;
+            lstViewTechData.Visibility = Visibility.Collapsed;
+            lstViewIDSTechData.Visibility = Visibility.Collapsed;
+            
             if (!Program.bw.WorkerReportsProgress) {
                 Program.bw.WorkerReportsProgress = true;
                 Program.bw.DoWork += Bw_DoWork;
@@ -159,6 +180,250 @@ namespace CourseChecker.WPF {
         private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e) {
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
             e.Handled = true;
+        }
+
+        #region CheckBox Integrata
+        private void chkBoxSelectAll_Checked(object sender, RoutedEventArgs e) {
+            IndividualChkBxUnCheckedFlagIntegrata = false;
+
+            foreach(Kurse kurs in lstViewIntegrata.ItemsSource) {
+                kurs.IsSelected = true;
+                lstViewIntegrata.SelectedItems.Add(kurs);
+            }
+        }
+
+        private void chkBoxSelectAll_Unchecked(object sender, RoutedEventArgs e) {
+
+            if (!IndividualChkBxUnCheckedFlagIntegrata) {
+                foreach(Kurse kurs in lstViewIntegrata.ItemsSource) {
+                    kurs.IsSelected = false;
+                    lstViewIntegrata.SelectedItems.Remove(kurs);
+                }
+            }
+        }
+
+        private void chkBoxSelect_Unchecked(object sender, RoutedEventArgs e) {
+            ListBoxItem kurs = ItemsControl.ContainerFromElement(lstViewIntegrata, e.OriginalSource as DependencyObject) as ListBoxItem;
+            if (kurs != null)
+                kurs.IsSelected = false;
+
+            IndividualChkBxUnCheckedFlagIntegrata = true;
+            CheckBox headerChk = (CheckBox)((GridView)lstViewIntegrata.View).Columns[0].Header;
+            headerChk.IsChecked = false;
+        }
+
+        private void chkBoxSelect_Checked(object sender, RoutedEventArgs e) {
+            ListBoxItem kurs = ItemsControl.ContainerFromElement(lstViewIntegrata, e.OriginalSource as DependencyObject) as ListBoxItem;
+            if(kurs != null) 
+                kurs.IsSelected = true;
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e) {
+
+        }
+
+        private void lstViewIntegrata_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            if(e.AddedItems.Count > 0) {
+                Kurse kurs = (Kurse)e.AddedItems[0];
+                ListViewItem lvi = (ListViewItem)lstViewIntegrata.ItemContainerGenerator.ContainerFromItem(kurs);
+                CheckBox chkBox = FindVisualChild<CheckBox>(lvi);
+                if (chkBox != null)
+                    chkBox.IsChecked = true;
+            } else {
+                Kurse kurs = (Kurse)e.RemovedItems[0];
+                ListViewItem lvi = (ListViewItem)lstViewIntegrata.ItemContainerGenerator.ContainerFromItem(kurs);
+                CheckBox chkBox = FindVisualChild<CheckBox>(lvi);
+                if (chkBox != null)
+                    chkBox.IsChecked = false;
+            }
+        }
+
+        #endregion CheckBox Integrata
+
+        #region CheckBox IDSIntegrata
+        private void chkBoxSelectAll_CheckedIDSInte(object sender, RoutedEventArgs e) {
+            IndividualChkBxUnCheckedFlagIDSIntegrata = false;
+
+            foreach (Kurse kurs in lstViewIDSIntegrata.ItemsSource) {
+                kurs.IsSelected = true;
+                lstViewIDSIntegrata.SelectedItems.Add(kurs);
+            }
+        }
+
+        private void chkBoxSelectAll_UncheckedIDSInte(object sender, RoutedEventArgs e) {
+
+            if (!IndividualChkBxUnCheckedFlagIDSIntegrata) {
+                foreach (Kurse kurs in lstViewIDSIntegrata.ItemsSource) {
+                    kurs.IsSelected = false;
+                    lstViewIDSIntegrata.SelectedItems.Remove(kurs);
+                }
+            }
+        }
+
+        private void chkBoxSelect_UncheckedIDSInte(object sender, RoutedEventArgs e) {
+            ListBoxItem kurs = ItemsControl.ContainerFromElement(lstViewIDSIntegrata, e.OriginalSource as DependencyObject) as ListBoxItem;
+            if (kurs != null)
+                kurs.IsSelected = false;
+
+            IndividualChkBxUnCheckedFlagIDSIntegrata = true;
+            CheckBox headerChk = (CheckBox)((GridView)lstViewIDSIntegrata.View).Columns[0].Header;
+            headerChk.IsChecked = false;
+        }
+
+        private void chkBoxSelect_CheckedIDSInte(object sender, RoutedEventArgs e) {
+            ListBoxItem kurs = ItemsControl.ContainerFromElement(lstViewIDSIntegrata, e.OriginalSource as DependencyObject) as ListBoxItem;
+            if (kurs != null)
+                kurs.IsSelected = true;
+        }
+
+        private void MenuItem_ClickIDSInte(object sender, RoutedEventArgs e) {
+
+        }
+
+        private void lstViewIDSIntegrata_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            if (e.AddedItems.Count > 0) {
+                Kurse kurs = (Kurse)e.AddedItems[0];
+                ListViewItem lvi = (ListViewItem)lstViewIDSIntegrata.ItemContainerGenerator.ContainerFromItem(kurs);
+                CheckBox chkBox = FindVisualChild<CheckBox>(lvi);
+                if (chkBox != null)
+                    chkBox.IsChecked = true;
+            } else {
+                Kurse kurs = (Kurse)e.RemovedItems[0];
+                ListViewItem lvi = (ListViewItem)lstViewIDSIntegrata.ItemContainerGenerator.ContainerFromItem(kurs);
+                CheckBox chkBox = FindVisualChild<CheckBox>(lvi);
+                if (chkBox != null)
+                    chkBox.IsChecked = false;
+            }
+        }
+        #endregion CheckBox IDSIntegrata
+
+        #region CheckBox TechData
+        private void chkBoxSelectAll_CheckedTechData(object sender, RoutedEventArgs e) {
+            IndividualChkBxUnCheckedFlagTechData = false;
+
+            foreach (Kurse kurs in lstViewTechData.ItemsSource) {
+                kurs.IsSelected = true;
+                lstViewTechData.SelectedItems.Add(kurs);
+            }
+        }
+
+        private void chkBoxSelectAll_UncheckedTechData(object sender, RoutedEventArgs e) {
+
+            if (!IndividualChkBxUnCheckedFlagTechData) {
+                foreach (Kurse kurs in lstViewTechData.ItemsSource) {
+                    kurs.IsSelected = false;
+                    lstViewTechData.SelectedItems.Remove(kurs);
+                }
+            }
+        }
+
+        private void chkBoxSelect_UncheckedTechData(object sender, RoutedEventArgs e) {
+            ListBoxItem kurs = ItemsControl.ContainerFromElement(lstViewTechData, e.OriginalSource as DependencyObject) as ListBoxItem;
+            if (kurs != null)
+                kurs.IsSelected = false;
+
+            IndividualChkBxUnCheckedFlagTechData = true;
+            CheckBox headerChk = (CheckBox)((GridView)lstViewTechData.View).Columns[0].Header;
+            headerChk.IsChecked = false;
+        }
+
+        private void chkBoxSelect_CheckedTechdata(object sender, RoutedEventArgs e) {
+            ListBoxItem kurs = ItemsControl.ContainerFromElement(lstViewTechData, e.OriginalSource as DependencyObject) as ListBoxItem;
+            if (kurs != null)
+                kurs.IsSelected = true;
+        }
+
+        private void MenuItem_ClickTechData(object sender, RoutedEventArgs e) {
+
+        }
+
+        private void lstViewTechData_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            if (e.AddedItems.Count > 0) {
+                Kurse kurs = (Kurse)e.AddedItems[0];
+                ListViewItem lvi = (ListViewItem)lstViewTechData.ItemContainerGenerator.ContainerFromItem(kurs);
+                CheckBox chkBox = FindVisualChild<CheckBox>(lvi);
+                if (chkBox != null)
+                    chkBox.IsChecked = true;
+            } else {
+                Kurse kurs = (Kurse)e.RemovedItems[0];
+                ListViewItem lvi = (ListViewItem)lstViewTechData.ItemContainerGenerator.ContainerFromItem(kurs);
+                CheckBox chkBox = FindVisualChild<CheckBox>(lvi);
+                if (chkBox != null)
+                    chkBox.IsChecked = false;
+            }
+        }
+        #endregion CheckBox TechData
+
+        #region CheckBox IDSTechData
+        private void chkBoxSelectAll_CheckedIDSTechData(object sender, RoutedEventArgs e) {
+            IndividualChkBxUnCheckedFlagIDSTechData = false;
+
+            foreach (Kurse kurs in lstViewIDSTechData.ItemsSource) {
+                kurs.IsSelected = true;
+                lstViewIDSTechData.SelectedItems.Add(kurs);
+            }
+        }
+
+        private void chkBoxSelectAll_UncheckedIDSTechData(object sender, RoutedEventArgs e) {
+
+            if (!IndividualChkBxUnCheckedFlagIDSTechData) {
+                foreach (Kurse kurs in lstViewIDSTechData.ItemsSource) {
+                    kurs.IsSelected = false;
+                    lstViewIDSTechData.SelectedItems.Remove(kurs);
+                }
+            }
+        }
+
+        private void chkBoxSelect_UncheckedIDSTechData(object sender, RoutedEventArgs e) {
+            ListBoxItem kurs = ItemsControl.ContainerFromElement(lstViewIDSTechData, e.OriginalSource as DependencyObject) as ListBoxItem;
+            if (kurs != null)
+                kurs.IsSelected = false;
+
+            IndividualChkBxUnCheckedFlagIDSTechData = true;
+            CheckBox headerChk = (CheckBox)((GridView)lstViewIDSTechData.View).Columns[0].Header;
+            headerChk.IsChecked = false;
+        }
+
+        private void chkBoxSelect_CheckedIDSTechdata(object sender, RoutedEventArgs e) {
+            ListBoxItem kurs = ItemsControl.ContainerFromElement(lstViewIDSTechData, e.OriginalSource as DependencyObject) as ListBoxItem;
+            if (kurs != null)
+                kurs.IsSelected = true;
+        }
+
+        private void MenuItem_ClickIDSTechData(object sender, RoutedEventArgs e) {
+
+        }
+
+        private void lstViewIDSTechData_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            if (e.AddedItems.Count > 0) {
+                Kurse kurs = (Kurse)e.AddedItems[0];
+                ListViewItem lvi = (ListViewItem)lstViewIDSTechData.ItemContainerGenerator.ContainerFromItem(kurs);
+                CheckBox chkBox = FindVisualChild<CheckBox>(lvi);
+                if (chkBox != null)
+                    chkBox.IsChecked = true;
+            } else {
+                Kurse kurs = (Kurse)e.RemovedItems[0];
+                ListViewItem lvi = (ListViewItem)lstViewIDSTechData.ItemContainerGenerator.ContainerFromItem(kurs);
+                CheckBox chkBox = FindVisualChild<CheckBox>(lvi);
+                if (chkBox != null)
+                    chkBox.IsChecked = false;
+            }
+        }
+        #endregion CheckBox IDSTechData
+
+        public static T FindVisualChild<T>(DependencyObject depObj) where T : DependencyObject {
+            if (depObj != null) {
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++) {
+                    DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
+                    if (child != null && child is T) {
+                        return (T)child;
+                    }
+
+                    T childItem = FindVisualChild<T>(child);
+                    if (childItem != null) return childItem;
+                }
+            }
+            return null;
         }
     }
 }
