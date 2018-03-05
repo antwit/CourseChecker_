@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using CourseChecker.SiteReader;
 using NLog;
+using static CourseChecker.WPF.CounterForProgressbar;
 
 namespace CourseChecker.Course {
     
@@ -54,8 +55,8 @@ namespace CourseChecker.Course {
             GetCourseUrlsFromIntegrata urlsFromIntegrata = new GetCourseUrlsFromIntegrata(listURIs, listIDs);
 
             AddRange(queueUrls, urlsFromIntegrata.SetsOfUrls);
-            Program.iNumberOfCourses += queueUrls.Count;
-            Program.boolIntegrata = true;
+            NumberOfCourses += queueUrls.Count;
+            BoolIntegrata = true;
             logger.Info("[Integrata] Links zu den entsprechenden Kursen aus Integrata extrahiert!");
 
             GetCourse.AddRange((new GetCoursesFromIntegrata(queueUrls)).GetListKurse);
@@ -79,8 +80,8 @@ namespace CourseChecker.Course {
             GetCourse = new List<Kurse>();
 
             ReadWithSeleniumTechDataMainSite collectUrl = new ReadWithSeleniumTechDataMainSite(uriSearchDb2, Program.ListManualCheckForTechData, uriSearch);
-            Program.iNumberOfCourses += collectUrl.ListUrl.Count;
-            Program.boolTechData = true;
+            NumberOfCourses += collectUrl.ListUrl.Count;
+            BoolTechData = true;
             logger.Info("[TechData] Links zu den entsprechenden Kursen aus TechData extrahiert!");
 
             GetCoursesFromTechData collectCourseTechData = new GetCoursesFromTechData(collectUrl.ListUrl, listExclude);
@@ -117,7 +118,7 @@ namespace CourseChecker.Course {
             GetCourse.AddRange(readSiteIDS_2.KurseIDS);
             GetCourse.AddRange(readSiteIDS_3.KurseIDS);
 
-            Program.boolIDS = true;
+            BoolIDS = true;
             logger.Info("[IDS] Es wurden {0} Kurse aus IDS extrahiert!", GetCourse.Count);
         }
 

@@ -5,30 +5,29 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static CourseChecker.WPF.CounterForProgressbar;
+using CourseChecker.Events;
 
 namespace CourseChecker.SiteReader {
+    internal delegate void CounterEventHandler(Object sender, CounterEventArgs e);
 
     class GetCoursesFromIntegrata {
         private static Logger logger = LogManager.GetCurrentClassLogger();
         private HtmlWeb webContent = new HtmlWeb();
         private List<Kurse> lstKurse = new List<Kurse>();
         private Uri link;
-        delegate int del();
         internal List<Kurse> GetListKurse { get; set; }
+        private event CounterEventHandler Counter;
 
         internal GetCoursesFromIntegrata(Queue<Uri> listSites) {
             GetListKurse = new List<Kurse>();
+            this.Counter += SiteCounter;
 
             Parallel.ForEach(listSites, url => {
                 HtmlDocument htmlDoc = webContent.Load(url);
                 this.link = url;
                 GetData(htmlDoc);
-
-                if(Program.boolIDS & Program.boolIntegrata & Program.boolTechData) {
-                    Program.bw.ReportProgress((int)((double)Program.iCounter++ / (double)Program.iNumberOfCourses * 100));
-                } else {
-                    Program.bw.ReportProgress((int)((double)Program.iCounter++ / (double)Program.iThousend * 100));
-                }
+                Counter(this, new CounterEventArgs());
             });
         }
 

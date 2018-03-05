@@ -13,6 +13,7 @@ using CourseChecker.Logging;
 using System.Diagnostics;
 using System.Windows.Controls;
 using System.Windows.Media;
+using static CourseChecker.WPF.CounterForProgressbar;
 
 namespace CourseChecker.WPF {
     /// <summary>
@@ -93,9 +94,9 @@ namespace CourseChecker.WPF {
         private void BtnStart(object sender, RoutedEventArgs e) {
             logger.Info("Suche gestartet...");
             proBar = new Progressbar();
-            Program.boolIDS = Program.boolIntegrata = Program.boolTechData = false;
-            Program.iCounter = 0;
-            Program.iNumberOfCourses = 0;
+            BoolIDS = BoolIntegrata = BoolTechData = false;
+            Counter = 0;
+            NumberOfCourses = 0;
 
             lstViewLogs.ItemsSource = null;
             lstViewIntegrata.ItemsSource = null;
@@ -108,15 +109,15 @@ namespace CourseChecker.WPF {
             lstViewTechData.Visibility = Visibility.Collapsed;
             lstViewIDSTechData.Visibility = Visibility.Collapsed;
             
-            if (!Program.bw.WorkerReportsProgress) {
-                Program.bw.WorkerReportsProgress = true;
-                Program.bw.DoWork += Bw_DoWork;
-                Program.bw.ProgressChanged += Bw_ProgressChanged;
-                Program.bw.RunWorkerCompleted += Bw_RunworkerCompleted;
+            if (!bw.WorkerReportsProgress) {
+                bw.WorkerReportsProgress = true;
+                bw.DoWork += Bw_DoWork;
+                bw.ProgressChanged += Bw_ProgressChanged;
+                bw.RunWorkerCompleted += Bw_RunworkerCompleted;
             }
 
-            if (!Program.bw.IsBusy) {
-                Program.bw.RunWorkerAsync();
+            if (!bw.IsBusy) {
+                bw.RunWorkerAsync();
                 this.btnStart.IsEnabled = false;
                 this.btnPDF.IsEnabled = false;
                 this.btnBuchungen.IsEnabled = false;

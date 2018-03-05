@@ -21,14 +21,7 @@ namespace CourseChecker {
                 "AS24G",
                 "AS27G"
         };
-
-        internal readonly static int iThousend = 308;
-        internal static bool boolIDS = false;
-        internal static bool boolIntegrata = false;
-        internal static bool boolTechData = false;
-        internal static int iNumberOfCourses;
-        internal static int iCounter;
-        internal static BackgroundWorker bw = new BackgroundWorker();
+        
         internal static List<string> ListManualCheckForTechData => listManualCheckForTechData;
 
         [STAThread]

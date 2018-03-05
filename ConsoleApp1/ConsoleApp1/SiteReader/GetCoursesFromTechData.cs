@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static CourseChecker.WPF.CounterForProgressbar;
+using CourseChecker.Events;
 
 namespace CourseChecker.SiteReader {
 
@@ -15,22 +17,19 @@ namespace CourseChecker.SiteReader {
         private HtmlWeb webContent = new HtmlWeb();
         private Uri link;
         internal List<Kurse> ListKurse { get; set; }
+        private event CounterEventHandler Counter;
 
         public GetCoursesFromTechData(List<Uri> listUrl, List<String> listExcluded) {
             ListKurse = new List<Kurse>();
             webContent.AutoDetectEncoding = false;
             webContent.OverrideEncoding = Encoding.UTF8;
+            this.Counter += SiteCounter;
 
             Parallel.ForEach(listUrl, url => {
                 HtmlDocument htmlDoc = webContent.Load(url);
                 this.link = url;
                 GetCourses(htmlDoc, listExcluded);
-
-                if (Program.boolIDS & Program.boolIntegrata & Program.boolTechData) {
-                    Program.bw.ReportProgress((int)((double)Program.iCounter++ / (double)Program.iNumberOfCourses * 100));
-                } else {
-                    Program.bw.ReportProgress((int)((double)Program.iCounter++ / (double)Program.iThousend * 100));
-                }
+                Counter(this, new CounterEventArgs());
             });
         }
 

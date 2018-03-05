@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1C41EE7E-751D-45F5-9195-43E1FE3F60A7}</ProjectGuid>
-	<ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>WinExe</OutputType>
     <RootNamespace>CourseChecker</RootNamespace>
     <AssemblyName>CourseChecker</AssemblyName>
@@ -99,6 +99,7 @@
   <ItemGroup>
     <Compile Include="Course\Course.cs" />
     <Compile Include="Course\CourseProvider.cs" />
+    <Compile Include="Events\CounterEventArgs.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="PDF\CreatePDF.cs" />
     <Compile Include="Program.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="WPF\ChangeBook.xaml.cs">
       <DependentUpon>ChangeBook.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WPF\CounterForProgressbar.cs" />
     <Compile Include="WPF\Progressbar.xaml.cs">
       <DependentUpon>Progressbar.xaml</DependentUpon>
     </Compile>

@@ -6,30 +6,29 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
+using static CourseChecker.WPF.CounterForProgressbar;
+using CourseChecker.Events;
 
 namespace CourseChecker.SiteReader {
 
     class GetCoursesFromIDS {
         private static Logger logger = LogManager.GetCurrentClassLogger();
         internal List<Kurse> KurseIDS { get; set; }
+        private event CounterEventHandler Counter;
 
         public GetCoursesFromIDS(Uri url, String strAnbieter) {
             String strSite = GetSite(url);
             List<String> listSection = SectionTableEntry(strSite);
             KurseIDS = new List<Kurse>();
+            this.Counter += SiteCounter;
 
-            Program.iNumberOfCourses += listSection.Count;
+            NumberOfCourses += listSection.Count;
 
             foreach(String strElement in listSection) {
                 List<String> listTmp = SplitSection(strElement);
                 KurseIDS.Add(new Kurse(listTmp.ElementAt(0), listTmp.ElementAt(1), DateTime.Parse(listTmp.ElementAt(2)),
                                 DateTime.Parse(listTmp.ElementAt(3)), listTmp.ElementAt(4), Convert.ToInt32(listTmp.ElementAt(5)), strAnbieter, url));
-
-                if(Program.boolIDS & Program.boolIntegrata & Program.boolTechData) {
-                    Program.bw.ReportProgress((int)((double)Program.iCounter++ / (double)Program.iNumberOfCourses * 100));
-                } else {
-                    Program.bw.ReportProgress((int)((double)Program.iCounter++ / (double)Program.iThousend * 100));
-                }
+                Counter(this, new CounterEventArgs());
             }
         }
 
