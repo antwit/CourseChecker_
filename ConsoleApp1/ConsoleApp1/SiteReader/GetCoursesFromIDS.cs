@@ -14,7 +14,7 @@ namespace CourseChecker.SiteReader {
     class GetCoursesFromIDS {
         private static Logger logger = LogManager.GetCurrentClassLogger();
         internal List<Kurse> KurseIDS { get; set; }
-        private event CounterEventHandler Counter;
+        private event EventHandler<CounterEventArgs> Counter;
 
         public GetCoursesFromIDS(Uri url, String strAnbieter) {
             String strSite = GetSite(url);

@@ -9,7 +9,6 @@ using static CourseChecker.WPF.CounterForProgressbar;
 using CourseChecker.Events;
 
 namespace CourseChecker.SiteReader {
-    internal delegate void CounterEventHandler(Object sender, CounterEventArgs e);
 
     class GetCoursesFromIntegrata {
         private static Logger logger = LogManager.GetCurrentClassLogger();
@@ -17,7 +16,7 @@ namespace CourseChecker.SiteReader {
         private List<Kurse> lstKurse = new List<Kurse>();
         private Uri link;
         internal List<Kurse> GetListKurse { get; set; }
-        private event CounterEventHandler Counter;
+        private event EventHandler<CounterEventArgs> Counter;
 
         internal GetCoursesFromIntegrata(Queue<Uri> listSites) {
             GetListKurse = new List<Kurse>();

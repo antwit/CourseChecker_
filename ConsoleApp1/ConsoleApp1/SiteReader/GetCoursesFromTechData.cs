@@ -17,7 +17,7 @@ namespace CourseChecker.SiteReader {
         private HtmlWeb webContent = new HtmlWeb();
         private Uri link;
         internal List<Kurse> ListKurse { get; set; }
-        private event CounterEventHandler Counter;
+        private event EventHandler<CounterEventArgs> Counter;
 
         public GetCoursesFromTechData(List<Uri> listUrl, List<String> listExcluded) {
             ListKurse = new List<Kurse>();
