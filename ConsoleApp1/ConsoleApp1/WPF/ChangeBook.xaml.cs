@@ -14,8 +14,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace CourseChecker.WPF {
+
     /// <summary>
-    /// Interaction logic for ChangeBook.xaml
+    /// Hier werden die selektierte Kurse angezeigt, Änderungen zu den Kursen sind hier möglich 
     /// </summary>
     public partial class ChangeBook : Window {
         public ChangeBook() {

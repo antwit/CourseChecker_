@@ -7,9 +7,17 @@ using NLog;
 
 namespace CourseChecker.PDF {
 
+    /// <summary>
+    /// Diese Klasse erstellt ein PDF, für die selektierte Kurse
+    /// </summary>
     class CreatePDF {
         private static Logger logger = LogManager.GetCurrentClassLogger();
-
+        
+        /// <summary>
+        /// Konstruktor, erstellt das PDF und speichert an dem gegebenen Speicherpfad ab
+        /// </summary>
+        /// <param name="kurse">Liste der selektierte Kurse</param>
+        /// <param name="path">Speicherpfad</param>
         public CreatePDF(List<Kurse> kurse, String path) {
             String date = DateTime.Now.ToShortDateString();
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
@@ -19,6 +27,7 @@ namespace CourseChecker.PDF {
             ExcelPrintOptions epo = ws.PrintOptions;
             epo.Portrait = false;
 
+            // Aufbau der Grundstruktur
             dt.Columns.Add("Kurs-Nr.", typeof(String));
             dt.Columns.Add("Kurs-Name", typeof(String));
             dt.Columns.Add("Beginn", typeof(DateTime));
@@ -29,6 +38,7 @@ namespace CourseChecker.PDF {
             dt.Columns.Add("Preis", typeof(int));
             dt.Rows.Add(new Object[] { "", "", null, null, "", "", null });
 
+            // Kurs Daten werden geschrieben
             try {
                 int j = 0;
                 foreach (Kurse kurs in kurse) {
@@ -43,6 +53,7 @@ namespace CourseChecker.PDF {
                 Console.WriteLine("Leeres PDF Dokument erzeugt!");
             }
 
+            // Spalten werden Formatiert
             ws.Rows[0].Style.Font.Weight = ExcelFont.BoldWeight;
             ws.Cells.Style.Font.Size = 9 * 20;
             ws.Columns[6].Style.HorizontalAlignment = HorizontalAlignmentStyle.Center;
@@ -62,6 +73,7 @@ namespace CourseChecker.PDF {
             for (int i = 0; i < columnCount; i++)
                 ws.Columns[i].AutoFit();
 
+            // Speichert die Datei unter angegebenen Pfad
             ef.Save(path, new PdfSaveOptions() { SelectionType = SelectionType.EntireFile });
         }
     }

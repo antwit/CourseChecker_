@@ -17,7 +17,7 @@ using static CourseChecker.WPF.CounterForProgressbar;
 
 namespace CourseChecker.WPF {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Das Hauptfenster
     /// </summary>
     public partial class MainWindow : Window {
 
@@ -40,6 +40,9 @@ namespace CourseChecker.WPF {
             lstViewIDSTechData.Visibility = Visibility.Collapsed;
         }
 
+        /// <summary>
+        /// Die Suche nach den Kursen wird hier angestoßen, und das Ergebnis angezeigt
+        /// </summary>
         private void Bw_DoWork(object sender, DoWorkEventArgs e) {
             Task<IDS> taskIDS = Task<IDS>.Factory.StartNew(() => new IDS());
             Task<Integrata> taskIntegrata = Task<Integrata>.Factory.StartNew(() => new Integrata());
@@ -78,10 +81,16 @@ namespace CourseChecker.WPF {
                                                         });
         }
 
+        /// <summary>
+        /// Änderungen zum Fortschrittsbalken wird hier erfasst
+        /// </summary>
         private void Bw_ProgressChanged(object sender, ProgressChangedEventArgs e) {
             proBar.prgBar.Value = e.ProgressPercentage;
         }
 
+        /// <summary>
+        /// Ereignis falls die Suche fertiggestellt wurde
+        /// </summary>
         private void Bw_RunworkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
             proBar.Close();
             this.btnStart.IsEnabled = true;
@@ -91,6 +100,9 @@ namespace CourseChecker.WPF {
             logger.Info("Suche fertiggestellt!");
         }
 
+        /// <summary>
+        /// Ereignis zu "Suche Starten": Fortschrittsbalken wird aufgerufen und einige Bedingungen werden zurückgesetzt, außerdem wird die Suche nach den Kursen angestoßen
+        /// </summary>
         private void BtnStart(object sender, RoutedEventArgs e) {
             logger.Info("Suche gestartet...");
             proBar = new Progressbar();
@@ -127,6 +139,9 @@ namespace CourseChecker.WPF {
             proBar.Show();
         }
 
+        /// <summary>
+        /// Button "PDF erstellen": Alle selektierten Kurse werden nun zu einer Liste hinzugefügt und in eine PDF umgewandelt
+        /// </summary>
         private void BtnPDF(object sender, RoutedEventArgs e) {
             IList tmp = lstViewIDSIntegrata.SelectedItems;
             IList tmp2 = lstViewIntegrata.SelectedItems;
@@ -134,7 +149,6 @@ namespace CourseChecker.WPF {
             IList tmp4 = lstViewTechData.SelectedItems;
 
             listSelected = new List<Kurse>();
-            //Scheiß C#
             AddToListSelected(tmp, this.listSelected);
             AddToListSelected(tmp2, this.listSelected);
             AddToListSelected(tmp3, this.listSelected);
@@ -151,12 +165,18 @@ namespace CourseChecker.WPF {
             }
         }
 
+        /// <summary>
+        /// Fügt alle Elemente von ILIst in List hinzu, da IList kein Addrange kennt!
+        /// </summary>
         private void AddToListSelected(IList tmp, List<Kurse> list) {
             foreach (object tmpo in tmp) {
                 list.Add((Kurse)tmpo);
             }
         }
 
+        /// <summary>
+        /// Aufruf von "Ausgewählte Datensätze ändern": Eine Liste von den ausgewählten Kursen wird erstellt und an ChangeBook weitergegeben, um an der Liste Änderungen vornehmen zu können
+        /// </summary>
         private void BtnBuchungen(object sender, RoutedEventArgs e) {
             changeBook = new ChangeBook();
 
@@ -166,7 +186,6 @@ namespace CourseChecker.WPF {
             IList tmp4 = lstViewTechData.SelectedItems;
 
             listSelectedChange = new List<Kurse>();
-            //Scheiß C#
             AddToListSelected(tmp, this.listSelectedChange);
             AddToListSelected(tmp2, this.listSelectedChange);
             AddToListSelected(tmp3, this.listSelectedChange);
@@ -178,6 +197,9 @@ namespace CourseChecker.WPF {
             logger.Info("Kurse angepasst...");
         }
 
+        /// <summary>
+        /// URL's sind nun Hyperlink fähig
+        /// </summary>
         private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e) {
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
             e.Handled = true;
@@ -412,6 +434,12 @@ namespace CourseChecker.WPF {
         }
         #endregion CheckBox IDSTechData
 
+        /// <summary>
+        /// Findet das "Kind" Element, die Funktion ist für die Checkbox zuständig
+        /// </summary>
+        /// <typeparam name="T">Generic: Datentyp</typeparam>
+        /// <param name="depObj">Object von Typ DependencyObject</param>
+        /// <returns>Gibt das "Child" Element zurück falls es gefunden wurde, ansonsten NULL</returns>
         public static T FindVisualChild<T>(DependencyObject depObj) where T : DependencyObject {
             if (depObj != null) {
                 for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++) {

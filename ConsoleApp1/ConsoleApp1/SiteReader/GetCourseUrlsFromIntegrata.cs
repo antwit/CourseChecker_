@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace CourseChecker.SiteReader {
 
+    /// <summary>
+    /// Sammelt alle URL's zu den Kursen auf der gegebenen Seite
+    /// </summary>
     class GetCourseUrlsFromIntegrata {
         private static Logger logger = LogManager.GetCurrentClassLogger();
         private HtmlWeb webContent = new HtmlWeb();
@@ -15,6 +18,11 @@ namespace CourseChecker.SiteReader {
         private List<string> listIDs  = new List<string>();
         internal List<Kurse> GetCourses { get; set; }
 
+        /// <summary>
+        /// Kostruktor
+        /// </summary>
+        /// <param name="listUris">URL's zu den entsprechenden Webseiten</param>
+        /// <param name="listIDs">Liste mit ID's werden benutzt um die Daten Selektieren zu können</param>
         public GetCourseUrlsFromIntegrata(List<Uri> listUris, List<String> listIDs) {
             SetsOfUrls = new Queue<Uri>();
             this.listIDs.AddRange(listIDs);
@@ -23,6 +31,9 @@ namespace CourseChecker.SiteReader {
             CollectUrls();
         }
 
+        /// <summary>
+        /// Aus der URL wird der Quelltext extrahiert
+        /// </summary>
         private void CollectUrls() {
             Parallel.For(0,listURI.Count, i => {
                 HtmlDocument htmlDoc = webContent.Load(this.listURI[i]);
@@ -30,6 +41,11 @@ namespace CourseChecker.SiteReader {
             });
         }
 
+        /// <summary>
+        /// Extrahieren der Links zu den gegebenen Quelltext 
+        /// </summary>
+        /// <param name="htmlDoc">Quelltext</param>
+        /// <param name="strID">Liste mit ID's werden benutzt um die Daten Selektieren zu können</param>
         private void GetSingleUrls(HtmlDocument htmlDoc, string strID) {
             HtmlNode nodeID = htmlDoc.DocumentNode.SelectSingleNode("//*[@id='" + strID + "']");
             HtmlNodeCollection collNode = nodeID.SelectNodes(".//a[@class='column-group__sub-item-link']");

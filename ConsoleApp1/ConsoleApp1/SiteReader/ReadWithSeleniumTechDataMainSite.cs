@@ -8,10 +8,19 @@ using NLog;
 
 namespace CourseChecker.SiteReader {
 
+    /// <summary>
+    /// Liest aus der TechData Seite die nötigen Links zu den entsprechenden Kursen aus
+    /// </summary>
     class ReadWithSeleniumTechDataMainSite {
         private static Logger logger = LogManager.GetCurrentClassLogger();
         public List<Uri> ListUrl;
 
+        /// <summary>
+        /// Konstruktor
+        /// </summary>
+        /// <param name="url">Links zu den URL's mit den Kursen</param>
+        /// <param name="listManuelCheck">Liste mit den Kursen die separat geprüft werden müssen</param>
+        /// <param name="uriSearch">Allgemeine URL' zu der Suchleiste</param>
         public ReadWithSeleniumTechDataMainSite(Uri url, List<String> listManuelCheck, Uri uriSearch) {
             ListUrl = new List<Uri>();
             using(IWebDriver driver = new PhantomJSDriver()) {
@@ -33,6 +42,10 @@ namespace CourseChecker.SiteReader {
             });
         }
 
+        /// <summary>
+        /// Extrahiert die URL und speichert es in einer Liste ab
+        /// </summary>
+        /// <param name="driver">Selenium driver</param>
         private void AddUrl(IWebDriver driver) {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.CssSelector(".btn-sm")));

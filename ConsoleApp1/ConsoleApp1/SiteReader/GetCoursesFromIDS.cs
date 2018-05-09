@@ -10,12 +10,20 @@ using static CourseChecker.WPF.CounterForProgressbar;
 using CourseChecker.Events;
 
 namespace CourseChecker.SiteReader {
-
+    
+    /// <summary>
+    /// Hier werden die Kurse für IDS gesammelt
+    /// </summary>
     class GetCoursesFromIDS {
         private static Logger logger = LogManager.GetCurrentClassLogger();
         internal List<Kurse> KurseIDS { get; set; }
         private event EventHandler<CounterEventArgs> Counter;
 
+        /// <summary>
+        /// Konstruktor, extrahiert die Kurse aus der Webseite
+        /// </summary>
+        /// <param name="url">URL, aus der die Daten ausgelesen werden</param>
+        /// <param name="strAnbieter">Such-String beinhaltet den Name des Anbieters</param>
         public GetCoursesFromIDS(Uri url, String strAnbieter) {
             String strSite = GetSite(url);
             List<String> listSection = SectionTableEntry(strSite);
@@ -32,6 +40,11 @@ namespace CourseChecker.SiteReader {
             }
         }
 
+        /// <summary>
+        /// Holt sich den Quellcode aus der Webseite
+        /// </summary>
+        /// <param name="url">URL</param>
+        /// <returns>Quellcode von der URL</returns>
         public String GetSite(Uri url) {
             String strInhalt;
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
@@ -44,6 +57,11 @@ namespace CourseChecker.SiteReader {
             return strInhalt;
         }
 
+        /// <summary>
+        /// Im Quellcode wird selektiert
+        /// </summary>
+        /// <param name="strSite">Quellcode</param>
+        /// <returns>Eine Liste mit den selektierten Inhalt</returns>
         private List<String> SectionTableEntry(String strSite) {
             List<String> listSections = new List<String>();
             int iStart = 0;
@@ -61,6 +79,11 @@ namespace CourseChecker.SiteReader {
             return listSections;
         }
 
+        /// <summary>
+        /// Im Quellcode wird selektiert, herausgefiltert wird der Preis
+        /// </summary>
+        /// <param name="strSite">Quellcode</param>
+        /// <returns>Eine Liste mit den selektierten Inhalt</returns>
         private List<String> SplitSection(String strElement) {
             List<String> listData = new List<String>();
             String[] strTmp = strElement.Split(new String[] { "</td>" }, StringSplitOptions.None);

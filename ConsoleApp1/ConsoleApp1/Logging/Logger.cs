@@ -7,6 +7,9 @@ using System.Windows;
 namespace CourseChecker.Logging {
     internal delegate void PropertyChanged(object sender, PropertyChangedEventArgs e);
 
+    /// <summary>
+    /// NLog eingesetzt zum loggen
+    /// </summary>
     public static class Logger{
         public class LogInfo : INotifyPropertyChanged {
             public String Time { get; set; }
@@ -26,6 +29,7 @@ namespace CourseChecker.Logging {
         }
 
         internal static ICollection<LogInfo> GetLogging { get; private set; } = new ObservableCollection<LogInfo>();
+
 
         public static void LoggerNLog(String strLevel, String strMessage, String strTime) {
             Application.Current.Dispatcher.Invoke(delegate {

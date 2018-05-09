@@ -3,7 +3,7 @@
 namespace CourseChecker.WPF {
 
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Fortschrittsbalken
     /// </summary>
     public partial class Progressbar : Window {
         public Progressbar() {

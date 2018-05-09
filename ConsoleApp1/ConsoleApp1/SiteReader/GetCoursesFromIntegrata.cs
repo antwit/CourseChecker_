@@ -10,6 +10,9 @@ using CourseChecker.Events;
 
 namespace CourseChecker.SiteReader {
 
+    /// <summary>
+    /// Extrahiert die Kurse aus der gebenen URL's
+    /// </summary>
     class GetCoursesFromIntegrata {
         private static Logger logger = LogManager.GetCurrentClassLogger();
         private HtmlWeb webContent = new HtmlWeb();
@@ -18,6 +21,10 @@ namespace CourseChecker.SiteReader {
         internal List<Kurse> GetListKurse { get; set; }
         private event EventHandler<CounterEventArgs> Counter;
 
+        /// <summary>
+        /// Kostruktor, jede Seite wir Parallel aufgerufen
+        /// </summary>
+        /// <param name="listSites">Liste mit URL's zu den einzelnen Kursen</param>
         internal GetCoursesFromIntegrata(Queue<Uri> listSites) {
             GetListKurse = new List<Kurse>();
             this.Counter += SiteCounter;
@@ -30,6 +37,10 @@ namespace CourseChecker.SiteReader {
             });
         }
 
+        /// <summary>
+        /// Aus dem Quelltext werden die nötigen Daten für die Kurse extrahiert
+        /// </summary>
+        /// <param name="htmlDoc">Quelltext</param>
         private void GetData(HtmlDocument htmlDoc) {
             String strTitle = "";
             String strNumber = "";
@@ -42,7 +53,7 @@ namespace CourseChecker.SiteReader {
                 .SelectSingleNode("//*[@class='side-tabs__info']")
                 .InnerText;
                 iPrice = Convert.ToInt32(Regex.Match(strPrice, "(\\d[\\d\\.]+)").Value.Replace(".", ""));
-                //get all locations
+                // get all locations
                 HtmlNodeCollection placeDate = htmlDoc.DocumentNode.SelectNodes("//*[@class='city-item']");
                 if (placeDate == null) {
                     strTitle = Regex.Match(htmlDoc.DocumentNode.SelectSingleNode("//title").InnerText, ".*?:(.*)?- Training, Seminar").Groups[1].Value;
@@ -51,10 +62,10 @@ namespace CourseChecker.SiteReader {
 
                 foreach(HtmlNode node in placeDate) {
                     String[] strArrGetDatePlace = new String[4];
-                    //Select all appointments for specific location
+                    // Select all appointments for specific location
                     HtmlNodeCollection singleDate = node.SelectNodes("*/div/div[@class='row']");
                     foreach(HtmlNode eleDate in singleDate) {
-                        //Course identifier
+                        // Course identifier
                         strTitle = eleDate.SelectSingleNode("meta[1]").GetAttributeValue("Content", "");
                         Match match = Regex.Match(strTitle, patternKursNummer);
                         if(match.Success) {
@@ -63,29 +74,30 @@ namespace CourseChecker.SiteReader {
                         } else {
                             strTitle = strTitle.Trim();
                         }
-                        //Start date
+                        // Start date
                         strArrGetDatePlace[1] = eleDate
                             .SelectSingleNode("meta[4]")
                             .GetAttributeValue("Content", "");
-                        //End date
+                        // End date
                         strArrGetDatePlace[2] = eleDate
                             .SelectSingleNode("meta[5]")
                             .GetAttributeValue("Content", "");
-                        //Place
+                        // Place
                         strArrGetDatePlace[0] = eleDate
                             .SelectSingleNode("div[1]/meta")
                             .GetAttributeValue("Content", "");
-                        //Guarantee
+                        // Guarantee
                         strArrGetDatePlace[3] = eleDate.SelectSingleNode("div[4]/span/small/a") == null ? "false" : "true";
 
                         listStrArrPlaceDate.Add(strArrGetDatePlace);
                     }
                 }
             } catch(Exception) {
-                //Course not found
+                // Course not found
                 logger.Info("[Integrata] Keine Termine gefunden für: {0}", strTitle);
             }
 
+            // speichert die Kurse ab
             if(listStrArrPlaceDate.Count > 0) {
                 foreach(string[] strArr in listStrArrPlaceDate) {
                     DateTime startDate = new DateTime();

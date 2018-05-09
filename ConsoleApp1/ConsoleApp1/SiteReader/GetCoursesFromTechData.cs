@@ -12,6 +12,9 @@ using CourseChecker.Events;
 
 namespace CourseChecker.SiteReader {
 
+    /// <summary>
+    /// Extrahiert die Kurse aus der gebenen URL's
+    /// </summary>
     class GetCoursesFromTechData {
         private static Logger logger = LogManager.GetCurrentClassLogger();
         private HtmlWeb webContent = new HtmlWeb();
@@ -19,6 +22,11 @@ namespace CourseChecker.SiteReader {
         internal List<Kurse> ListKurse { get; set; }
         private event EventHandler<CounterEventArgs> Counter;
 
+        /// <summary>
+        /// Kostruktor, jede Seite wir Parallel aufgerufen
+        /// </summary>
+        /// <param name="listUrl">Liste mit URL's zu den einzelnen Kursen</param>
+        /// <param name="listExcluded">Liste mit den Kursen die man nicht extrahieren möchte</param>
         public GetCoursesFromTechData(List<Uri> listUrl, List<String> listExcluded) {
             ListKurse = new List<Kurse>();
             webContent.AutoDetectEncoding = false;
@@ -33,6 +41,11 @@ namespace CourseChecker.SiteReader {
             });
         }
 
+        /// <summary>
+        /// Aus dem Quelltext werden die nötigen Daten für die Kurse extrahiert
+        /// </summary>
+        /// <param name="htmlDoc">Quelltext zu der Seite</param>
+        /// <param name="listExcluded">Liste mit den Kursen die man nicht extrahieren möchte</param>
         private void GetCourses(HtmlDocument htmlDoc, List<string> listExcluded) {
             try {
                 List<String>[] arrLocDate;
@@ -44,7 +57,7 @@ namespace CourseChecker.SiteReader {
                 String patternPrice = "([\\d\\.]+),00";
                 String strPrice = "";
 
-                //get title and course number
+                // get title and course number
                 String strTitleAndNr = htmlDoc.DocumentNode.SelectSingleNode("//*[@name='keywords']").Attributes["content"].DeEntitizeValue;
                 kursNr_Title = new string[2] { "", "" };
                 Match match = Regex.Match(strTitleAndNr, patternName);
@@ -61,7 +74,7 @@ namespace CourseChecker.SiteReader {
                     logger.Info("[TechData] Kurs '" + kursNr_Title[0] + "' wurde aussortiert, da es sich in der Excludeliste befand.");
                     throw new Exception();
                 }
-                //find all locations
+                // find all locations
                 HtmlNodeCollection collNodeLocation = htmlDoc.DocumentNode.SelectNodes("//*[@class='location']");
                 if (collNodeLocation.Count < 1) {
                     logger.Info("[TechData] Kein Termine gefunden für: " + kursNr_Title[0]);
@@ -72,11 +85,11 @@ namespace CourseChecker.SiteReader {
                 for (int i = 0; i < collNodeLocation.Count; i++) {
                     String strLocation = System.Net.WebUtility.HtmlDecode(collNodeLocation[i].InnerText);
                     arrLocDate[i] = new List<string>() { strLocation };
-                    //get all appointments
+                    // get all appointments
                     HtmlNodeCollection collNodeDates = collNodeLocation[i].SelectNodes("following-sibling::*");
 
                     foreach (HtmlNode nodeEle in collNodeDates) {
-                        //get start and end date
+                        // get start and end date
                         String nodeDateElement = nodeEle.SelectSingleNode("*[@class='date']").InnerText.Trim();
                         Match matchDate = Regex.Match(nodeDateElement, patternDate);
                         String startDate = matchDate.Groups[1].Value;
@@ -84,13 +97,13 @@ namespace CourseChecker.SiteReader {
                         arrLocDate[i].Add(startDate);
                         arrLocDate[i].Add(endDate);
 
-                        //get price
+                        // get price
                         String nodePoceElement = nodeEle.SelectSingleNode("*[@class='price']").InnerText.Trim();
                         Match matchPrice = Regex.Match(nodePoceElement, patternPrice);
                         strPrice = matchPrice.Groups[1].Value.Replace(".", "");
                         arrLocDate[i].Add(strPrice);
 
-                        //is guarantee appointment
+                        // is guarantee appointment
                         String strGuarantee = nodeEle.SelectSingleNode("*/*[@class='sprite-promo-icons-guaranteed-course']") == null ? "false" : "true";
                         arrLocDate[i].Add(strGuarantee);
                     }

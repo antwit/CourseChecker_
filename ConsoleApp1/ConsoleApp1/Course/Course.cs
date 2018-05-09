@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace CourseChecker.Course {
 
+    /// <summary>
+    /// Diese Klasse speichert alle nötige Informationen zum Kurs, sodass man später die Kurse vergleichen kann 
+    /// </summary>
     internal class Kurse: IDisposable {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -20,6 +23,9 @@ namespace CourseChecker.Course {
         public Uri Link { get; set; }
         public bool IsSelected { get; set;}
 
+        /// <summary>
+        /// Alle Gründe werden hier aufgelistet 
+        /// </summary>
         private static readonly Dictionary<String, String> dictReason = new Dictionary<string, string>() {
             { "Preis", "Kurspreis wurde geändert;"},
             { "Garantie", "Kurs ist nun ein Garantietermin;" },
@@ -28,6 +34,17 @@ namespace CourseChecker.Course {
             { "Kurs", "Kurs hinzugefügt;" }
         };
         
+        /// <summary>
+        /// Konstruktor der Klasse ohne Angabe von Garantietermin 
+        /// </summary>
+        /// <param name="strKursNr">Kurs Nummer</param>
+        /// <param name="strKursTitel">Kurs Titel</param>
+        /// <param name="dateBeginn">Terminbeginn</param>
+        /// <param name="dateEnde">Terminende</param>
+        /// <param name="strOrt">Ort der Veranstaltung</param>
+        /// <param name="iPreis">Preis ohne MwSt.</param>
+        /// <param name="strAnbieter">Anbieter des Kurses</param>
+        /// <param name="link">Link zum Kurs</param>
         public Kurse(String strKursNr, String strKursTitel, DateTime dateBeginn, DateTime dateEnde, String strOrt, int iPreis, String strAnbieter, Uri link) {
             this.StrKursNr = strKursNr;
             this.StrKursTitel = strKursTitel;
@@ -41,6 +58,18 @@ namespace CourseChecker.Course {
             this.Link = link;
         }
 
+        /// <summary>
+        /// Konstruktor der Klasse ohne Angabe von Garantietermin 
+        /// </summary>
+        /// <param name="strKursNr">Kurs Nummer</param>
+        /// <param name="strKursTitel">Kurs Titel</param>
+        /// <param name="dateBeginn">Terminbeginn</param>
+        /// <param name="dateEnde">Terminende</param>
+        /// <param name="boolGarantieTermin">Termin ist Garantietermin</param>
+        /// <param name="strOrt">Ort der Veranstaltung</param>
+        /// <param name="iPreis">Preis ohne MwSt.</param>
+        /// <param name="strAnbieter">Anbieter des Kurses</param>
+        /// <param name="link">Link zum Kurs</param>
         public Kurse(String strKursNr, String strKursTitel, DateTime dateBeginn, DateTime dateEnde, String strOrt, int iPreis, Boolean boolGarantieTermin, String strAnbieter, Uri link) {
             this.StrKursNr = strKursNr;
             this.StrKursTitel = strKursTitel;
@@ -54,6 +83,11 @@ namespace CourseChecker.Course {
             this.Link = link;
         }
         
+        /// <summary>
+        /// Prüft zwei Kurse auf Unterschiede
+        /// </summary>
+        /// <param name="kursCheck">Der Kurs mit dem verglichen wird</param>
+        /// <returns>Falls die Kurse gleich sind gibt es ein "true", andernfalls ein "false" als boolischer Wert zurück</returns>
         public Boolean Contains(Kurse kursCheck) {
             Boolean retEqual = false;
             Boolean boolCheckFields = this.StrKursNr.ToLowerInvariant().Equals(kursCheck.StrKursNr.ToLowerInvariant())
@@ -83,6 +117,7 @@ namespace CourseChecker.Course {
                                     && this.DateBeginn.Equals(kursCheck.DateBeginn) 
                                     && this.StrOrt.ToLowerInvariant().Equals(kursCheck.StrOrt.ToLowerInvariant())) {
 
+                //Gründe werden hinzugefügt
                 if(!this.IPreis.Equals(kursCheck.IPreis))
                     this.StrReason = dictReason["Preis"];
                 if(!this.BoolGarantieTermin.Equals(kursCheck.BoolGarantieTermin) && this.BoolGarantieTermin)
@@ -95,6 +130,11 @@ namespace CourseChecker.Course {
             return retEqual;
         }
 
+        /// <summary>
+        /// Prüft zwei Kurse auf Unterschiede, hier speziell für IDS
+        /// </summary>
+        /// <param name="kursCheck">Der Kurs mit dem verglichen wird</param>
+        /// <returns>Falls die Kurse gleich sind gibt es ein "true", andernfalls ein "false" als boolischer Wert zurück</returns>
         public Boolean ContainsForIDS(Kurse kursCheck) {
             Boolean retEqual = false;
             Boolean boolCheckFields = this.StrKursNr.ToLowerInvariant().Equals(kursCheck.StrKursNr.ToLowerInvariant())
@@ -122,6 +162,7 @@ namespace CourseChecker.Course {
                                     && this.DateBeginn.Equals(kursCheck.DateBeginn) 
                                     && this.StrOrt.ToLowerInvariant().Equals(kursCheck.StrOrt.ToLowerInvariant())) {
 
+                //Gründe werden hinzugefügt
                 if(!this.IPreis.Equals(kursCheck.IPreis) && this.StrKursNr.ToLowerInvariant().Equals(kursCheck.StrKursNr.ToLowerInvariant()))
                     kursCheck.StrReason = dictReason["Preis"];
                 if(!this.BoolGarantieTermin.Equals(kursCheck.BoolGarantieTermin) && this.BoolGarantieTermin)
@@ -135,30 +176,22 @@ namespace CourseChecker.Course {
         }
 
         #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
+        private bool disposedValue = false;
 
         protected virtual void Dispose(bool disposing) {
             if (!disposedValue) {
                 if (disposing) {
-                    // TODO: dispose managed state (managed objects).
                     GC.SuppressFinalize(this);
                 }
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
-
                 disposedValue = true;
             }
         }
 
-        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
         ~Kurse() {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(false);
         }
-
-        // This code added to correctly implement the disposable pattern.
+        
         void IDisposable.Dispose() {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
         }
         #endregion

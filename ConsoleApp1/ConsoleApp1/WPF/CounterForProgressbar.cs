@@ -4,6 +4,9 @@ using CourseChecker.Events;
 
 namespace CourseChecker.WPF {
 
+    /// <summary>
+    /// Der Zähler für den Fortschrittsbalken, sammelt den Stand der einzelne abgearbeitete Kurse zusammen
+    /// </summary>
     class CounterForProgressbar {
 
         private readonly static int iEstimatedValue = 308;
@@ -40,6 +43,11 @@ namespace CourseChecker.WPF {
             set { _Counter = value; }
         }
 
+        /// <summary>
+        /// Liefert den Fortschritt an den Fortschrittsbalken
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         internal static void SiteCounter(Object sender, CounterEventArgs e) {
             if (BoolIDS & BoolIntegrata & BoolTechData) {
                 bw.ReportProgress((int)((double)Counter++ / (double)NumberOfCourses * 100));
